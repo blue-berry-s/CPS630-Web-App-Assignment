@@ -32,3 +32,25 @@ body {
   width: 70px;
   height: auto;
 }
+
+#upcoming-events {
+  margin: 30px;
+  color: #363636;
+}
+
+#event-display {
+  display: flex;
+  flex-direction: row;
+  padding: 10px 0px;
+  gap: 30px;
+}
+
+#event-cards {
+  border: 2px solid black;
+  width: 70%;
+}
+
+#filter {
+  border: 2px solid black;
+  width: 30%;
+}
