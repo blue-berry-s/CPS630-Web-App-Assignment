@@ -1,9 +1,13 @@
-
 [
   {
     "id": "e1",
     "title": "Welcome Event",
+    "description": "Event description",
     "date": "2026-02-10",
-    "location": "TMU Campus"
+    "time": "8:00 AM EST - 1:15 PM EST",
+    "location": "MAC Arena",
+    "organization": "TMU Staff",
+    "capacity": "245 seats: 129 available",
+    "cost": "$35"
   }
 ]
