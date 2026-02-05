@@ -47,8 +47,37 @@ body {
 }
 
 #event-cards {
-  border: 2px solid black;
-  width: 70%;
+  width: 80%;
+}
+
+.card-content {
+  background-color: white;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  gap: 10px;
+}
+
+.card-content img {
+  width: 40%;
+}
+
+.details {
+  width: 60%;
+}
+
+.title-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  color: #0077C8;
+  border-bottom: 2px solid #0077C8;
+}
+
+.title-icons {
+  gap: 10px;
 }
 
 #filter {
