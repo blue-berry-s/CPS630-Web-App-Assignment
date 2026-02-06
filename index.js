@@ -50,8 +50,8 @@ app.get("/", (req, res) => {
 });
 
 // Product page
-app.get("/product", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "product.html"));
+app.get("/addEvent", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "addEvent.html"));
 });
 
 // Login page
