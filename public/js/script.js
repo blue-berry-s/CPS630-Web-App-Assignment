@@ -16,7 +16,7 @@ async function loadEvents() {
       // Mapping event details to respective elements
       card.innerHTML = `
         <div class="card-content">
-          <img src="../assets/logos/TMU.jpg" alt="TMU Logo">
+          <img src="../assets/logos/TMU.svg" alt="TMU Logo">
 
           <div class="details">
             <div class="title-bar">
@@ -28,11 +28,46 @@ async function loadEvents() {
               </div>
             </div>
 
-            <p><strong>Date:</strong> ${event.date}</p>
-            <p><strong>Location:</strong> ${event.location}</p>
-            <p class="tickets">Only ${event.remaining || 'few'} tickets left!</p>
-            <button class="btn-delete"> DELETE </button>
-            <button class="btn-primary btn-more-info">More Info</button>
+            <div class="main-details">
+              <p>${event.description}</p>
+
+              <div class="detail-rows">
+                <div class="detail-cols">
+                  <div class="detail-item">
+                    <img src="../assets/icons/DateIcon.svg" alt="Date Icon">
+                    <p>${event.date}</p>
+                  </div>
+                  <div class="detail-item">
+                    <img src="../assets/icons/TimeIcon.svg" alt="Date Icon">
+                    <p>${event.time}</p>
+                  </div>
+                  <div class="detail-item">
+                    <img src="../assets/icons/LocationIcon.svg" alt="Date Icon">
+                    <p>${event.location}</p>
+                  </div>
+                </div>
+
+                <div class="detail-cols">
+                  <div class="detail-item">
+                    <img src="../assets/icons/CreatorIcon.svg" alt="Date Icon">
+                    <p>${event.organization}</p>
+                  </div>
+                  <div class="detail-item">
+                    <img src="../assets/icons/AvailabilityIcon.svg" alt="Date Icon">
+                    <p>${event.capacity}</p>
+                  </div>
+                  <div class="detail-item">
+                    <img src="../assets/icons/PriceIcon.svg" alt="Date Icon">
+                    <p>${event.cost}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="button-bar">
+              <button class="btn-delete"> DELETE </button>
+              <button class="btn-primary btn-more-info">More Info</button>
+            </div>
           </div>
         </div>
       `;
