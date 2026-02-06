@@ -13,6 +13,14 @@ async function loadEvents() {
       const card = document.createElement("div");
       card.className = "event-card-container";
 
+      // Format time
+      const dateObj = new Date(event.date + 'T00:00:00');
+      const formattedDate = dateObj.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric'
+      });
+
       // Mapping event details to respective elements
       card.innerHTML = `
         <div class="card-content">
@@ -39,7 +47,7 @@ async function loadEvents() {
                   </div>
                   <div class="detail-item">
                     <img src="../assets/icons/TimeIcon.svg" alt="Date Icon">
-                    <p>${event.time}</p>
+                    <p>${formattedDate}</p>
                   </div>
                   <div class="detail-item">
                     <img src="../assets/icons/LocationIcon.svg" alt="Date Icon">
