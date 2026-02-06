@@ -14,11 +14,19 @@ async function loadEvents() {
       return 0;
     });
 
+<<<<<<< HEAD
     displayEvents(allEvents);
   } catch (error) {
     console.error("Error loading events:", error);
   }
 }
+=======
+    // Loop through each event in json file
+    loadTagFilters();
+    events.forEach(event => {
+      const card = document.createElement("div");
+      card.className = "event-card-container";
+>>>>>>> a12cc0b (Update script.js and server.js for dynamic event tags)
 
 // Displays the event passed in
 function displayEvents(eventsToRender) {
@@ -54,6 +62,7 @@ function displayEvents(eventsToRender) {
               </div>
             </div>
 
+<<<<<<< HEAD
             <div class="main-details">
               <p>${event.description}</p>
 
@@ -94,6 +103,13 @@ function displayEvents(eventsToRender) {
               <button class="btn-delete"> DELETE </button>
               <button class="btn-primary btn-more-info">More Info</button>
             </div>
+=======
+            <p><strong>Date:</strong> ${event.date}</p>
+            <p><strong>Location:</strong> ${event.location}</p>
+            <p class="tickets">Only ${event.seats || 'few'} tickets left!</p>
+            <button class="btn-delete"> DELETE </button>
+            <button class="btn-primary btn-more-info">More Info</button>
+>>>>>>> a12cc0b (Update script.js and server.js for dynamic event tags)
           </div>
         </div>
       `;
@@ -102,6 +118,30 @@ function displayEvents(eventsToRender) {
     container.appendChild(card);
   });
 }
+
+
+
+async function loadTagFilters() {
+  const filterDiv = document.getElementById("filter");
+  filterDiv.innerHTML = "<h2>Event Category</h2>";
+
+  const res = await fetch("/api/tags");
+  const tags = await res.json();
+
+  tags.forEach(tag => {
+    const row = document.createElement("div");
+    row.className = "selector";
+    row.innerHTML = `
+      <input type="checkbox" value="${tag}">
+      <label>${tag}</label>
+    `;
+    row.querySelector("input").addEventListener("change", () => {
+      loadEvents();
+    });
+    filterDiv.appendChild(row);
+  });
+}
+
 
 // Initialize the load when the page is ready
 document.addEventListener('DOMContentLoaded', () => {

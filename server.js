@@ -1,32 +1,29 @@
-
-// Import Express
+// import Express
 const express = require("express");
 
-// Import Node utilities
+// import Node utilities
 const path = require("path");
 const fs = require("fs");
 
-// Create Express app
+// create the xpress app
 const app = express();
 const PORT = 8080;
 
 
 // MIDDLEWARE
 
-
-// This lets the server read JSON from POST requests
+// this lets the server read JSON from POST requests
 app.use(express.json());
 
-// Thi lets the server serve HTML, CSS, images from /public
+// Ttis lets the server serve HTML, CSS, images from /public
 app.use(express.static(path.join(__dirname, "public")));
 
 
 // "DATABASE" (JSON FILE)
 
-
 const DATA_FILE = path.join(__dirname, "data", "events.json");
 
-// Read events from file
+// reead events from file
 function readEvents() {
   try {
     const data = fs.readFileSync(DATA_FILE, "utf8");
@@ -49,7 +46,7 @@ app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "home.html"));
 });
 
-// Product page
+// Add Event page
 app.get("/addEvent", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "addEvent.html"));
 });
@@ -68,9 +65,37 @@ app.get("/api/events", (req, res) => {
   res.status(200).json(events); // 200 OK
 });
 
-// POST: add a new event
+
+// GET all unique tags from all events
+// This is used so the frontend can generate filters/checkboxes dynamically
+app.get("/api/tags", (req, res) => {
+  const events = readEvents();
+  const tagSet = new Set();
+
+  events.forEach(event => {
+    if (Array.isArray(event.tags)) {
+      event.tags.forEach(tag => tagSet.add(String(tag)));
+    }
+  });
+
+  res.status(200).json(Array.from(tagSet).sort());
+});
+
+
+// POST: add a new event (now stores tags + extra fields)
 app.post("/api/events", (req, res) => {
-  const { title, date, location } = req.body;
+  const {
+    title,
+    date,
+    location,
+    description,
+    time,
+    creator,
+    imageUrl,
+    seats,
+    price,
+    tags
+  } = req.body;
 
   // Validate input
   if (!title || !date) {
@@ -80,13 +105,42 @@ app.post("/api/events", (req, res) => {
     });
   }
 
+  // Make tags alwayss an arraye
+  let cleanTags = [];
+
+  if (Array.isArray(tags)) {
+    cleanTags = tags;
+  } else if (typeof tags === "string") {
+    cleanTags = tags.split(",");
+  }
+
+  cleanTags = cleanTags
+    .map(t => String(t).trim())
+    .filter(t => t.length > 0);
+
+  // remove duplicates
+  cleanTags = [...new Set(cleanTags)];
+
   const events = readEvents();
 
   const newEvent = {
     id: "e" + Date.now(),
-    title,
-    date,
-    location: location || ""
+    title: String(title),
+    date: String(date),
+
+    //default values
+    price: Number.isFinite(Number(price)) ? Number(price) : 0,
+    location: location ? String(location) : "",
+    description: description ? String(description) : "",
+    time: time ? String(time) : "",
+    creator: creator ? String(creator) : "",
+    seats: Number.isFinite(Number(seats)) ? Number(seats) : 0,
+
+    //image support = store a URL string 
+    imageUrl: imageUrl ? String(imageUrl) : "",
+
+    // store tags in the JSON database
+    tags: cleanTags
   };
 
   events.push(newEvent);
@@ -94,6 +148,7 @@ app.post("/api/events", (req, res) => {
 
   res.status(201).json(newEvent); // 201 Created
 });
+
 
 // DELETE: remove event by id
 app.delete("/api/events/:id", (req, res) => {
