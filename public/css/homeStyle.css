@@ -89,6 +89,55 @@
 }
 
 #filter {
-  border: 2px solid black;
   width: 30%;
+}
+
+#search-event {
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0px 10px 0px 0px;
+}
+
+#search-event input[type="text"] {
+  background: transparent;
+  outline: none;
+  width: 100%;
+}
+
+#filter h2 {
+  border-bottom: 3px solid black;
+  padding: 0px 0px 5px 0px;
+}
+
+#date-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#search-date {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+#search-date label {
+  font-weight: bold;
+}
+
+#search-date div {
+  display: flex;
+  background-color: white;
+}
+
+#search-date input[type="date"] {
+  background: transparent;
+  width: 80%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0;
 }

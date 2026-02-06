@@ -32,7 +32,30 @@
       <div id="event-cards"></div>
 
       <div id="filter">
+        <form id="search-event">
+          <input type="text" name="title" placeholder="Search (name or description)">
+          <input type="image" src="/assets/icons/SearchIcon.svg" alt="submit" width="20">
+        </form>
 
+        <h2>Event Date</h2>
+
+        <div id="date-filter">
+          <form id="search-date">
+            <label for="from-date">From: </label>
+            <div>
+              <input type="date" name="from-date">
+              <input type="image" src="/assets/icons/SearchDateIcon.svg" alt="Submit" width="20"><br>
+            </div>
+          </form>
+
+          <form id="search-date">
+            <label for="to-date">To: </label>
+            <div>
+              <input type="date" name="to-date">
+              <input type="image" src="/assets/icons/SearchDateIcon.svg" alt="Submit" width="20"><br>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   </section>
