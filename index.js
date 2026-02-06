@@ -10,9 +10,15 @@ const fs = require("fs");
 const app = express();
 const PORT = 8080;
 
+// Hard coded credentials
+const EMAIL = "student@torontomu.ca";
+const PASSWORD = "student123";
+
 
 // MIDDLEWARE
 
+// This lets Express parse form submissions (HTML forms)
+app.use(express.urlencoded({ extended: true }));
 
 // This lets the server read JSON from POST requests
 app.use(express.json());
@@ -44,8 +50,24 @@ function saveEvents(events) {
 
 // PAGE ROUTES 
 
-// Home page
+// Login page
 app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+
+// Handle login form submission
+app.post("/", (req, res) => {
+  const { email, password } = req.body;
+
+  if (email === EMAIL && password === PASSWORD) {
+    res.redirect("/home");
+  } else {
+    res.send("<h3>Invalid credentials</h3>");
+  }
+});
+
+// Home page
+app.get("/home", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "home.html"));
 });
 
@@ -54,10 +76,7 @@ app.get("/addEvent", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "addEvent.html"));
 });
 
-// Login page
-app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
-});
+
 
 
 // REST API
