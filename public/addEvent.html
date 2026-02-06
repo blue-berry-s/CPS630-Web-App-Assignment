@@ -23,7 +23,7 @@
       </nav>
     </header>
 
-  <section id="TopText">
+  <section id="topText">
     <h1> Add an Event! </h1>
     <p> Description text here </p>
   </section>
@@ -31,63 +31,95 @@
   <form>
     <h1> NEW EVENT FORM </h1>
     <div class="row">
-        <label for="eventName"> Event Name</label>
-        <input type="text" name="eventName" placeholder="Event Name">
+        <div class="inputSection">
+          <label for="eventName"> Event Name</label>
+          <input type="text" name="eventName" placeholder="Event Name">
+        </div>
 
-        <label for="eventDate"> Date</label>
-        <input type="date" name="eventDate">
+        <div class="inputSection">
+          <label for="eventDate"> Date</label>
+          <input type="date" name="eventDate">
+        </div>
     </div>
 
-    <label for="eventDesc"> Event Description</label>
-    <textarea id="eventDescInput" name="eventDesc" rows="4" cols="50"> A short description of the events here </textarea>
+    <div class="inputSection">
+      <label for="eventDesc"> Event Description</label>
+      <textarea id="eventDescInput" name="eventDesc" rows="5"  placeholder="Write a short description of your event here"></textarea>
+    </div>
 
     <h2> Event Tags</h2>
     
-    <table>
-        <input type="checkbox" name="academicsTag" id="academicsTag" />
-        <label for="academicsTag">Academics</label>
-    </table>
+    <div>
+        <div class="selector">
+          <input type="checkbox" name="academicsTag" id="academicsTag" />
+          <label for="academicsTag">Academics</label>
+        </div>
+    </div>
 
     <h2> Event Details</h2>
-        <table>
-            <label for="locationData"> <img src="./assets/icons/LocationIcon.svg"></label>
-            <input type="text" name="locationData" placeholder="Location">
+        <div class="grid" id="eventGrid">
+            <div>
+              <label for="locationData"> <img src="./assets/icons/LocationIcon.svg"></label>
+              <input type="text" name="locationData" placeholder="Location">
+            </div>
 
-            <label for="timeData"> <img src="./assets/icons/TimeIcon.svg"></label>
-            <input type="text" name="timeData" placeholder="Time">
+            <div>
+              <label for="timeData"> <img src="./assets/icons/TimeIcon.svg" style="width:2em; height:2em;"></label>
+              <input type="text" name="timeData" placeholder="Time">
+            </div>
 
-            <label for="creatorData"> <img src="./assets/icons/CreatorIcon.svg"></label>
-            <input type="text" name="creatorData" placeholder="Event For">
+            <div>
+              <label for="creatorData"> <img src="./assets/icons/CreatorIcon.svg" style="width:2em; height:2em;"></label>
+              <input type="text" name="creatorData" placeholder="Event For">
+            </div>
 
-            <label for="availabilityData"> <img src="./assets/icons/AvailabilityIcon.svg"></label>
-            <input type="number" name="availabilityData" placeholder="Number of seats">
+            <div>
+              <label for="availabilityData"> <img src="./assets/icons/AvailabilityIcon.svg"></label>
+              <input type="number" name="availabilityData" placeholder="Number of seats">
+            </div>
 
-            <label for="priceData"> <img src="./assets/icons/PriceIcon.svg"></label>
-            <input type="number" name="priceData" placeholder="Price">
+            <div>
+              <label for="priceData"> <img src="./assets/icons/PriceIcon.svg"></label>
+              <input type="number" name="priceData" placeholder="Price">
+            </div>
 
-            <label for="imageData"> <img src="./assets/icons/ImageIcon.svg"></label>
-            <input type="file" name="imageData" accept="image/png, image/jpeg, image/svg">
-        </table>
+            <div>
+              <label for="imageData"> <img src="./assets/icons/ImageIcon.svg" style="width:1.3em; height:1.3em;"></label> 
+              <input type="file" accept="image/png, image/jpg, image/svg">
+            
+            </div>
+        </div>
 
         
     <h2> Registration Details</h2>
 
-        <h3> Requires Registration?</h3>
-        <input type="radio" id="registrationTrue" name="requiresRegistration" value="registrationTrue" checked />
-        <label for="registrationTrue"> Yes </label>
-        <input type="radio" id="registrationFalse" name="requiresRegistration" value="registrationFalse" />
-        <label for="registrationTrue"> No </label>
+        <div class="gid" id="registrationGrid">
+          <div class="div1"><h3> Requires Registration?</h3></div>
+          <div class="selector div2">
+            <input type="radio" id="registrationTrue" name="requiresRegistration" value="registrationTrue" checked />
+            <label for="registrationTrue"> Yes </label>
+          </div>
+          <div class="selector div3">
+            <input type="radio" id="registrationFalse" name="requiresRegistration" value="registrationFalse" />
+            <label for="registrationTrue"> No </label>
+          </div>
+          
 
-        <h3> Requires Opens On</h3>
-        <input type="radio" id="dateToday" name="registrationDate" value="dateToday" checked />
-        <label for="registrationTrue"> Today </label>
-        <input type="radio" id="dateOther" name="registrationDate" value="dateOther" />
-        <label for="registrationTrue"> Other </label>
-        <input type="date" name="eventDate">
+          <div class="div4"><h3> Registration Opens</h3></div>
+          <div class="selector div5">
+            <input type="radio" id="dateToday" name="registrationDate" value="dateToday" checked />
+            <label for="registrationTrue"> Today </label>
+          </div>
+          <div class="selector div6">
+            <input type="radio" id="dateOther" name="registrationDate" value="dateOther" />
+            <label for="registrationTrue">  <input type="date" id="registrationDateDate"> </label>
+          </div>
+            
 
 
-        <label for="registrationLink"> Registration Link</label>
-        <input type="text" name="registrationLink" placeholder="Registration Link">
+          <div class="div7"><h3> Registration Link</h3></div>
+          <div class="div8"><input type="text" name="registrationLink" placeholder="Registration Link"></div>
+        </div>
 
         <input type="submit">
 
