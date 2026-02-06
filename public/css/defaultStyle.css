@@ -1,0 +1,134 @@
+/* This contains the style of a default page - sections include: headers, background color, text colors etc */
+
+/* Color Pallets and controls */
+:root{
+    --primary-bg-color: #E9E9E9;
+    --primary-text-color:#363636;
+    
+    --heading-text-color:#002D72;
+
+
+    /* button colors */
+    --primary-button-color:#FFE100;
+    --primary-button-hover-color:#FFF56D;
+    --primary-button-active-color:#EBD20F;
+
+    --delete-button-color:#C50000;
+    --delete-button-hover-color:#e11111;
+    --delete-button-active-color:#ae0505;
+
+    /* button Text colors */
+    --primary-button-text-color:#002D72;
+    --delete-button-text-color:#ffffff;
+
+    --button-disable-color:#919191;
+    --button-disable-text-color:#000000;
+
+
+    /* Box Shadows */
+    --box-shadow-1: 0px 4px 4px 0px hsla(0, 0%, 0%, 0.25);
+    
+}
+
+
+/* Default website body styling */
+body {
+  background-color: var(--primary-bg-color);
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  color:var(--primary-text-color);
+}
+
+/* Nav bar styling */
+#nav-bar {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 18vh;
+  padding: 5px 20px;
+  color:var(--heading-text-color);
+  font-size:1.5em;
+}
+
+
+#left-icons {
+  display: flex;
+  color: #002D72;
+  gap: 1em;
+  align-items:center;
+}
+
+
+#right-icons img {
+  max-width:60%;
+}
+
+
+
+button{
+    border:none;
+    font-weight:bold;
+    border-radius:10px;
+    padding: 0.8em 3.5em;
+    box-shadow: var(--box-shadow-1);
+    transition: 
+        background-color 0.2s,
+        box-shdaow 0.4s;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+button:active{
+    box-shadow: none;;
+}
+
+
+
+/* Primary button styling: See figma for button classifications */
+.btn-primary{
+    background-color:var(--primary-button-color);
+    color:var(--primary-button-text-color);
+}
+
+.btn-primary:hover{
+    background-color:var(--primary-button-hover-color);
+}
+
+.btn-primary:active{
+    background-color:var(--primary-button-active-color);
+}
+
+
+/* Primary button styling: See figma for button classifications */
+.btn-delete{
+    font-weight:800;
+    background-color:var(--delete-button-color);
+    color:var(--delete-button-text-color);
+}
+
+.btn-delete:hover{
+    background-color:var(--delete-button-hover-color);
+}
+
+.btn-delete:active{
+    background-color:var(--delete-button-active-color);
+}
+
+
+/* Disabled Button styling */
+
+.btn-disabled{
+    cursor: not-allowed;
+    box-shadow:none;
+    background-color:var(--button-disable-color);
+    color:var(--button-disable-text-color);
+
+}
+

@@ -31,7 +31,8 @@ async function loadEvents() {
             <p><strong>Date:</strong> ${event.date}</p>
             <p><strong>Location:</strong> ${event.location}</p>
             <p class="tickets">Only ${event.remaining || 'few'} tickets left!</p>
-            <button class="btn-more-info">More Info</button>
+            <button class="btn-delete"> DELETE </button>
+            <button class="btn-primary btn-more-info">More Info</button>
           </div>
         </div>
       `;
