@@ -1,0 +1,43 @@
+
+  /* Main card */
+  .login-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    padding: 1.75rem;
+    width: 550px;
+    height: 750px;
+  }
+  
+  /* Logo */
+  .logo {
+    width: 197px;
+    height: 120px;
+  }
+  
+  /* Input container */
+  .input-box {
+    width: 450px;
+    background-color: #F1F1F1;
+  }
+  
+  /* Inputs */
+  .input-field {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.375rem;
+    border: 1px solid #d1d5db;
+  }
+  
+  .input-field:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+  }
+  
+  /* Button */
+  .login-btn {
+    width: 100px;
+    background-color: #09529D;
+  }
+  
