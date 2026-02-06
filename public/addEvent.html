@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/addEventStyle.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kite+One&family=Pacifico&family=Stack+Sans+Notch&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Zen+Dots&display=swap');
+    </style>
+</head>
+<body>
+    <header id="nav-bar">
+    <div id="left-icons">
+      <img src="./assets/logos/TMU.jpg" alt="TMU Logo">
+      <h1>TMU EVENTS</h1>
+    </div>
+    <nav id="right-icons">
+      <img src="./assets/icons/home.svg" alt="Home Button">
+      <img src="./assets/icons/profile.svg" alt="Profile Button">
+    </nav>
+  </header>
+
+  <section id="TopText">
+    <h1> Add an Event! </h1>
+    <p> Description text here </p>
+  </section>
+
+  <form>
+    <h1> NEW EVENT FORM </h1>
+    <div class="row">
+        <label for="eventName"> Event Name</label>
+        <input type="text" name="eventName" placeholder="Event Name">
+
+        <label for="eventDate"> Date</label>
+        <input type="date" name="eventDate">
+    </div>
+
+    <label for="eventDesc"> Event Description</label>
+    <textarea id="eventDescInput" name="eventDesc" rows="4" cols="50"> A short description of the events here </textarea>
+
+    <h2> Event Tags</h2>
+    
+    <table>
+        <input type="checkbox" name="academicsTag" id="academicsTag" />
+        <label for="academicsTag">Academics</label>
+    </table>
+
+    <h2> Event Details</h2>
+        <table>
+            <label for="locationData"> <img src="./assets/icons/LocationIcon.svg"></label>
+            <input type="text" name="locationData" placeholder="Location">
+
+            <label for="timeData"> <img src="./assets/icons/TimeIcon.svg"></label>
+            <input type="text" name="timeData" placeholder="Time">
+
+            <label for="creatorData"> <img src="./assets/icons/CreatorIcon.svg"></label>
+            <input type="text" name="creatorData" placeholder="Event For">
+
+            <label for="availabilityData"> <img src="./assets/icons/AvailabilityIcon.svg"></label>
+            <input type="number" name="availabilityData" placeholder="Number of seats">
+
+            <label for="priceData"> <img src="./assets/icons/PriceIcon.svg"></label>
+            <input type="number" name="priceData" placeholder="Price">
+
+            <label for="imageData"> <img src="./assets/icons/ImageIcon.svg"></label>
+            <input type="file" name="imageData" accept="image/png, image/jpeg, image/svg">
+        </table>
+
+        
+    <h2> Registration Details</h2>
+
+        <h3> Requires Registration?</h3>
+        <input type="radio" id="registrationTrue" name="requiresRegistration" value="registrationTrue" checked />
+        <label for="registrationTrue"> Yes </label>
+        <input type="radio" id="registrationFalse" name="requiresRegistration" value="registrationFalse" />
+        <label for="registrationTrue"> No </label>
+
+        <h3> Requires Opens On</h3>
+        <input type="radio" id="dateToday" name="registrationDate" value="dateToday" checked />
+        <label for="registrationTrue"> Today </label>
+        <input type="radio" id="dateOther" name="registrationDate" value="dateOther" />
+        <label for="registrationTrue"> Other </label>
+        <input type="date" name="eventDate">
+
+
+        <label for="registrationLink"> Registration Link</label>
+        <input type="text" name="registrationLink" placeholder="Registration Link">
+
+        <input type="submit">
+
+  </form>
+  
+    
+</body>
+</html>

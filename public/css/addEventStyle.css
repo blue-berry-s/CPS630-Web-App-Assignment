@@ -1,0 +1,26 @@
+#TopText{
+    padding: 0px 2vw ;
+}
+
+form{
+    margin:auto;
+    background-color: white;
+    width: 50%;
+    padding: 1em;
+    border-radius:20px;
+}
+
+form textarea{
+    max-width:90%;
+}
+
+form input[type="text"]{
+    
+    
+}
+
+
+form label{
+    color: #0077c8;
+    font-weight:bold;
+}
