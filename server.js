@@ -1,4 +1,3 @@
-
 const express = require("express");     // web server library
 const path = require("path");           // helps build safe file paths
 const fs = require("fs");               // lets us read/write files
@@ -9,6 +8,9 @@ const PORT = 8080;
 // This lets Express read JSON bodies from POST requests
 app.use(express.json());
 
+// ADDED: This lets Express read HTML form bodies (method="POST" action="/")
+app.use(express.urlencoded({ extended: true }));
+
 // This lets Express serve files inside /public (html, css, js, images)
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -18,17 +20,19 @@ const DATA_FILE = path.join(__dirname, "data", "events.json");
 // Read all events from events.json
 function readEvents() {
   try {
-    const data = fs.readFileSync(DATA_FILE, "utf8"); // read file text
-    return JSON.parse(data);                         // turn into JS array
+    const data = fs.readFileSync(DATA_FILE, "utf8");
+    return JSON.parse(data);
   } catch (err) {
-    return []; // if file missing or broken, return empty list
+    return [];
   }
 }
 
-// Save all events back to events.json
+// Save all events back to events.json (make sure folder exists)
 function saveEvents(events) {
+  fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true }); // <-- important safety
   fs.writeFileSync(DATA_FILE, JSON.stringify(events, null, 2));
 }
+
 
 //-----
 // PAGE ROUTES (HTML PAGES)
@@ -50,6 +54,37 @@ app.get("/login", (req, res) => {
 });
 
 // ------------------
+// LOGIN (HARDCODED username and password)
+// ------------------
+
+const HARDCODED_USER = {
+  email: "student@torontomu.ca",
+  password: "password123"
+};
+
+// ADDED: POST / (because your HTML form posts to "/")
+app.post("/", (req, res) => {
+  const { email, password } = req.body;
+
+  if (email === HARDCODED_USER.email && password === HARDCODED_USER.password) {
+    return res.redirect("/"); // goes to GET / -> home.html
+  }
+
+  return res.redirect("/login"); // back to login page
+});
+
+// POST /api/login = check email + password
+app.post("/api/login", (req, res) => {
+  const { email, password } = req.body;
+
+  if (email === HARDCODED_USER.email && password === HARDCODED_USER.password) {
+    return res.status(200).json({ message: "Login successful" });
+  }
+
+  res.status(401).json({ error: "Invalid email or password" });
+});
+
+// ------------------
 // REST API ROUTES
 // --------------
 
@@ -62,22 +97,19 @@ app.get("/api/events", (req, res) => {
 // GET /api/tags = return all unique tags found in events.json
 app.get("/api/tags", (req, res) => {
   const events = readEvents();
-  const tagSet = new Set(); // Set automatically removes duplicates
+  const tagSet = new Set();
 
-  // Loop through each event and collect its tags
   events.forEach(event => {
     if (Array.isArray(event.tags)) {
       event.tags.forEach(tag => tagSet.add(tag));
     }
   });
 
-  // Convert Set -> Array and sort alphabetically
   res.status(200).json(Array.from(tagSet).sort());
 });
 
-// POST /api/events = add a new event (matches your JSON fields)
+// POST /api/events = add a new event
 app.post("/api/events", (req, res) => {
-  // Pull fields from the request body
   const {
     title,
     description,
@@ -90,7 +122,6 @@ app.post("/api/events", (req, res) => {
     tags
   } = req.body;
 
-  // Basic validation: title and date are required
   if (!title || !date) {
     return res.status(400).json({
       error: "Missing required fields",
@@ -100,9 +131,8 @@ app.post("/api/events", (req, res) => {
 
   const events = readEvents();
 
-  // Create a new event object that matches your JSON format
   const newEvent = {
-    id: "e" + Date.now(),                 // simple unique id
+    id: "e" + Date.now(),
     title: title,
     description: description || "",
     date: date,
@@ -111,10 +141,9 @@ app.post("/api/events", (req, res) => {
     organization: organization || "",
     capacity: capacity || "",
     cost: cost || "",
-    tags: Array.isArray(tags) ? tags : [] // tags must be an array
+    tags: Array.isArray(tags) ? tags : []
   };
 
-  // Add and save
   events.push(newEvent);
   saveEvents(events);
 
