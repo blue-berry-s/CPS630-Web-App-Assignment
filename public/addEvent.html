@@ -28,7 +28,7 @@
     <p> Description text here </p>
   </section>
 
-  <form>
+  <form id="add-event-form" enctype="multipart/form-data" >
     <h1> NEW EVENT FORM </h1>
     <div class="row">
         <div class="inputSection">
@@ -85,7 +85,7 @@
 
             <div>
               <label for="imageData"> <img src="./assets/icons/ImageIcon.svg" style="width:1.3em; height:1.3em;"></label> 
-              <input type="file" accept="image/png, image/jpg, image/svg">
+              <input type="file" accept="image/png, image/jpg, image/svg+xml">
             
             </div>
         </div>
@@ -121,7 +121,10 @@
           <div class="div8"><input type="text" name="registrationLink" placeholder="Registration Link"></div>
         </div>
 
+
         <input type="submit">
+        <script src="/js/addEvent.js"></script>
+
 
   </form>
   

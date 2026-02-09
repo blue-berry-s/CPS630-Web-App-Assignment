@@ -1,45 +1,38 @@
-// import Express
-const express = require("express");
 
-// import Node utilities
-const path = require("path");
-const fs = require("fs");
+const express = require("express");     // web server library
+const path = require("path");           // helps build safe file paths
+const fs = require("fs");               // lets us read/write files
 
-// create the xpress app
 const app = express();
 const PORT = 8080;
 
-
-// MIDDLEWARE
-
-// this lets the server read JSON from POST requests
+// This lets Express read JSON bodies from POST requests
 app.use(express.json());
 
-// Ttis lets the server serve HTML, CSS, images from /public
+// This lets Express serve files inside /public (html, css, js, images)
 app.use(express.static(path.join(__dirname, "public")));
 
-
-// "DATABASE" (JSON FILE)
-
+// Path to our JSON "database"
 const DATA_FILE = path.join(__dirname, "data", "events.json");
 
-// reead events from file
+// Read all events from events.json
 function readEvents() {
   try {
-    const data = fs.readFileSync(DATA_FILE, "utf8");
-    return JSON.parse(data);
+    const data = fs.readFileSync(DATA_FILE, "utf8"); // read file text
+    return JSON.parse(data);                         // turn into JS array
   } catch (err) {
-    return []; // if file missing or broken
+    return []; // if file missing or broken, return empty list
   }
 }
 
-// Save events to file
+// Save all events back to events.json
 function saveEvents(events) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(events, null, 2));
 }
 
-
-// PAGE ROUTES 
+//-----
+// PAGE ROUTES (HTML PAGES)
+// -------------------------
 
 // Home page
 app.get("/", (req, res) => {
@@ -56,48 +49,48 @@ app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
+// ------------------
+// REST API ROUTES
+// --------------
 
-// REST API
-
-// GET: return list of events
+// GET /api/events = return all events
 app.get("/api/events", (req, res) => {
   const events = readEvents();
-  res.status(200).json(events); // 200 OK
+  res.status(200).json(events);
 });
 
-
-// GET all unique tags from all events
-// This is used so the frontend can generate filters/checkboxes dynamically
+// GET /api/tags = return all unique tags found in events.json
 app.get("/api/tags", (req, res) => {
   const events = readEvents();
-  const tagSet = new Set();
+  const tagSet = new Set(); // Set automatically removes duplicates
 
+  // Loop through each event and collect its tags
   events.forEach(event => {
     if (Array.isArray(event.tags)) {
-      event.tags.forEach(tag => tagSet.add(String(tag)));
+      event.tags.forEach(tag => tagSet.add(tag));
     }
   });
 
+  // Convert Set -> Array and sort alphabetically
   res.status(200).json(Array.from(tagSet).sort());
 });
 
-
-// POST: add a new event (now stores tags + extra fields)
+// POST /api/events = add a new event (matches your JSON fields)
 app.post("/api/events", (req, res) => {
+  // Pull fields from the request body
   const {
     title,
-    date,
-    location,
     description,
+    date,
     time,
-    creator,
-    imageUrl,
-    seats,
-    price,
+    location,
+    organization,
+    capacity,
+    cost,
     tags
   } = req.body;
 
-  // Validate input
+  // Basic validation: title and date are required
   if (!title || !date) {
     return res.status(400).json({
       error: "Missing required fields",
@@ -105,75 +98,51 @@ app.post("/api/events", (req, res) => {
     });
   }
 
-  // Make tags alwayss an arraye
-  let cleanTags = [];
-
-  if (Array.isArray(tags)) {
-    cleanTags = tags;
-  } else if (typeof tags === "string") {
-    cleanTags = tags.split(",");
-  }
-
-  cleanTags = cleanTags
-    .map(t => String(t).trim())
-    .filter(t => t.length > 0);
-
-  // remove duplicates
-  cleanTags = [...new Set(cleanTags)];
-
   const events = readEvents();
 
+  // Create a new event object that matches your JSON format
   const newEvent = {
-    id: "e" + Date.now(),
-    title: String(title),
-    date: String(date),
-
-    //default values
-    price: Number.isFinite(Number(price)) ? Number(price) : 0,
-    location: location ? String(location) : "",
-    description: description ? String(description) : "",
-    time: time ? String(time) : "",
-    creator: creator ? String(creator) : "",
-    seats: Number.isFinite(Number(seats)) ? Number(seats) : 0,
-
-    //image support = store a URL string 
-    imageUrl: imageUrl ? String(imageUrl) : "",
-
-    // store tags in the JSON database
-    tags: cleanTags
+    id: "e" + Date.now(),                 // simple unique id
+    title: title,
+    description: description || "",
+    date: date,
+    time: time || "",
+    location: location || "",
+    organization: organization || "",
+    capacity: capacity || "",
+    cost: cost || "",
+    tags: Array.isArray(tags) ? tags : [] // tags must be an array
   };
 
+  // Add and save
   events.push(newEvent);
   saveEvents(events);
 
-  res.status(201).json(newEvent); // 201 Created
+  res.status(201).json(newEvent);
 });
 
-
-// DELETE: remove event by id
+// DELETE /api/events/:id = delete an event by id
 app.delete("/api/events/:id", (req, res) => {
   const id = req.params.id;
   const events = readEvents();
 
   const index = events.findIndex(e => e.id === id);
-
   if (index === -1) {
     return res.status(404).json({ error: "Event not found" });
   }
 
-  const deletedEvent = events.splice(index, 1)[0];
+  const deleted = events.splice(index, 1)[0];
   saveEvents(events);
 
-  res.status(200).json(deletedEvent); // 200 OK
+  res.status(200).json(deleted);
 });
 
-// 404 HANDLER
+// If none of the routes match, return 404
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-
-// START SERVER
+// Start server
 app.listen(PORT, () => {
   console.log("Server running at http://localhost:" + PORT);
 });

@@ -1,5 +1,4 @@
-[
-  {
+[{
     "id": "e1",
     "title": "Welcome Event",
     "description": "A very exciting event description. Event descriptions can be short or long. Regardless of their length, they will have a cut-off length of 150 chara...",
@@ -8,7 +7,8 @@
     "location": "MAC Arena",
     "organization": "TMU Staff",
     "capacity": "245 seats; 129 available",
-    "cost": "$35"
+    "cost": "$35",
+    "tags": ["Academics"]
   },
   {
     "id": "e2",
@@ -19,7 +19,8 @@
     "location": "SLC Amphitheatre",
     "organization": "Career Services",
     "capacity": "500 seats; 42 available",
-    "cost": "Free"
+    "cost": "Free",
+    "tags": ["Careers", "Networking"]
   },
   {
     "id": "e3",
@@ -30,7 +31,8 @@
     "location": "RAC Gym",
     "organization": "TMU Athletics",
     "capacity": "100 seats; 15 available",
-    "cost": "$5"
+    "cost": "$5",
+    "tags": ["Sports", "Recreation"]
   },
   {
     "id": "e4",
@@ -41,6 +43,7 @@
     "location": "ENG 201",
     "organization": "Computer Science Society",
     "capacity": "40 seats; 0 available",
-    "cost": "Free"
+    "cost": "Free",
+    "tags": ["Academics", "Workshop", "Technology"]
   }
 ]
