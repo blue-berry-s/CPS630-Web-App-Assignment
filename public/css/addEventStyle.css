@@ -93,7 +93,7 @@ label img{
 #registrationGrid {
 display: grid;
 grid-template-columns: 2fr auto repeat(3, 1fr);
-grid-template-rows: repeat(3, 1fr);
+grid-template-rows: repeat(3, auto);
 grid-column-gap: 0.5em;
 grid-row-gap: 0px;
 }

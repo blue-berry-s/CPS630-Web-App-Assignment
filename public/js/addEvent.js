@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            // @blue-berry-s modify here to create another html element
             alert("Event saved!");
             window.location.href = "/"; // go back to home
         } catch (err) {

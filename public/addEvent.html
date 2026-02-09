@@ -70,7 +70,7 @@
 
             <div>
               <label for="creatorData"> <img src="./assets/icons/CreatorIcon.svg" style="width:2em; height:2em;"></label>
-              <input type="text" name="creatorData" placeholder="Event For">
+              <input type="text" name="creatorData" placeholder="Event Creator">
             </div>
 
             <div>
@@ -96,29 +96,14 @@
         <div class="gid" id="registrationGrid">
           <div class="div1"><h3> Requires Registration?</h3></div>
           <div class="selector div2">
-            <input type="radio" id="registrationTrue" name="requiresRegistration" value="registrationTrue" checked />
+            <input type="radio" id="registrationTrue" name="requiresRegistration" value="registrationTrue" onclick="showRegistrationAdditional()" checked />
             <label for="registrationTrue"> Yes </label>
           </div>
           <div class="selector div3">
-            <input type="radio" id="registrationFalse" name="requiresRegistration" value="registrationFalse" />
+            <input type="radio" id="registrationFalse" name="requiresRegistration" value="registrationFalse" onclick="hideRegistrationAdditional()"/>
             <label for="registrationTrue"> No </label>
           </div>
           
-
-          <div class="div4"><h3> Registration Opens</h3></div>
-          <div class="selector div5">
-            <input type="radio" id="dateToday" name="registrationDate" value="dateToday" checked />
-            <label for="registrationTrue"> Today </label>
-          </div>
-          <div class="selector div6">
-            <input type="radio" id="dateOther" name="registrationDate" value="dateOther" />
-            <label for="registrationTrue">  <input type="date" id="registrationDateDate"> </label>
-          </div>
-            
-
-
-          <div class="div7"><h3> Registration Link</h3></div>
-          <div class="div8"><input type="text" name="registrationLink" placeholder="Registration Link"></div>
         </div>
 
 
@@ -127,6 +112,7 @@
 
   </form>
   <script src="/js/addEvent.js"></script>
+  <script src="/js/adjustRegistration.js"></script>
   
     
 </body>
