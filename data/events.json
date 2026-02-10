@@ -1,19 +1,5 @@
 [
   {
-    "id": "e1",
-    "title": "Welcome Event",
-    "description": "A very exciting event description. Event descriptions can be short or long. Regardless of their length, they will have a cut-off length of 150 chara...",
-    "date": "2026-02-10",
-    "time": "8:00 AM EST - 1:15 PM EST",
-    "location": "MAC Arena",
-    "organization": "TMU Staff",
-    "capacity": "245 seats; 129 available",
-    "cost": "$35",
-    "tags": [
-      "Academics"
-    ]
-  },
-  {
     "id": "e4",
     "title": "JS Workshop: Node.js Basics",
     "description": "A hands-on lab covering Express, Nodemon, and API routing. Perfect for students working on their CPS630 or CPS530 web development projects.",
@@ -27,6 +13,141 @@
       "Academics",
       "Workshop",
       "Technology"
+    ]
+  },
+  {
+    "id": "e1770694446644",
+    "title": "Test Event",
+    "description": "",
+    "date": "2026-02-28",
+    "time": "1:00 PM - 2:30 PM",
+    "location": "Kerr Hall Upper Gym",
+    "organization": "TMSU",
+    "capacity": "30 seats",
+    "cost": "$30",
+    "tags": []
+  },
+  {
+    "id": "e5",
+    "title": "Resume Blitz: Tech Edition",
+    "description": "Get your resume critiqued by industry professionals from Google and Amazon. Focus on software engineering and data science roles.",
+    "date": "2026-02-15",
+    "time": "10:00 AM EST - 4:00 PM EST",
+    "location": "SLC 3rd Floor",
+    "organization": "Career & Co-op Centre",
+    "capacity": "100 seats; 12 available",
+    "cost": "Free",
+    "tags": [
+      "Career",
+      "Professional Development",
+      "Technology"
+    ]
+  },
+  {
+    "id": "e6",
+    "title": "Winter Gala 2026",
+    "description": "A night of formal dining and dancing to celebrate the end of the winter midterms. Semi-formal attire required.",
+    "date": "2026-03-05",
+    "time": "7:00 PM EST - 11:30 PM EST",
+    "location": "The Mattamy Athletic Centre",
+    "organization": "Student Life Committee",
+    "capacity": "500 seats; 45 available",
+    "cost": "$25",
+    "tags": [
+      "Social",
+      "Arts & Culture"
+    ]
+  },
+  {
+    "id": "e7",
+    "title": "Algorithm Whiteboarding",
+    "description": "Preparing for technical interviews? Join us to solve LeetCode medium/hard problems on the big boards. Pizza will be provided.",
+    "date": "2026-02-18",
+    "time": "5:30 PM EST - 8:00 PM EST",
+    "location": "ENG 103",
+    "organization": "Computer Science Society",
+    "capacity": "30 seats; 5 available",
+    "cost": "Free",
+    "tags": [
+      "Academics",
+      "Technology",
+      "Workshop"
+    ]
+  },
+  {
+    "id": "e8",
+    "title": "Sustainable Living Panel",
+    "description": "Discussion on urban gardening and zero-waste lifestyles in a downtown campus environment.",
+    "date": "2026-04-12",
+    "time": "12:00 PM EST - 1:30 PM EST",
+    "location": "George Vari Engineering Building",
+    "organization": "Sustainability Hub",
+    "capacity": "60 seats; 20 available",
+    "cost": "Free",
+    "tags": [
+      "Environment",
+      "Community"
+    ]
+  },
+  {
+    "id": "e9",
+    "title": "Intramural Basketball Finals",
+    "description": "The final championship game of the winter season. Come cheer on the Computer Science Tigers!",
+    "date": "2026-03-20",
+    "time": "6:00 PM EST - 9:00 PM EST",
+    "location": "Kerr Hall Lower Gym",
+    "organization": "TMSU Athletics",
+    "capacity": "200 seats; 150 available",
+    "cost": "Free",
+    "tags": [
+      "Sports",
+      "Social"
+    ]
+  },
+  {
+    "id": "e10",
+    "title": "AI Ethics Seminar",
+    "description": "A deep dive into the legal and ethical implications of Large Language Models in higher education.",
+    "date": "2026-03-10",
+    "time": "2:00 PM EST - 4:00 PM EST",
+    "location": "POD 250",
+    "organization": "Philosophy Department",
+    "capacity": "80 seats; 10 available",
+    "cost": "Free",
+    "tags": [
+      "Academics",
+      "Seminar",
+      "Technology"
+    ]
+  },
+  {
+    "id": "e11",
+    "title": "Beginner Pottery Workshop",
+    "description": "Learn the basics of wheel throwing and hand-building. All materials provided. Beginners welcome!",
+    "date": "2026-02-25",
+    "time": "4:00 PM EST - 6:00 PM EST",
+    "location": "Kerr Hall West 101",
+    "organization": "Creative Arts Collective",
+    "capacity": "15 seats; 0 available",
+    "cost": "$10",
+    "tags": [
+      "Arts & Culture",
+      "Workshop"
+    ]
+  },
+  {
+    "id": "e12",
+    "title": "Hackathon Info Session",
+    "description": "Interested in joining MetropolitanHacks 2026? Find team members and learn about the prize categories.",
+    "date": "2026-02-10",
+    "time": "6:00 PM EST - 7:30 PM EST",
+    "location": "Virtual (Zoom)",
+    "organization": "MetHacks Team",
+    "capacity": "500 seats; 420 available",
+    "cost": "Free",
+    "tags": [
+      "Technology",
+      "Networking"
     ]
   }
 ]

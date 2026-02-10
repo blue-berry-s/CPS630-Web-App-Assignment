@@ -128,7 +128,7 @@ async function deleteEvent(id) {
 
 // Load tags from the backend and build filter checkboxes dynamically
 async function loadTagFilters() {
-  const filterDiv = document.getElementById("filter");
+  const filterDiv = document.getElementById("event-category");
   if (!filterDiv) return;
 
   // Clear filter area and add heading
