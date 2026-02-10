@@ -14,36 +14,6 @@
     ]
   },
   {
-    "id": "e2",
-    "title": "Tech Career Fair",
-    "description": "Connect with top employers in the GTA! Bring your resume and meet recruiters from companies like Live Nation, Google, and local startups.",
-    "date": "2026-03-05",
-    "time": "10:00 AM EST - 4:00 PM EST",
-    "location": "SLC Amphitheatre",
-    "organization": "Career Services",
-    "capacity": "500 seats; 42 available",
-    "cost": "Free",
-    "tags": [
-      "Careers",
-      "Networking"
-    ]
-  },
-  {
-    "id": "e3",
-    "title": "Intramural Volleyball Finals",
-    "description": "Come cheer on your favorite teams as they battle for the championship trophy. High energy and snacks provided for all student spectators!",
-    "date": "2026-02-15",
-    "time": "6:00 PM EST - 9:00 PM EST",
-    "location": "RAC Gym",
-    "organization": "TMU Athletics",
-    "capacity": "100 seats; 15 available",
-    "cost": "$5",
-    "tags": [
-      "Sports",
-      "Recreation"
-    ]
-  },
-  {
     "id": "e4",
     "title": "JS Workshop: Node.js Basics",
     "description": "A hands-on lab covering Express, Nodemon, and API routing. Perfect for students working on their CPS630 or CPS530 web development projects.",

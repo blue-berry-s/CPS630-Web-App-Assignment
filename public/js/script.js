@@ -17,6 +17,8 @@ async function loadEvents() {
 
     // Build the tag filter list on the right
     loadTagFilters();
+    searchFilter();
+    dateFilter();
   } catch (error) {
     console.error("Error loading events:", error);
   }
@@ -130,7 +132,7 @@ async function loadTagFilters() {
   if (!filterDiv) return;
 
   // Clear filter area and add heading
-  filterDiv.innerHTML = "<h2>Event Category</h2>";
+  filterDiv.innerHTML += "<h2>Event Category</h2>";
 
   try {
     const res = await fetch("/api/tags");
@@ -182,6 +184,69 @@ function applyTagFilters() {
   });
 
   displayEvents(filtered);
+}
+
+// Filter events by name/description
+function searchFilter() {
+  const searchForm = document.getElementById('search-event');
+
+  // Check if form exists
+  if (searchForm) {
+
+    // Wait for submit event to search for event
+    searchForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const searchTerm = e.target.title.value.toLowerCase();
+
+      // Filter events based on keyword entered
+      const filtered = allEvents.filter(event =>
+        event.title.toLowerCase().includes(searchTerm) ||
+        event.description.toLowerCase().includes(searchTerm) ||
+        event.location.toLowerCase().includes(searchTerm) ||
+        event.organization.toLowerCase().includes(searchTerm)
+      );
+
+      displayEvents(filtered);
+    });
+  }
+}
+
+// Filter by date
+function dateFilter() {
+  const searchForm = document.getElementById('search-date');
+
+  searchForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+
+    // Get values of the dates
+    const fromDate = document.getElementById('from-date').value;
+    const toDate = document.getElementById('to-date').value;
+
+    // Filter events based on the 3 options
+    const filtered = allEvents.filter(event => {
+      const eventDate = event.date;
+
+      // When from and to date given
+      if (fromDate && toDate) {
+        return eventDate >= fromDate && eventDate <= toDate;
+      }
+      // When only from date is given
+      else if (fromDate) {
+        return eventDate >= fromDate;
+      }
+      // When only to date is given
+      else if (toDate) {
+        return eventDate <= toDate;
+      }
+      // When no dates given
+      else
+        return true;
+    });
+
+    // Display the results
+    displayEvents(filtered);
+  });
 }
 
 // Run when page loads
