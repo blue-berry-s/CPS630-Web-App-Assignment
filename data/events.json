@@ -134,20 +134,5 @@
       "Arts & Culture",
       "Workshop"
     ]
-  },
-  {
-    "id": "e12",
-    "title": "Hackathon Info Session",
-    "description": "Interested in joining MetropolitanHacks 2026? Find team members and learn about the prize categories.",
-    "date": "2026-02-10",
-    "time": "6:00 PM EST - 7:30 PM EST",
-    "location": "Virtual (Zoom)",
-    "organization": "MetHacks Team",
-    "capacity": "500 seats; 420 available",
-    "cost": "Free",
-    "tags": [
-      "Technology",
-      "Networking"
-    ]
   }
 ]

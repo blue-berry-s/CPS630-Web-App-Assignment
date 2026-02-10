@@ -93,6 +93,10 @@ function displayEvents(eventsToRender) {
             </div>
           </div>
 
+          <div class="category-bar">
+              ${event.tags.map(tag => `<p class="tag">${tag}</p>`).join('')}
+          </div>
+
           <div class="button-bar">
             <button class="btn-delete" data-id="${event.id}">DELETE</button>
             <button class="btn-primary btn-more-info">More Info</button>
