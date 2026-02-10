@@ -61,12 +61,25 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // @blue-berry-s modify here to create another html element
-            alert("Event saved!");
-            window.location.href = "/"; // go back to home
+            
+            setNotice("success", "Success!", "Event Successfully Created!");
+            window.scrollTo(0, 0);
+            //window.location.href = "/"; // go back to home
         } catch (err) {
             console.error(err);
             alert("Network error. Could not save event.");
         }
     });
 });
+
+const notice = document.getElementById("notice");
+const noticeType = document.getElementById("noticeType");
+const noticeInfo = document.getElementById("noticeInfo");
+
+function setNotice(className, type, info){
+        notice.className = "";
+        notice.className = className;
+        notice.style.display = "flex";
+        noticeType.innerText = type;
+        noticeInfo.innerText = info;
+}

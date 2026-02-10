@@ -9,6 +9,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kite+One&family=Pacifico&family=Stack+Sans+Notch&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Zen+Dots&display=swap');
     </style>
+    
 </head>
 <body>
     <header id="nav-bar">
@@ -23,6 +24,12 @@
       </nav>
     </header>
 
+    <div id="notice">
+      <strong id="noticeType"> Action! </strong>
+      <p id="noticeInfo"> Additional information here </p>
+      <span class="closebtn" onclick="this.parentElement.style.display='none'">X</span>
+    </div>
+
   <section id="topText">
     <h1> Add an Event! </h1>
     <p> Description text here </p>
@@ -33,12 +40,12 @@
     <div class="row">
         <div class="inputSection">
           <label for="eventName"> Event Name</label>
-          <input type="text" name="eventName" placeholder="Event Name">
+          <input type="text" name="eventName" placeholder="Event Name" id="eventName" required>
         </div>
 
         <div class="inputSection">
           <label for="eventDate"> Date</label>
-          <input type="date" name="eventDate">
+          <input type="date" name="eventDate" id="eventDate" required>
         </div>
     </div>
 
@@ -49,11 +56,7 @@
 
     <h2> Event Tags</h2>
     
-    <div>
-        <div class="selector">
-          <input type="checkbox" name="academicsTag" id="academicsTag" />
-          <label for="academicsTag">Academics</label>
-        </div>
+    <div id="tagsContainer">
     </div>
 
     <h2> Event Details</h2>
@@ -113,6 +116,7 @@
   </form>
   <script src="/js/addEvent.js"></script>
   <script src="/js/adjustRegistration.js"></script>
+  <script src="/js/getEventTags.js"></script>
   
     
 </body>
