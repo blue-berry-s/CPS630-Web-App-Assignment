@@ -82,10 +82,10 @@
 }
 
 .category-bar {
-  width:100%;
+  width: 100%;
   display: flex;
-  flex-wrap:wrap;
-  align-items:center;
+  flex-wrap: wrap;
+  align-items: center;
   column-gap: 1em;
 }
 
@@ -106,6 +106,21 @@
 
 #filter {
   width: 30%;
+}
+
+#btn-add-event {
+  width: 100%;
+  padding: 1em 3.5em;
+  background-color: #004C9B;
+  color: white;
+}
+
+#btn-add-event:hover {
+  background-color: #0077C8;
+}
+
+#btn-add-event:active {
+  background-color: #002D72;
 }
 
 #search-event {
@@ -150,6 +165,7 @@
 
 #search-date input[type="date"] {
   background: transparent;
+  outline: none;
   width: 80%;
 }
 
