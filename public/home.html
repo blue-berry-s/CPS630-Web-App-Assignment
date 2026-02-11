@@ -20,7 +20,7 @@
     </div>
 
     <nav id="right-icons">
-      <img src="./assets/icons/home.svg" alt="Home Button">
+      <img src="./assets/icons/home.svg" alt="Home Button" onclick="goTo('/')">
       <img src="./assets/icons/profile.svg" alt="Profile Button">
     </nav>
   </header>
@@ -32,7 +32,7 @@
       <div id="event-cards"></div>
 
       <div id="filter">
-        <button id="btn-add-event">Add Event</button>
+        <button id="btn-add-event" onclick="goTo('/addEvent')">Add Event</button>
 
         <h2>Filters</h2>
         <form id="search-event">
@@ -61,5 +61,7 @@
       </div>
     </div>
   </section>
+
+  <script src="/js/navigationButton.js"></script>
 </body>
 </html>

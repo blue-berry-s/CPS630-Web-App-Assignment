@@ -251,20 +251,13 @@ function dateFilter() {
   });
 }
 
-// Links add event button to page
-function addEvent() {
-  const addEventBtn = document.getElementById("btn-add-event");
-  addEventBtn.addEventListener("click", () => {
-    window.location.href = "/addEvent";
-  });
-}
+
 
 // Run when page loads
 document.addEventListener("DOMContentLoaded", () => {
   // Create filter and button listener events
   searchFilter();
   dateFilter();
-  addEvent();
 
   // Fetch event data from JSON file
   loadEvents();

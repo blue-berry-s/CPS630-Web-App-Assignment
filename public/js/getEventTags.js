@@ -28,8 +28,8 @@ async function DisplayTags(){
             const selectorDiv = document.createElement("div");
             selectorDiv.classList.add("selector");
             selectorDiv.innerHTML = `
-                <input type="checkbox" name="${tag.toLowerCase()}Tag" id="${tag.toLowerCase()}Tag" />
-                <label for="academicsTag">${tag}</label>
+                <input type="checkbox" name="eventTags" id="${tag}" />
+                <label for="${tag}">${tag}</label>
             `;
             
             tagsContainer.appendChild(selectorDiv);

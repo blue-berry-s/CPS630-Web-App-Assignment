@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Collect all checked tag checkboxes
         const tags = Array.from(
             document.querySelectorAll('input[name="eventTags"]:checked')
-        ).map(cb => cb.value);
+        ).map(cb => cb.id);
 
 
         // Build payload to match event JSON format
