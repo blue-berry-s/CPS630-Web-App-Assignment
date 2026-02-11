@@ -1,0 +1,152 @@
+#topText{
+    padding: 0px 2vw ;
+}
+
+form{
+    margin:auto;
+    background-color: white;
+    width: 50%;
+    padding: 2em 1.5em;
+    border-radius:20px;
+}
+
+form h1{
+    margin-bottom:1em;
+}
+
+form textarea{
+    resize: none;
+    max-width:100%;
+}
+
+
+form label, form h3{
+    color: var(--form-label-text-color);
+    font-weight:bold;
+
+}
+
+#tagsContainer{
+    display:grid;
+    grid-template-columns: auto auto auto auto;
+    row-gap:1em;
+}
+
+
+.row{
+    display:flex;
+    flex-direction:row;
+    width:100%;
+    justify-content: space-between;
+    margin-bottom: 2em;
+}
+
+.inputSection{
+    display:flex;
+    flex-direction:column;
+    gap:0.2em;
+}
+
+form input[type="text"], form input[type="date"]{
+    width:20em;
+    
+}
+
+h2{
+    margin-top:2em;
+}
+
+.selector{
+    display: grid;
+    align-items: center;
+    grid-template-columns: 1.5em auto;
+    gap: 0.5em;
+}
+
+.selector label{
+    font-size:1.2em;
+    font-weight:500;
+    color:var(--primary-text-color)
+}
+
+.grid{
+    display:grid;
+    width:100%;
+}
+
+#eventGrid{
+        grid-template-columns: 30% 30% 30%;
+        column-gap:1.5em;
+        row-gap:2em;
+}
+
+#eventGrid div{
+    display:flex;
+    align-items: center;
+    gap:0.2em;
+}
+
+#eventGrid input{
+    max-width:80%; 
+}
+
+label img{
+    width:1.8em;
+    height:1.8em;
+}
+
+#registrationGrid {
+display: grid;
+grid-template-columns: 2fr auto repeat(3, 1fr);
+grid-template-rows: repeat(3, auto);
+grid-column-gap: 0.5em;
+grid-row-gap: 0px;
+}
+
+.div1 { grid-area: 1 / 1 / 2 / 2; }
+.div2 { grid-area: 1 / 3 / 2 / 4; }
+.div3 { grid-area: 1 / 4 / 2 / 5; }
+.div4 { grid-area: 2 / 1 / 3 / 2; }
+.div5 { grid-area: 2 / 3 / 3 / 4; }
+.div6 { grid-area: 2 / 4 / 3 / 5; }
+.div7 { grid-area: 3 / 1 / 4 / 2; }
+.div8 { grid-area: 3 / 3 / 4 / 6; }
+
+input[type="submit"]{
+    margin-left:auto;
+    text-align:right;
+    display: block;
+    background-color:var(--primary-button-text-color);
+    color:var(--delete-button-text-color);
+}
+
+#notice{
+    align-items:center;
+    padding:0.5em 1em;
+    display:none;
+    font-size:2em;
+    color:var(--delete-button-text-color);
+}
+
+#notice span{
+    margin-left:auto;
+}
+#notice strong{
+    margin-right:1em;
+}
+
+.alert{
+    background-color:var(--delete-button-color);
+}
+
+.warning{
+    background-color:rgb(209, 105, 0);
+}
+
+.success{
+    background-color:rgb(32, 189, 0);
+}
+
+*:required:placeholder-shown, input[type="date"]:invalid{
+    box-shadow:inset 0 0 5px 1px rgba(255, 0, 0, 0.5);
+}

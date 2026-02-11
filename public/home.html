@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="./css/defaultStyle.css">
+  <link rel="stylesheet" href="./css/homeStyle.css">
+  <script src="/js/displayEvents.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kite+One&family=Pacifico&family=Stack+Sans+Notch&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Zen+Dots&display=swap');
+  </style>
+</head>
+
+<body>
+  <header id="nav-bar">
+    <div id="left-icons">
+      <img src="./assets/logos/TMU.jpg" alt="TMU Logo">
+      <h1>TMU EVENTS</h1>
+    </div>
+
+    <nav id="right-icons">
+      <img src="./assets/icons/home.svg" alt="Home Button" onclick="goTo('/')">
+      <img src="./assets/icons/profile.svg" alt="Profile Button">
+    </nav>
+  </header>
+
+  <section id="upcoming-events">
+    <h1>Upcoming Events</h1>
+
+    <div id="event-display">
+      <div id="event-cards"></div>
+
+      <div id="filter">
+        <button id="btn-add-event" onclick="goTo('/addEvent')">Add Event</button>
+
+        <h2>Filters</h2>
+        <form id="search-event">
+          <input type="text" name="title" placeholder="Search (name or description)">
+          <input type="image" src="/assets/icons/SearchIcon.svg" alt="submit" width="20">
+        </form>
+
+        <h2>Event Date</h2>
+        <div id="date-filter">
+          <form id="search-date">
+            <label for="from-date">From: </label>
+            <div>
+              <input type="date" id="from-date" name="from-date">
+              <input type="image" src="/assets/icons/SearchDateIcon.svg" alt="submit" width="20"><br>
+            </div>
+
+            <label for="to-date">To: </label>
+            <div>
+              <input type="date" id="to-date" name="to-date">
+              <input type="image" src="/assets/icons/SearchDateIcon.svg" alt="submit" width="20"><br>
+            </div>
+          </form>
+        </div>
+
+        <div id="event-category"></div>
+      </div>
+    </div>
+  </section>
+
+  <script src="/js/navigationButton.js"></script>
+</body>
+</html>

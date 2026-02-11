@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Event</title>
+    <link rel="stylesheet" href="./css/defaultStyle.css">
+    <link rel="stylesheet" href="./css/addEventStyle.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Kite+One&family=Pacifico&family=Stack+Sans+Notch&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Zen+Dots&display=swap');
+    </style>
+    
+</head>
+<body>
+    <header id="nav-bar">
+      <div id="left-icons">
+        <img src="./assets/logos/TMU.jpg" alt="TMU Logo">
+        <h1>TMU EVENTS</h1>
+      </div>
+
+      <nav id="right-icons">
+        <img src="./assets/icons/home.svg" alt="Home Button" onclick="goTo('/')">
+        <img src="./assets/icons/profile.svg" alt="Profile Button">
+      </nav>
+    </header>
+
+    <div id="notice">
+      <strong id="noticeType"> Action! </strong>
+      <p id="noticeInfo"> Additional information here </p>
+      <span class="closebtn" onclick="this.parentElement.style.display='none'">X</span>
+    </div>
+
+  <section id="topText">
+    <h1> Add an Event! </h1>
+    <p> Description text here </p>
+  </section>
+
+  <form id="add-event-form" enctype="multipart/form-data" >
+    <h1> NEW EVENT FORM </h1>
+    <div class="row">
+        <div class="inputSection">
+          <label for="eventName"> Event Name</label>
+          <input type="text" name="eventName" placeholder="Event Name" id="eventName" required>
+        </div>
+
+        <div class="inputSection">
+          <label for="eventDate"> Date</label>
+          <input type="date" name="eventDate" id="eventDate" required>
+        </div>
+    </div>
+
+    <div class="inputSection">
+      <label for="eventDesc"> Event Description</label>
+      <textarea id="eventDescInput" name="eventDesc" rows="5"  placeholder="Write a short description of your event here"></textarea>
+    </div>
+
+    <h2> Event Tags</h2>
+    
+    <div id="tagsContainer">
+    </div>
+
+    <h2> Event Details</h2>
+        <div class="grid" id="eventGrid">
+            <div>
+              <label for="locationData"> <img src="./assets/icons/LocationIcon.svg"></label>
+              <input type="text" name="locationData" placeholder="Location">
+            </div>
+
+            <div>
+              <label for="timeData"> <img src="./assets/icons/TimeIcon.svg" style="width:2em; height:2em;"></label>
+              <input type="text" name="timeData" placeholder="Time">
+            </div>
+
+            <div>
+              <label for="creatorData"> <img src="./assets/icons/CreatorIcon.svg" style="width:2em; height:2em;"></label>
+              <input type="text" name="creatorData" placeholder="Event Creator">
+            </div>
+
+            <div>
+              <label for="availabilityData"> <img src="./assets/icons/AvailabilityIcon.svg"></label>
+              <input type="number" name="availabilityData" placeholder="Number of seats">
+            </div>
+
+            <div>
+              <label for="priceData"> <img src="./assets/icons/PriceIcon.svg"></label>
+              <input type="number" name="priceData" placeholder="Price">
+            </div>
+
+            <div>
+              <label for="imageData"> <img src="./assets/icons/ImageIcon.svg" style="width:1.3em; height:1.3em;"></label> 
+              <input type="file" name="imageFile" accept="image/png, image/jpg, image/svg+xml">
+            
+            </div>
+        </div>
+
+        
+    <h2> Registration Details</h2>
+
+        <div class="gid" id="registrationGrid">
+          <div class="div1"><h3> Requires Registration?</h3></div>
+          <div class="selector div2">
+            <input type="radio" id="registrationTrue" name="requiresRegistration" value="registrationTrue" onclick="showRegistrationAdditional()" checked />
+            <label for="registrationTrue"> Yes </label>
+          </div>
+          <div class="selector div3">
+            <input type="radio" id="registrationFalse" name="requiresRegistration" value="registrationFalse" onclick="hideRegistrationAdditional()"/>
+            <label for="registrationTrue"> No </label>
+          </div>
+          
+        </div>
+
+
+        <input type="submit">
+
+
+  </form>
+  <script src="/js/addEvent.js"></script>
+  <script src="/js/adjustRegistration.js"></script>
+  <script src="/js/getEventTags.js"></script>
+  <script src="/js/navigationButton.js"></script>
+    
+</body>
+</html>
