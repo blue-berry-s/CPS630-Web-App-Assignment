@@ -38,9 +38,9 @@ function saveEvents(events) {
 // PAGE ROUTES (HTML PAGES)
 // -------------------------
 
-// Home page
+// defualt route goes to login first
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "home.html"));
+  return res.redirect("/login"); 
 });
 
 // Add Event page
@@ -51,6 +51,11 @@ app.get("/addEvent", (req, res) => {
 // Login page
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
+});
+
+//moved home page route. here to login can redirect to it
+app.get("/home", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "home.html"));
 });
 
 // ------------------
