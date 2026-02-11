@@ -38,7 +38,7 @@ function saveEvents(events) {
 // PAGE ROUTES (HTML PAGES)
 // -------------------------
 
-// defualt route goes to login first
+// defualt route does to login first
 app.get("/", (req, res) => {
   return res.redirect("/login"); 
 });
@@ -72,7 +72,7 @@ app.post("/", (req, res) => {
   const { email, password } = req.body;
 
   if (email === HARDCODED_USER.email && password === HARDCODED_USER.password) {
-    return res.redirect("/"); // goes to GET / -> home.html
+    return res.redirect("/home"); // goes to GET / -> home.html
   }
 
   return res.redirect("/login"); // back to login page
