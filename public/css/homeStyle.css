@@ -1,6 +1,6 @@
 #upcoming-events {
   margin: 30px;
-  color: #363636;
+  color: var(--text-primary);
 }
 
 #event-display {
@@ -18,7 +18,7 @@
 }
 
 .card-content {
-  background-color: white;
+  background-color: var(--text-light);
   border-radius: 10px;
   display: flex;
   flex-direction: row;
@@ -41,8 +41,8 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  color: #0077C8;
-  border-bottom: 2px solid #0077C8;
+  color: var(--color-blue-accent);
+  border-bottom: 2px solid var(--color-blue-accent);
 }
 
 .title-icons {
@@ -90,10 +90,10 @@
 }
 
 .tag {
-  border: 1px solid var(--icon-color);
+  border: 1px solid var( --color-blue);
   border-radius: 20px;
   padding: 0.5em 1em;
-  color: var(--form-label-text-color);
+  color: var( --color-blue);
   font-weight: bold;
 }
 
@@ -111,12 +111,12 @@
 #btn-add-event {
   width: 100%;
   padding: 1em 3.5em;
-  background-color: #004C9B;
-  color: white;
+  background-color: var(--color-blue);
+  color: var(--text-light);
 }
 
 #btn-add-event:hover {
-  background-color: #0077C8;
+  background-color: var(--color-blue-accent);
 }
 
 #btn-add-event:active {
@@ -124,7 +124,7 @@
 }
 
 #search-event {
-  background-color: white;
+  background-color: var(--text-light);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -138,7 +138,7 @@
 }
 
 #filter h2 {
-  border-bottom: 3px solid black;
+  border-bottom: 3px solid var(--text-primary);
   padding: 0px 0px 5px 0px;
 }
 
@@ -160,7 +160,7 @@
 
 #search-date div {
   display: flex;
-  background-color: white;
+  background-color: var(--text-light);
 }
 
 #search-date input[type="date"] {

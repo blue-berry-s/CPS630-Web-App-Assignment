@@ -4,7 +4,7 @@
 
 form{
     margin:auto;
-    background-color: white;
+    background-color: var(--surface-white);
     width: 50%;
     padding: 2em 1.5em;
     padding: 2em 1.5em;
@@ -28,7 +28,7 @@ form textarea{
 
 
 form label, form h3{
-    color: var(--form-label-text-color);
+    color: var(--color-blue-accent);
     font-weight:bold;
 
 }
@@ -73,7 +73,7 @@ h2{
 .selector label{
     font-size:1.2em;
     font-weight:500;
-    color:var(--primary-text-color)
+    color:var(--text-primary)
 }
 
 .grid{
@@ -123,8 +123,8 @@ input[type="submit"]{
     margin-left:auto;
     text-align:right;
     display: block;
-    background-color:var(--primary-button-text-color);
-    color:var(--delete-button-text-color);
+    background-color:var(--color-blue);
+    color:var(--text-light);
 }
 
 #notice{
@@ -132,7 +132,7 @@ input[type="submit"]{
     padding:0.5em 1em;
     display:none;
     font-size:2em;
-    color:var(--delete-button-text-color);
+    color:var(--text-light);
 }
 
 #notice span{
@@ -143,7 +143,7 @@ input[type="submit"]{
 }
 
 .alert{
-    background-color:var(--delete-button-color);
+    background-color:var(--color-red-dark);
 }
 
 .warning{
