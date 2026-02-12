@@ -19,7 +19,8 @@
       class="logo mb-10 object-contain"
     />
 
-    <form id="loginForm" method="POST" action="/" class="flex flex-col items-center space-y-5 w-full">
+    <form id="loginForm" class="flex flex-col items-center space-y-5 w-full">
+      <p id="errorMsg" style="color:red;"></p>
 
       <div class="input-box flex flex-col p-4 rounded-lg space-y-4">
 
@@ -59,5 +60,37 @@
     </p>
 
   </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+        e.preventDefault(); // stops normal form submission
+    
+        const email = document.querySelector('input[name="email"]').value;
+        const password = document.querySelector('input[name="password"]').value;
+    
+        try {
+            const response = await fetch("/api/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ email, password })
+            });
+    
+            const data = await response.json();
+    
+            if (!response.ok) {
+                document.getElementById("errorMsg").textContent = data.error;
+                return;
+            }
+            
+            window.location.href = "/home";
+    
+        } catch (error) {
+            alert("Server error");
+        }
+    });
+    </script>
+    
 </body>
 </html>
