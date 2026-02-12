@@ -7,6 +7,14 @@ async function loadEvents() {
   try {
     // Ask the server for all events
     const response = await fetch("/api/events");
+
+
+    // NEW: handle backend error status (like 500)
+    if (!response.ok) {
+      throw new Error("Server error: " + response.status);
+    }
+
+
     allEvents = await response.json();
 
     // Sort events by date (earliest first)
@@ -17,6 +25,7 @@ async function loadEvents() {
 
     // Build the tag filter list on the right
     loadTagFilters();
+
   } catch (error) {
     console.error("Error loading events:", error);
   }
@@ -138,6 +147,12 @@ async function loadTagFilters() {
 
   try {
     const res = await fetch("/api/tags");
+
+    // NEW: handle backend error status (like 500)
+    if (!res.ok) {
+      throw new Error("Server error: " + res.status);
+    }
+
     const tags = await res.json();
 
     // If there are no tags, show a small message

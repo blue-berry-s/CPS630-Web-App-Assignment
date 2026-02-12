@@ -54,14 +54,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 body: JSON.stringify(payload)
             });
 
+
+
+
             const data = await res.json();
+
+            // NEW: if server returned an unexpected empty array, treat as error
+            if (Array.isArray(data) && data.length === 0) {
+                alert("Unexpected empty response from server.");
+                return;
+            }
 
             if (!res.ok) {
                 alert(data.error || "Failed to add event.");
                 return;
             }
 
-            
+
             setNotice("success", "Success!", "Event Successfully Created!");
             window.scrollTo(0, 0);
             //window.location.href = "/"; // go back to home
@@ -76,10 +85,10 @@ const notice = document.getElementById("notice");
 const noticeType = document.getElementById("noticeType");
 const noticeInfo = document.getElementById("noticeInfo");
 
-function setNotice(className, type, info){
-        notice.className = "";
-        notice.className = className;
-        notice.style.display = "flex";
-        noticeType.innerText = type;
-        noticeInfo.innerText = info;
+function setNotice(className, type, info) {
+    notice.className = "";
+    notice.className = className;
+    notice.style.display = "flex";
+    noticeType.innerText = type;
+    noticeInfo.innerText = info;
 }

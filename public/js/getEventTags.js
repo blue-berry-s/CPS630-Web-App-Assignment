@@ -10,6 +10,12 @@ document.addEventListener("DOMContentLoaded", () => {
 async function DisplayTags(){
     try{
         const res = await fetch("/api/tags");
+
+        // NEW: check if backend returned error status (like 500)
+        if (!res.ok) {
+            throw new Error("Server returned status " + res.status);
+        }
+
         const allTags = await res.json();
         const tagsContainer = document.getElementById("tagsContainer");
 
