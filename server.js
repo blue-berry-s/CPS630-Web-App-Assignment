@@ -23,7 +23,7 @@ function readEvents() {
     const data = fs.readFileSync(DATA_FILE, "utf8");
     return JSON.parse(data);
   } catch (err) {
-    return [];
+    return null; // NEW ERROR HANDLING: return null if file read or JSON parse fails
   }
 }
 
