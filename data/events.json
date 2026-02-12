@@ -1,4 +1,15 @@
-[
+[{
+    "id": "e1",
+    "title": "Welcome Event",
+    "description": "A very exciting event description. Event descriptions can be short or long. Regardless of their length, they will have a cut-off length of 150 chara...",
+    "date": "2026-02-10",
+    "time": "8:00 AM EST - 1:15 PM EST",
+    "location": "MAC Arena",
+    "organization": "TMU Staff",
+    "capacity": "245 seats; 129 available",
+    "cost": "$35",
+    "tags": ["Academics"]
+  },
   {
     "id": "e2",
     "title": "Tech Career Fair",
@@ -9,9 +20,30 @@
     "organization": "Career Services",
     "capacity": "500 seats; 42 available",
     "cost": "Free",
-    "tags": [
-      "Careers",
-      "Networking"
-    ]
+    "tags": ["Careers", "Networking"]
+  },
+  {
+    "id": "e3",
+    "title": "Intramural Volleyball Finals",
+    "description": "Come cheer on your favorite teams as they battle for the championship trophy. High energy and snacks provided for all student spectators!",
+    "date": "2026-02-15",
+    "time": "6:00 PM EST - 9:00 PM EST",
+    "location": "RAC Gym",
+    "organization": "TMU Athletics",
+    "capacity": "100 seats; 15 available",
+    "cost": "$5",
+    "tags": ["Sports", "Recreation"]
+  },
+  {
+    "id": "e4",
+    "title": "JS Workshop: Node.js Basics",
+    "description": "A hands-on lab covering Express, Nodemon, and API routing. Perfect for students working on their CPS630 or CPS530 web development projects.",
+    "date": "2026-02-22",
+    "time": "1:00 PM EST - 3:00 PM EST",
+    "location": "ENG 201",
+    "organization": "Computer Science Society",
+    "capacity": "40 seats; 0 available",
+    "cost": "Free",
+    "tags": ["Academics", "Workshop", "Technology"]
   }
 ]
