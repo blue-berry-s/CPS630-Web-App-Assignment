@@ -67,23 +67,13 @@ const HARDCODED_USER = {
   password: "password123"
 };
 
-// ADDED: POST / (because your HTML form posts to "/")
-app.post("/", (req, res) => {
-  const { email, password } = req.body;
-
-  if (email === HARDCODED_USER.email && password === HARDCODED_USER.password) {
-    return res.redirect("/home"); // goes to GET / -> home.html
-  }
-
-  return res.redirect("/login"); // back to login page
-});
 
 // POST /api/login = check email + password
 app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
   if (email === HARDCODED_USER.email && password === HARDCODED_USER.password) {
-    return res.status(200).json({ message: "Login successful" });
+    return res.status(200).json({});
   }
 
   res.status(401).json({ error: "Invalid email or password" });
@@ -172,7 +162,7 @@ app.delete("/api/events/:id", (req, res) => {
   const id = req.params.id;
   const events = readEvents();
 
-  const index = events.findIndex(e => e.id === id);
+  const index = events.findIndex(e => e.id == id);
   if (index === -1) {
     return res.status(404).json({ error: "Event not found" });
   }
