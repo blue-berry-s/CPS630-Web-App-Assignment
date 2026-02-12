@@ -143,7 +143,7 @@ async function loadTagFilters() {
   if (!filterDiv) return;
 
   // Clear filter area and add heading
-  filterDiv.innerHTML += "<h2>Event Category</h2>";
+  filterDiv.innerHTML = "<h2>Event Category</h2>";
 
   try {
     const res = await fetch("/api/tags");
