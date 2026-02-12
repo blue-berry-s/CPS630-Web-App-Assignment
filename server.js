@@ -40,7 +40,7 @@ function saveEvents(events) {
 
 // defualt route does to login first
 app.get("/", (req, res) => {
-  return res.redirect("/login"); 
+  return res.redirect("/login");
 });
 
 // Add Event page
@@ -96,12 +96,24 @@ app.post("/api/login", (req, res) => {
 // GET /api/events = return all events
 app.get("/api/events", (req, res) => {
   const events = readEvents();
+  // NEW ERROR HANDLING: if server couldn't read events file
+  if (events === null) {
+    return res.status(500).json({ error: "Server error loading events" });
+  }
   res.status(200).json(events);
 });
 
 // GET /api/tags = return all unique tags found in events.json
 app.get("/api/tags", (req, res) => {
   const events = readEvents();
+
+
+  // NEW ERROR HANDLING: if server couldn't read events file
+  if (events === null) {
+    return res.status(500).json({ error: "Server error loading tags" });
+  }
+
+
   const tagSet = new Set();
 
   events.forEach(event => {
