@@ -1,6 +1,7 @@
 
 // Store events in a global array so we can filter them
 let allEvents = [];
+const container = document.getElementById("event-cards");
 
 // Load all events from the backend and display them
 async function loadEvents() {
@@ -27,17 +28,26 @@ async function loadEvents() {
     loadTagFilters();
 
   } catch (error) {
+    const message = document.createElement("h3");
+    message.textContent = "ERROR: ERROR LOADING EVENTS IN SERVER";
+    container.appendChild(message);
     console.error("Error loading events:", error);
   }
 }
 
 // Display a list of events inside the #event-cards div
 function displayEvents(eventsToRender) {
-  const container = document.getElementById("event-cards");
+  
   if (!container) return;
 
   // Clear existing cards
   container.innerHTML = "";
+
+  if (eventsToRender.length == 0){
+    const message = document.createElement("h3");
+    message.textContent = "No upcoming events found";
+    container.appendChild(message);
+  }
 
   // Build a card for each event
   eventsToRender.forEach(event => {
