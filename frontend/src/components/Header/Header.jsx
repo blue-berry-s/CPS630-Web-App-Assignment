@@ -1,5 +1,7 @@
-function Header(){
-    return(
+import './Header.css';
+
+function Header() {
+    return (
         <>
             <header id="nav-bar">
                 <div id="left-icons">
@@ -13,6 +15,7 @@ function Header(){
                 </nav>
             </header>
         </>
-    );
-
+    )
 }
+
+export default Header;

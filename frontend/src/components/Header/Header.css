@@ -1,0 +1,22 @@
+#nav-bar {
+  background-color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 18vh;
+  padding: 5px 20px;
+  color: var(--heading-text-color);
+  font-size: 1em;
+}
+
+#left-icons {
+  display: flex;
+  color: #002D72;
+  gap: 1em;
+  align-items: center;
+}
+
+#right-icons img {
+  max-width: 60%;
+}
