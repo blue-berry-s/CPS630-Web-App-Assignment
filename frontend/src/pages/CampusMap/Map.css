@@ -1,0 +1,36 @@
+#events {
+  padding: 5px 25px;
+}
+
+#events h1 {
+  color: #363636;
+  font-size: 2rem;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.map-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.pin-button {
+  position: absolute;
+  padding: 10px;
+  width: 1.5em;
+  height: 1.5em;
+  background-image: url('../../assets/mapPin.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transform: translate(-50%, -100%);
+}

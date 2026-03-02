@@ -1,11 +1,11 @@
 import './App.css'
-import Header from './components/Header/Header'
+import CampusMap from './pages/CampusMap/CampusMap'
 
 function App() {
 
   return (
     <>
-      <Header />
+      <CampusMap />
     </>
   )
 }
