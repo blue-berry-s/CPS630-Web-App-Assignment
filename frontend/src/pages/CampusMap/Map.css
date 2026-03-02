@@ -26,11 +26,21 @@
   padding: 10px;
   width: 1.5em;
   height: 1.5em;
-  background-image: url('../../assets/mapPin.png');
+  background-image: url('../../assets/mapPinOff.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
   border: none;
   cursor: pointer;
   transform: translate(-50%, -100%);
+}
+
+.pin-button.active {
+  background-image: url('../../assets/mapPin.png');
+}
+
+.pin-button:focus,
+.pin-button:active {
+  outline: none;
+  border: none;
 }

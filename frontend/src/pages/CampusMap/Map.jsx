@@ -4,7 +4,7 @@ import './Map.css';
 
 const locations = [
   { id: "MAC", x: 59.9, y: 5.8 },
-  { id: "KH Building", x: 56.8, y: 44 },
+  { id: "KHB", x: 56.8, y: 44 },
   { id: 'JOR', x: 45.75, y: 43.8 },
   { id: 'POD', x: 45.75, y: 53.2 },
   { id: 'LIB', x: 45.75, y: 63.3 },
@@ -20,7 +20,7 @@ const locations = [
 ]
 
 function Map() {
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState("MAC");
 
   return (
     <>
@@ -39,7 +39,11 @@ function Map() {
                 top: `${loc.y}%`,
                 position: 'absolute'
               }}
-              onClick={() => setSelectedId(loc.id)}
+              onClick={() => {
+                setSelectedId(loc.id);
+
+
+              }}
             />
           ))}
         </div>
