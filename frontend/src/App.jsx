@@ -11,14 +11,26 @@ function App() {
     <>
       <Header />
       <Button 
-        buttonType="btn-primary "
+        buttonType="btn-blue"
         text="Add Event"
         onClick={()=>{window.location.href = '/addEvent';}}
       />
 
       <Button 
-        buttonType="btn-primary "
+        buttonType="btn-blue"
         text="Maps"
+        onClick={()=>{window.location.href = '/addEvent';}}
+      />
+
+      <Button 
+        buttonType="btn-white"
+        text="White Button"
+        onClick={()=>{window.location.href = '/addEvent';}}
+      />
+
+      <Button 
+        buttonType="btn-red"
+        text="Red button"
         onClick={()=>{window.location.href = '/addEvent';}}
       />
 

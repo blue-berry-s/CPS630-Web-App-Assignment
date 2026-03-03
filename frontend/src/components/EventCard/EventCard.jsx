@@ -60,12 +60,12 @@ function EventCard({title, description, formattedDate, time, location, organizat
 
                 <div className="button-bar">
                     <Button 
-                        buttonType="btn-delete"
+                        buttonType="btn-red"
                         text="DELETE"
                         onClick={()=>{}}
                     />
                     <Button 
-                        buttonType="btn-primary"
+                        buttonType="btn-yellow"
                         text="REGISTER"
                         onClick={()=>{}}
                     />
