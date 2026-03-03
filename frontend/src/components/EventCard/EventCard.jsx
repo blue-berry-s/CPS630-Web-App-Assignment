@@ -1,4 +1,5 @@
 import Button from '../Button/Button.jsx';
+import CardTagDisplay from '../CardTagDisplay/CardTagDisplay.jsx';
 import './EventCard.css'
 
 
@@ -54,9 +55,9 @@ function EventCard({title, description, formattedDate, time, location, organizat
                     </div>
                 </div>
 
-                <div className="category-bar">
-                    {/* ${event.tags.map(tag => `<p className="tag">${tag}</p>`).join('')} */}
-                </div>
+                <CardTagDisplay 
+                    tags={["Networking", "Sports", "Academics", "Testing"]}
+                />
 
                 <div className="button-bar">
                     <Button 
