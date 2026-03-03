@@ -1,177 +1,357 @@
-const express = require("express");     // web server library
-const path = require("path");           // helps build safe file paths
-const fs = require("fs");               // lets us read/write files
+// ==============================
+// IMPORTING LIBRARIES
+// ==============================
 
-const app = express();
-const PORT = 8080;
 
-// This lets Express read JSON bodies from POST requests
+const express = require("express");
+
+// Path helps safely build file paths (so they work on Windows/Mac/Linux)
+const path = require("path");
+
+// mongoose is a library that helps node.js talk to MongoDB
+const mongoose = require("mongoose");
+
+// dotenv lets the app read variables from a .env file
+// Example: database URL, port, etc.
+require("dotenv").config();
+
+
+// ==============================
+// BASIC SERVER SETUP
+// ==============================
+
+const app = express();      // create the Express app
+const PORT = 8080;          // server will run on localhost:8080
+
+
+// This allows the server to read JSON data sent from the frontend
+// Example: when a form sends JSON
 app.use(express.json());
 
-// ADDED: This lets Express read HTML form bodies (method="POST" action="/")
+// This allows the server to read regular form data (like <form method="POST">)
 app.use(express.urlencoded({ extended: true }));
 
-// This lets Express serve files inside /public (html, css, js, images)
-app.use(express.static(path.join(__dirname, "public")));
+// This tells Express to serve static files (HTML, CSS, JS) from /public
+// So when visiting "/", it can load home.html, etc.
+app.use(express.static(path.join(__dirname, "../frontend/public")));
 
-// Path to our JSON "database"
-const DATA_FILE = path.join(__dirname, "data", "events.json");
 
-// Read all events from events.json
-function readEvents() {
-  try {
-    const data = fs.readFileSync(DATA_FILE, "utf8");
-    return JSON.parse(data);
-  } catch (err) {
-    return [];
+// ========================================================
+// OLD VERSION VS NEW VERSION of SERVER.JS
+// ========================================================
+
+// OLD VERSION:
+// - Used fs
+// - Used events.json file
+// - Used readEvents() and saveEvents()
+// - Stored data manually in a file
+
+// NEW VERSION:
+// - Uses MongoDB database
+// - Uses Mongoose to define schema
+// - Data is stored in a real database collection
+// - No more fs or JSON file
+
+
+// ==============================
+// CONNECTING TO MONGODB
+// ==============================
+
+// This connects to a MongoDB database running locally.
+mongoose.connect("mongodb://127.0.0.1:27017/events_db");
+
+// mongoose.connection gives access to the connection object
+const db = mongoose.connection;
+
+// If there is an error connecting to the database
+db.on("error", function (err) {
+  console.log("Database connection error:", err);
+});
+
+// If connection succeeds
+db.on("open", function () {
+  console.log("Database connected successfully");
+});
+
+
+// ==============================
+// DEFINING THE EVENT MODEL
+// ==============================
+
+// A Schema describes what an event looks like inside the database. converting json -> schema
+
+const EventSchema = new mongoose.Schema({
+
+  // Required title field
+  title: { type: String, required: true },
+
+  // Optional description
+  description: { type: String, default: "" },
+
+  // Required date field
+  date: { type: String, required: true },
+
+  // Optional time
+  time: { type: String, default: "" },
+
+  // Optional location
+  location: { type: String, default: "" },
+
+  // Optional organization
+  organization: { type: String, default: "" },
+
+  // Optional cost
+  cost: { type: String, default: "" },
+
+  // Tags stored as an array of strings
+  tags: { type: [String], default: [] },
+
+  // NEW addition: 
+  // total number of seats available
+  availableSeatings: { type: Number, required: true, min: 0 },
+
+  // how many seats are already taken
+  registeredSeatings: { type: Number, default: 0, min: 0 }
+
+});
+
+// Virtual field (not stored in DB, calculated automatically)
+// Checks if event is full
+EventSchema.virtual("isFull").get(function () {
+  return this.registeredSeatings >= this.availableSeatings;
+});
+
+// This ensures virtual fields appear in JSON responses
+EventSchema.set("toJSON", { virtuals: true });
+
+// Create the model from the schema
+// "Event" becomes the collection name "events" in MongoDB
+const Event = mongoose.model("Event", EventSchema);
+
+
+// ==============================
+// SEED FUNCTION (TEST DATA)
+// =================================
+
+// In MongoDB, if the collection is empty, insert sample data.
+
+async function seedIfEmpty() {
+
+  // count how many documents exist
+  const count = await Event.countDocuments();
+
+  // If no events exist, insert test data
+  if (count === 0) {
+
+    console.log("Adding test events to database...");
+
+    await Event.insertMany([
+      {
+        title: "Test Event A",
+        description: "Seeded example event",
+        date: "2026-03-10",
+        time: "10:00",
+        location: "Campus",
+        organization: "CPS630",
+        cost: "Free",
+        tags: ["test"],
+        availableSeatings: 10,
+        registeredSeatings: 2
+      }
+    ]);
+
+  } else {
+    console.log("Events already exist. No seed added.");
   }
 }
 
-// Save all events back to events.json (make sure folder exists)
-function saveEvents(events) {
-  fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true }); // <-- important safety
-  fs.writeFileSync(DATA_FILE, JSON.stringify(events, null, 2));
-}
+// Call the seed function once when server starts
+seedIfEmpty();
 
 
-//-----
-// PAGE ROUTES (HTML PAGES)
-// -------------------------
+// ==============================
+// PAGE ROUTES (UNCHANGED)
+// ==============================
 
-// Home page
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "home.html"));
+res.sendFile(path.join(__dirname, "../frontend/public", "home.html"));
 });
 
-// Add Event page
 app.get("/addEvent", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "addEvent.html"));
+  res.sendFile(path.join(__dirname, "../frontend/public", "addEvent.html"));
 });
 
-// Login page
 app.get("/login", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "login.html"));
+  res.sendFile(path.join(__dirname, "../frontend/public", "login.html"));
 });
 
-// ------------------
-// LOGIN (HARDCODED username and password)
-// ------------------
+
+// ==============================
+// LOGIN LOGIC (UNCHANGED)
+// ==============================
 
 const HARDCODED_USER = {
   email: "student@torontomu.ca",
   password: "password123"
 };
 
-// ADDED: POST / (because your HTML form posts to "/")
 app.post("/", (req, res) => {
+
+  // Extract email and password from form
   const { email, password } = req.body;
 
-  if (email === HARDCODED_USER.email && password === HARDCODED_USER.password) {
-    return res.redirect("/"); // goes to GET / -> home.html
+  if (email === HARDCODED_USER.email &&
+      password === HARDCODED_USER.password) {
+
+    return res.redirect("/");
   }
 
-  return res.redirect("/login"); // back to login page
+  return res.redirect("/login");
 });
 
-// POST /api/login = check email + password
 app.post("/api/login", (req, res) => {
+
   const { email, password } = req.body;
 
-  if (email === HARDCODED_USER.email && password === HARDCODED_USER.password) {
+  if (email === HARDCODED_USER.email &&
+      password === HARDCODED_USER.password) {
+
     return res.status(200).json({ message: "Login successful" });
   }
 
   res.status(401).json({ error: "Invalid email or password" });
 });
 
-// ------------------
-// REST API ROUTES
-// --------------
 
-// GET /api/events = return all events
-app.get("/api/events", (req, res) => {
-  const events = readEvents();
-  res.status(200).json(events);
+// ==============================
+// REST API ROUTES (CRUD)
+// ==============================
+
+
+// READ ALL EVENTS
+app.get("/api/events", async (req, res) => {
+
+  try {
+    const events = await Event.find(); // get all events from DB
+    res.status(200).json(events);
+
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
 });
 
-// GET /api/tags = return all unique tags found in events.json
-app.get("/api/tags", (req, res) => {
-  const events = readEvents();
-  const tagSet = new Set();
 
-  events.forEach(event => {
-    if (Array.isArray(event.tags)) {
-      event.tags.forEach(tag => tagSet.add(tag));
+// READ ONE EVENT BY ID
+app.get("/api/events/:id", async (req, res) => {
+
+  try {
+    const event = await Event.findById(req.params.id);
+
+    if (!event) {
+      return res.status(404).json({ error: "Event not found" });
     }
-  });
 
-  res.status(200).json(Array.from(tagSet).sort());
+    res.status(200).json(event);
+
+  } catch (err) {
+    res.status(400).json({ error: "Invalid ID" });
+  }
 });
 
-// POST /api/events = add a new event
-app.post("/api/events", (req, res) => {
-  const {
-    title,
-    description,
-    date,
-    time,
-    location,
-    organization,
-    capacity,
-    cost,
-    tags
-  } = req.body;
 
-  if (!title || !date) {
-    return res.status(400).json({
-      error: "Missing required fields",
-      required: ["title", "date"]
+// CREATE EVENT
+app.post("/api/events", async (req, res) => {
+
+  try {
+
+    const {
+      title,
+      description,
+      date,
+      time,
+      location,
+      organization,
+      cost,
+      tags,
+      availableSeatings
+    } = req.body;
+
+    if (!title || !date || availableSeatings === undefined) {
+      return res.status(400).json({
+        error: "Missing required fields"
+      });
+    }
+
+    const newEvent = await Event.create({
+      title,
+      description: description || "",
+      date,
+      time: time || "",
+      location: location || "",
+      organization: organization || "",
+      cost: cost || "",
+      tags: Array.isArray(tags) ? tags : [],
+      availableSeatings: Number(availableSeatings),
+      registeredSeatings: 0
     });
+
+    res.status(201).json(newEvent);
+
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
   }
-
-  const events = readEvents();
-
-  const newEvent = {
-    id: "e" + Date.now(),
-    title: title,
-    description: description || "",
-    date: date,
-    time: time || "",
-    location: location || "",
-    organization: organization || "",
-    capacity: capacity || "",
-    cost: cost || "",
-    tags: Array.isArray(tags) ? tags : []
-  };
-
-  events.push(newEvent);
-  saveEvents(events);
-
-  res.status(201).json(newEvent);
 });
 
-// DELETE /api/events/:id = delete an event by id
-app.delete("/api/events/:id", (req, res) => {
-  const id = req.params.id;
-  const events = readEvents();
 
-  const index = events.findIndex(e => e.id === id);
-  if (index === -1) {
-    return res.status(404).json({ error: "Event not found" });
+// UPDATE EVENT
+app.put("/api/events/:id", async (req, res) => {
+
+  try {
+
+    const updated = await Event.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true } // return updated document
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    res.status(200).json(updated);
+
+  } catch (err) {
+    res.status(400).json({ error: "Invalid update request" });
   }
-
-  const deleted = events.splice(index, 1)[0];
-  saveEvents(events);
-
-  res.status(200).json(deleted);
 });
 
-// If none of the routes match, return 404
+
+// DELETE EVENT
+app.delete("/api/events/:id", async (req, res) => {
+
+  try {
+
+    const deleted = await Event.findByIdAndDelete(req.params.id);
+
+    if (!deleted) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    res.status(200).json(deleted);
+
+  } catch (err) {
+    res.status(400).json({ error: "Invalid ID" });
+  }
+});
+
+
+// 404 HANDLER
 app.use((req, res) => {
   res.status(404).json({ error: "Route not found" });
 });
 
-// Start server
+
+// START SERVER
 app.listen(PORT, () => {
   console.log("Server running at http://localhost:" + PORT);
 });
