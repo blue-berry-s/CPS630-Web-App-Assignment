@@ -186,6 +186,28 @@ app.get("/api/events", async (req, res) => {
   }
 });
 
+// GET ALL EVENT TAGS
+app.get("/api/tags", async (req, res) => {
+
+  try {
+    const events = await Event.find({}, 'tags'); // get all the tags from all the events in DB
+
+    const tagSet = new Set();
+
+    events.forEach(event => {
+      if (Array.isArray(event.tags)) {
+        event.tags.forEach(tag => tagSet.add(tag));
+      }
+    });
+
+    res.status(200).json(Array.from(tagSet).sort());
+
+  } catch (err) {
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
+
 
 // READ ONE EVENT BY ID
 app.get("/api/events/:id", async (req, res) => {
