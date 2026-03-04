@@ -40,7 +40,7 @@ const EventSchema = new mongoose.Schema({
   availableSeatings: { type: Number, required: true, min: 0 },
 
   // how many seats are already taken
-  registeredSeatings: { type: Number, default: 0, min: 0 }
+  registeredSeatings: { type: Number, default: 0, min: 0}
 
 });
 

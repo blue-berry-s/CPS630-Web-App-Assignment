@@ -273,6 +273,54 @@ app.put("/api/events/:id", async (req, res) => {
   }
 });
 
+// UPDATE EVENT - UNREGISTER FOR AN EVENT
+app.put("/api/events/unregister/:id", async (req, res) => {
+
+  try {
+
+    const updated = await Event.findOneAndUpdate(
+      {_id:req.params.id, 
+        $expr: { $gt: ["$registeredSeatings", 0] }
+      },
+      {$inc: { registeredSeatings: -1 }},
+      { new: true } // return updated document
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: "Event not found or has no registrations" });
+    }
+
+    res.status(200).json(updated);
+
+  } catch (err) {
+    res.status(400).json({ error: "Unregistration Failed" });
+  }
+});
+
+// UPDATE EVENT - REGISTER FOR AN EVENT
+app.put("/api/events/register/:id", async (req, res) => {
+
+  try {
+
+    const updated = await Event.findOneAndUpdate(
+      {_id:req.params.id, 
+        $expr: { $lt: ["$registeredSeatings", "$availableSeatings"] }
+      },
+      {$inc: { registeredSeatings: 1 }},
+      { new: true } // return updated document
+    );
+
+    if (!updated) {
+      return res.status(404).json({ error: "Event not found or is full" });
+    }
+
+    res.status(200).json(updated);
+
+  } catch (err) {
+    res.status(400).json({ error: "Registration Failed" });
+  }
+});
+
 
 // DELETE EVENT
 app.delete("/api/events/:id", async (req, res) => {
