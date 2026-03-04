@@ -12,9 +12,19 @@ import SeatIcon from "../../assets/icons/SmileIcon.svg";
 import TimeIcon from "../../assets/icons/TimeIcon.svg";
 
 function AddEvent() {
+  const buildings = [
+    "TRS", "SLC", "LIB", "POD",
+    "JOR", "KHB", "RAC", "RCC",
+    "ENG", "EPH", "MAC", "DSQ"
+  ];
   return (
     <>
       <Header />
+      <div className="topText">
+        <h2>Add an Event!</h2>
+        <p>Description Text here about adding events - follow the form and whatever blah blah blah don’t need to read that much this is so much 
+          fun writing filler text yadayadayada</p>
+      </div>
 
       <div className="add-event-container">
         <div className="form-card">
@@ -61,10 +71,19 @@ function AddEvent() {
          
              <div className="two-column">
          
-               <div className="input-with-icon">
-                 <img src={BuildingIcon} alt="Building" />
-                 <input type="text" placeholder="Building..." />
-               </div>
+             <div className="input-with-icon">
+             <img src={BuildingIcon} alt="Building" className="input-icon" />
+              <select className="uniform-input" defaultValue="">
+                <option value="" disabled>
+                  Building
+                </option>
+                {buildings.map((b) => (
+                  <option key={b} value={b}>
+                    {b}
+                  </option>
+                ))}
+              </select>
+            </div>
          
                <input type="text" placeholder="Location" />
          
