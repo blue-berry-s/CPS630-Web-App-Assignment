@@ -11,9 +11,14 @@ const path = require("path");
 // mongoose is a library that helps node.js talk to MongoDB
 const mongoose = require("mongoose");
 
+// Get the required data models
+const Event = require('./models/Event.js');
+
+
+
 // dotenv lets the app read variables from a .env file
 // Example: database URL, port, etc.
-require("dotenv").config();
+//require("dotenv").config();
 
 
 // ==============================
@@ -75,61 +80,6 @@ db.on("open", function () {
 
 
 // ==============================
-// DEFINING THE EVENT MODEL
-// ==============================
-
-// A Schema describes what an event looks like inside the database. converting json -> schema
-
-const EventSchema = new mongoose.Schema({
-
-  // Required title field
-  title: { type: String, required: true },
-
-  // Optional description
-  description: { type: String, default: "" },
-
-  // Required date field
-  date: { type: String, required: true },
-
-  // Optional time
-  time: { type: String, default: "" },
-
-  // Optional location
-  location: { type: String, default: "" },
-
-  // Optional organization
-  organization: { type: String, default: "" },
-
-  // Optional cost
-  cost: { type: String, default: "" },
-
-  // Tags stored as an array of strings
-  tags: { type: [String], default: [] },
-
-  // NEW addition: 
-  // total number of seats available
-  availableSeatings: { type: Number, required: true, min: 0 },
-
-  // how many seats are already taken
-  registeredSeatings: { type: Number, default: 0, min: 0 }
-
-});
-
-// Virtual field (not stored in DB, calculated automatically)
-// Checks if event is full
-EventSchema.virtual("isFull").get(function () {
-  return this.registeredSeatings >= this.availableSeatings;
-});
-
-// This ensures virtual fields appear in JSON responses
-EventSchema.set("toJSON", { virtuals: true });
-
-// Create the model from the schema
-// "Event" becomes the collection name "events" in MongoDB
-const Event = mongoose.model("Event", EventSchema);
-
-
-// ==============================
 // SEED FUNCTION (TEST DATA)
 // =================================
 
@@ -145,20 +95,16 @@ async function seedIfEmpty() {
 
     console.log("Adding test events to database...");
 
-    await Event.insertMany([
-      {
-        title: "Test Event A",
-        description: "Seeded example event",
-        date: "2026-03-10",
-        time: "10:00",
-        location: "Campus",
-        organization: "CPS630",
-        cost: "Free",
-        tags: ["test"],
-        availableSeatings: 10,
-        registeredSeatings: 2
-      }
-    ]);
+    const data = require('./data/events.json');
+
+    data.forEach(event => {
+            //since it was already created as an object, we can just add it
+            const newEvent = new Event(event);
+            //actually inputs into the database (save is asynch function)
+            newEvent.save()
+                .then(()=> console.log(event.title + "added to database"))
+                .catch(err => console.error('ERROR adding event "'+ event.title + '"' + " \n" + err));
+        })
 
   } else {
     console.log("Events already exist. No seed added.");
@@ -269,6 +215,7 @@ app.post("/api/events", async (req, res) => {
       description,
       date,
       time,
+      building,
       location,
       organization,
       cost,
@@ -287,6 +234,7 @@ app.post("/api/events", async (req, res) => {
       description: description || "",
       date,
       time: time || "",
+      building: building || "",
       location: location || "",
       organization: organization || "",
       cost: cost || "",
