@@ -36,7 +36,7 @@ function Home({ setPage }) {
       <Header setPage={setPage}/>
       <Filter className="hide-on-large" setPage={setPage}/>
       <section id="upcoming-events">
-        <h2>Upcoming Events</h2>
+        <h1>Upcoming Events</h1>
 
         <div id="event-display">
           <div id="event-cards">

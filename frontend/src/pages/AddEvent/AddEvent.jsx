@@ -11,6 +11,7 @@ import BuildingIcon from "../../assets/icons/LocationIcon.svg";
 import CostIcon from "../../assets/icons/PriceIcon.svg";
 import SeatIcon from "../../assets/icons/SmileIcon.svg";
 import TimeIcon from "../../assets/icons/TimeIcon.svg";
+import DropDownArrow from "../../assets/icons/DropDownArrow.svg";
 
 function AddEvent({setPage}) {
   const buildings = [
@@ -22,7 +23,7 @@ function AddEvent({setPage}) {
       <>
        <Header setPage={setPage}/>
       <div className="topText">
-        <h2>Add an Event!</h2>
+        <h1>Add an Event!</h1>
         <p>Description Text here about adding events - follow the form and whatever blah blah blah don’t need to read that much this is so much 
           fun writing filler text yadayadayada</p>
       </div>
@@ -73,6 +74,7 @@ function AddEvent({setPage}) {
              <div className="two-column">
          
              <div className="input-with-icon">
+            <img id="dropDown" src={DropDownArrow}/>
              <img src={BuildingIcon} alt="Building" className="input-icon" />
               <select className="uniform-input" defaultValue="">
                 <option value="" disabled>

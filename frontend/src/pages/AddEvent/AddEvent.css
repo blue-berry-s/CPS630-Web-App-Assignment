@@ -2,20 +2,25 @@
 .add-event-container {
   display: flex;
   justify-content: center;
-  background: #E9E9E9;
-  margin-top: 20px;
+  background: var(--off-white);
+  margin-top: 2em;
+  margin-bottom:5em;
 }
 
 .topText {
   padding-left: 30px;
-  font-size: 150%;
 }
+
+.topText h1{
+  font-size:2em;
+}
+
 .form-section {
   display: grid;
   align-items: start; 
   margin-bottom: 20px;
   border-bottom: 1px solid #ccc;
-  padding-bottom: 20px;
+  padding-bottom: 2em;
 }
 .form-section:last-of-type {
   border-bottom: none;
@@ -184,12 +189,22 @@ textarea {
 .input-with-icon img {
   position: absolute;
   left: 12px;
-  width: 16px;
-  height: 16px;
+  width: 1.5em;
 }
 
 .input-with-icon input {
-  padding-left: 40px; 
+  padding-left: 3em; 
+}
+
+.uniform-input{
+  font-weight:bold;
+  color:var(--black);
+}
+
+#dropDown{
+  position:absolute;
+  right: 12px;
+  left:auto;
 }
 
 /* Responsive Designs */
