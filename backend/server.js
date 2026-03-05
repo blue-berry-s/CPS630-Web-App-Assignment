@@ -1,131 +1,152 @@
 // ==============================
-// IMPORTING LIBRARIES
+// IMPORT LIBRARIES
 // ==============================
 
+// express lets us build the server and create routes
 const express = require("express");
 
-// Path helps safely build file paths (so they work on Windows/Mac/Linux)
+// path helps us safely find files like html/css/js
 const path = require("path");
 
-// mongoose is a library that helps node.js talk to MongoDB
+// mongoose lets node talk to MongoDB
 const mongoose = require("mongoose");
-
-// dotenv REMOVED (you said to delete dotenv)
-// require("dotenv").config();
 
 
 // ==============================
 // BASIC SERVER SETUP
 // ==============================
 
-const app = express();      // create the Express app
-const PORT = 8080;          // server will run on localhost:8080
+const app = express();
+const PORT = 8080; // the port our server will run on
 
-
-// This allows the server to read JSON data sent from the frontend
-// Example: when a form sends JSON
+// allows the server to read JSON data sent from frontend
 app.use(express.json());
 
-// This allows the server to read regular form data (like <form method="POST">)
+// allows the server to read form data
 app.use(express.urlencoded({ extended: true }));
 
-// This tells Express to serve static files (HTML, CSS, JS) from /public
-// So when visiting "/", it can load home.html, etc.
+// serve the frontend files (html, css, js)
 app.use(express.static(path.join(__dirname, "../frontend/public")));
 
 
-
-
 // ==============================
-// CONNECTING TO MONGODB
+// CONNECT TO MONGODB
 // ==============================
 
-// This connects to a MongoDB database running locally.
+// connect to our local MongoDB database
 mongoose.connect("mongodb://127.0.0.1:27017/events_db");
 
-// mongoose.connection gives access to the connection object
+// mongoose connection object
 const db = mongoose.connection;
 
-// If there is an error connecting to the database
+// if there is an error connecting
 db.on("error", function (err) {
   console.log("Database connection error:", err);
 });
 
-// If connection succeeds
+// if connection works
 db.on("open", function () {
   console.log("Database connected successfully");
 });
 
 
 // ==============================
-// DEFINING THE EVENT MODEL
+// EVENT MODEL (SCHEMA)
 // ==============================
 
-// A Schema describes what an event looks like inside the database. converting json -> schema
-
+// this defines the structure of an event inside MongoDB
 const EventSchema = new mongoose.Schema({
 
-  // Required title field
+  // title is required
   title: { type: String, required: true },
 
-  // Optional description
+  // description is optional
   description: { type: String, default: "" },
 
-  // Required date field
+  // date is required
   date: { type: String, required: true },
 
-  // Optional time
+  // optional event time
   time: { type: String, default: "" },
 
-  // Optional location
+  // optional location
   location: { type: String, default: "" },
 
-  // Optional organization
+  // optional organization hosting event
   organization: { type: String, default: "" },
 
-  // Optional cost
+  // optional price
   cost: { type: String, default: "" },
 
-  // Tags stored as an array of strings
+  // tags for filtering events
   tags: { type: [String], default: [] },
 
-  // total number of seats available
+  // total seats available
   availableSeatings: { type: Number, required: true, min: 0 },
 
-  // how many seats are already taken
+  // seats already taken
   registeredSeatings: { type: Number, default: 0, min: 0 }
 
 });
 
-// Virtual field (not stored in DB, calculated automatically)
-// Checks if event is full
+// virtual property (not stored in database)
+// checks if event is already full
 EventSchema.virtual("isFull").get(function () {
   return this.registeredSeatings >= this.availableSeatings;
 });
 
-// This ensures virtual fields appear in JSON responses
+// make sure virtual fields appear when sending JSON
 EventSchema.set("toJSON", { virtuals: true });
 
-// Create the model from the schema
-// "Event" becomes the collection name "events" in MongoDB
+// create model so we can interact with events collection
 const Event = mongoose.model("Event", EventSchema);
 
 
 // ==============================
-// SEED FUNCTION (TEST DATA)
-// =================================
+// HELPER FUNCTIONS
+// ==============================
 
-// In MongoDB, if the collection is empty, insert sample data.
+// this converts a MongoDB event into the format
+// the frontend expects
+function toFrontendEvent(doc) {
 
+  const obj = doc.toJSON();
+
+  // frontend expects "id" not "_id"
+  obj.id = String(obj._id);
+
+  // frontend expects capacity as text like "40 seats"
+  obj.capacity = `${obj.availableSeatings} seats`;
+
+  return obj;
+}
+
+// convert frontend capacity string into a number
+function parseCapacityToSeats(capacity) {
+
+  if (!capacity) return NaN;
+
+  // find numbers inside the string
+  const match = String(capacity).match(/\d+/);
+
+  if (!match) return NaN;
+
+  return Number(match[0]);
+}
+
+
+// ==============================
+// ADD TEST DATA IF DATABASE EMPTY
+// ==============================
+
+// this just inserts a test event if there are none
 async function seedIfEmpty() {
 
-  // count how many documents exist
   const count = await Event.countDocuments();
 
-  // If no events exist, insert test data
   if (count === 0) {
 
-    console.log("Adding test events to database...");
+    console.log("Adding test events...");
 
     await Event.insertMany([
       {
@@ -142,36 +163,37 @@ async function seedIfEmpty() {
       }
     ]);
 
-  } else {
-    console.log("Events already exist. No seed added.");
   }
 }
 
-// Call the seed function once when server starts
 seedIfEmpty();
 
 
 // ==============================
-// PAGE ROUTES (UNCHANGED)
+// PAGE ROUTES
 // ==============================
 
+// load home page
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/public", "home.html"));
 });
 
+// load add event page
 app.get("/addEvent", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/public", "addEvent.html"));
 });
 
+// load login page
 app.get("/login", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/public", "login.html"));
 });
 
 
 // ==============================
-// LOGIN LOGIC (UNCHANGED)
+// LOGIN 
 // ==============================
 
+// simple login info (just for demo purposes)
 const HARDCODED_USER = {
   email: "student@torontomu.ca",
   password: "password123"
@@ -179,7 +201,6 @@ const HARDCODED_USER = {
 
 app.post("/", (req, res) => {
 
-  // Extract email and password from form
   const { email, password } = req.body;
 
   if (email === HARDCODED_USER.email &&
@@ -191,6 +212,8 @@ app.post("/", (req, res) => {
   return res.redirect("/login");
 });
 
+
+// login api for frontend
 app.post("/api/login", (req, res) => {
 
   const { email, password } = req.body;
@@ -206,25 +229,32 @@ app.post("/api/login", (req, res) => {
 
 
 // ==============================
-// REST API ROUTES (CRUD)
+// HELPER FUNCTION FOR DATE
 // ==============================
 
-// Helper: get today's date in local time as "YYYY-MM-DD"
+// get today's date in YYYY-MM-DD format
 function getTodayLocalYYYYMMDD() {
+
   const now = new Date();
+
   const y = now.getFullYear();
   const m = String(now.getMonth() + 1).padStart(2, "0");
   const d = String(now.getDate()).padStart(2, "0");
+
   return `${y}-${m}-${d}`;
 }
 
 
-// READ ALL EVENTS
-// By default: return only today's and future events (so past events won't show on home page).
-// If we want ALL events (including past), call: /api/events?all=true
+// ==============================
+// GET EVENTS
+// ==============================
+
+// get events from database
+// by default we only show upcoming events
 app.get("/api/events", async (req, res) => {
 
   try {
+
     const wantAll = String(req.query.all || "").toLowerCase() === "true";
 
     const query = wantAll
@@ -232,7 +262,8 @@ app.get("/api/events", async (req, res) => {
       : { date: { $gte: getTodayLocalYYYYMMDD() } };
 
     const events = await Event.find(query).sort({ date: 1, time: 1 });
-    res.status(200).json(events);
+
+    res.status(200).json(events.map(toFrontendEvent));
 
   } catch (err) {
     res.status(500).json({ error: "Server error" });
@@ -240,17 +271,21 @@ app.get("/api/events", async (req, res) => {
 });
 
 
-// READ ONE EVENT BY ID
+// ==============================
+// GET ONE EVENT
+// ==============================
+
 app.get("/api/events/:id", async (req, res) => {
 
   try {
+
     const event = await Event.findById(req.params.id);
 
     if (!event) {
       return res.status(404).json({ error: "Event not found" });
     }
 
-    res.status(200).json(event);
+    res.status(200).json(toFrontendEvent(event));
 
   } catch (err) {
     res.status(400).json({ error: "Invalid ID" });
@@ -258,7 +293,32 @@ app.get("/api/events/:id", async (req, res) => {
 });
 
 
+// ==============================
+// GET TAGS
+// ==============================
+
+// return list of all unique tags in database
+app.get("/api/tags", async (req, res) => {
+
+  try {
+
+    const events = await Event.find({}, { tags: 1, _id: 0 });
+
+    const tags = [...new Set(events.flatMap(e => e.tags || []))];
+
+    res.status(200).json(tags);
+
+  } catch (err) {
+    res.status(500).json({ error: "Could not load tags" });
+  }
+});
+
+
+// ==============================
 // CREATE EVENT
+// ==============================
+
+// create new event from form
 app.post("/api/events", async (req, res) => {
 
   try {
@@ -272,10 +332,12 @@ app.post("/api/events", async (req, res) => {
       organization,
       cost,
       tags,
-      availableSeatings
+      capacity
     } = req.body;
 
-    if (!title || !date || availableSeatings === undefined) {
+    const seats = parseCapacityToSeats(capacity);
+
+    if (!title || !date || Number.isNaN(seats)) {
       return res.status(400).json({
         error: "Missing required fields"
       });
@@ -290,11 +352,11 @@ app.post("/api/events", async (req, res) => {
       organization: organization || "",
       cost: cost || "",
       tags: Array.isArray(tags) ? tags : [],
-      availableSeatings: Number(availableSeatings),
+      availableSeatings: seats,
       registeredSeatings: 0
     });
 
-    res.status(201).json(newEvent);
+    res.status(201).json(toFrontendEvent(newEvent));
 
   } catch (err) {
     res.status(500).json({ error: "Server error" });
@@ -302,48 +364,27 @@ app.post("/api/events", async (req, res) => {
 });
 
 
-// UPDATE EVENT
-app.put("/api/events/:id", async (req, res) => {
+// ==============================
+// REGISTER FOR EVENT
+// ==============================
+
+// increment registeredSeatings by 1 (but only if event not full)
+app.patch("/api/events/register/:id", async (req, res) => {
 
   try {
 
-    const updated = await Event.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true } // return updated document
-    );
-
-    if (!updated) {
-      return res.status(404).json({ error: "Event not found" });
-    }
-
-    res.status(200).json(updated);
-
-  } catch (err) {
-    res.status(400).json({ error: "Invalid update request" });
-  }
-});
-
-
-// REGISTER FOR EVENT (PATCH)
-app.patch("/api/events/:id/register", async (req, res) => {
-
-  try {
-    const id = req.params.id;
-
-    // Atomically increment only if NOT full
     const updated = await Event.findOneAndUpdate(
-      { _id: id, $expr: { $lt: ["$registeredSeatings", "$availableSeatings"] } },
+      { _id: req.params.id, $expr: { $lt: ["$registeredSeatings", "$availableSeatings"] } },
       { $inc: { registeredSeatings: 1 } },
       { new: true }
     );
 
     if (updated) {
-      return res.status(200).json(updated);
+      return res.status(200).json(toFrontendEvent(updated));
     }
 
-    // If update failed, figure out why (not found vs full)
-    const exists = await Event.findById(id);
+    const exists = await Event.findById(req.params.id);
+
     if (!exists) {
       return res.status(404).json({ error: "Event not found" });
     }
@@ -356,25 +397,27 @@ app.patch("/api/events/:id/register", async (req, res) => {
 });
 
 
-// UNREGISTER FROM EVENT (PATCH)
-app.patch("/api/events/:id/unregister", async (req, res) => {
+// ==============================
+// UNREGISTER FROM EVENT
+// ==============================
+
+// decrement registeredSeatings by 1 (but only if registeredSeatings > 0)
+app.patch("/api/events/unregister/:id", async (req, res) => {
 
   try {
-    const id = req.params.id;
 
-    // Atomically decrement only if registeredSeatings > 0
     const updated = await Event.findOneAndUpdate(
-      { _id: id, registeredSeatings: { $gt: 0 } },
+      { _id: req.params.id, registeredSeatings: { $gt: 0 } },
       { $inc: { registeredSeatings: -1 } },
       { new: true }
     );
 
     if (updated) {
-      return res.status(200).json(updated);
+      return res.status(200).json(toFrontendEvent(updated));
     }
 
-    // If update failed, figure out why (not found vs already 0)
-    const exists = await Event.findById(id);
+    const exists = await Event.findById(req.params.id);
+
     if (!exists) {
       return res.status(404).json({ error: "Event not found" });
     }
@@ -387,7 +430,10 @@ app.patch("/api/events/:id/unregister", async (req, res) => {
 });
 
 
+// ==============================
 // DELETE EVENT
+// ==============================
+
 app.delete("/api/events/:id", async (req, res) => {
 
   try {
@@ -398,7 +444,7 @@ app.delete("/api/events/:id", async (req, res) => {
       return res.status(404).json({ error: "Event not found" });
     }
 
-    res.status(200).json(deleted);
+    res.status(200).json(toFrontendEvent(deleted));
 
   } catch (err) {
     res.status(400).json({ error: "Invalid ID" });
@@ -406,13 +452,11 @@ app.delete("/api/events/:id", async (req, res) => {
 });
 
 
-// 404 HANDLER
-app.use((req, res) => {
-  res.status(404).json({ error: "Route not found" });
-});
-
-
+// ==============================
 // START SERVER
+// ==============================
+
+// start the server
 app.listen(PORT, () => {
   console.log("Server running at http://localhost:" + PORT);
 });
