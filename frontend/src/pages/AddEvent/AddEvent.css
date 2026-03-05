@@ -2,7 +2,13 @@
 .add-event-container {
   display: flex;
   justify-content: center;
-  background: #f3f3f3;
+  background: #E9E9E9;
+  margin-top: 20px;
+}
+
+.topText {
+  padding-left: 30px;
+  font-size: 150%;
 }
 .form-section {
   display: grid;
@@ -16,7 +22,7 @@
 }
 /* Card */
 .form-card {
-  width: 700px;
+  width: 799px;
   background: white;
   padding: 40px;
   border-radius: 12px;
@@ -59,6 +65,7 @@
   grid-template-columns: 200px 1fr;
   align-items: center;
   margin-bottom: 30px;
+  
 }
 
 .section-label {
@@ -70,8 +77,10 @@
 .section-content {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  
+  gap: 15px;  
+}
+.section-content input {
+  border: 1px solid #ccc;
 }
 
 /* Two Column Layout */
@@ -168,7 +177,7 @@ textarea {
 .input-with-icon {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: center; 
 }
 
 .input-with-icon img {
@@ -193,3 +202,17 @@ textarea {
 
 /* Tablet */
 @media (min-width: 640px) and (max-width: 1023px) { }
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+.input-with-icon select {
+  height: 42px;               /* same as other inputs */
+  padding: 8px 12px 8px 40px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 14px;
+  background-color: #E9E9E9;     /* same as other inputs */
+  appearance: none;           /* remove default browser arrow */
+}

@@ -3,7 +3,54 @@ import CardTagDisplay from '../CardTagDisplay/CardTagDisplay.jsx';
 import './EventCard.css'
 
 
+
 function EventCard({title, description, formattedDate, time, location, organization, capacity, cost}){
+      // REGISTER for event
+        const handleRegister = async () => {
+          try {
+            const response = await fetch(`/api/events/register/${_id}`, {
+              method: 'PUT',
+              headers: { 'Content-Type': 'application/json' }
+            });
+        
+            const data = await response.json();
+        
+            if (response.ok) {
+              alert(`Registered successfully! Total registered: ${data.registeredSeatings}`);
+            } else {
+              alert(data.error || "Registration failed");
+            }
+          } catch (err) {
+            console.error("Registration error:", err);
+            alert("Registration failed. Try again.");
+          }
+        };
+    
+        // DELETE event
+        const handleDelete = async () => {
+          if (!window.confirm(`Are you sure you want to delete "${title}"?`)) return;
+        
+          try {
+            const response = await fetch(`/api/events/${_id}`, {
+              method: 'DELETE',
+              headers: { 'Content-Type': 'application/json' }
+            });
+      
+            const data = await response.json();
+      
+            if (response.ok) {
+              alert(`Event "${title}" deleted successfully!`);
+              // Optional: remove card from UI or trigger parent refresh
+            } else {
+              alert(data.error || "Delete failed");
+            }
+          } catch (err) {
+            console.error("Delete error:", err);
+            alert("Delete failed. Try again.");
+          }
+        };
+    
+    
     return (
         <>
             <div className="card-content">
@@ -61,12 +108,12 @@ function EventCard({title, description, formattedDate, time, location, organizat
                     <Button 
                         buttonType="btn-red"
                         text="DELETE"
-                        onClick={()=>{}}
+                        onClick={handleDelete}
                     />
                     <Button 
                         buttonType="btn-yellow"
                         text="REGISTER"
-                        onClick={()=>{}}
+                        onClick={handleRegister}
                     />
                 </div>
                 </div>
