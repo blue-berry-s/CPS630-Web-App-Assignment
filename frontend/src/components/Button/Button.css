@@ -4,6 +4,7 @@ input[type="submit"] {
   font-weight: bold;
   border-radius: 0.8em;
   padding: 0.8em 3.5em;
+  text-align: center;
   box-shadow: var(--box-shadow-1);
   transition:
     background-color 0.2s,
@@ -90,13 +91,6 @@ input[type="submit"]:active {
   background-color: var(--off-white);
 }
 
-
-
-
-
-
-
-
 /* Disabled Button styling */
 
 .btn-disabled {
@@ -105,4 +99,23 @@ input[type="submit"]:active {
   background-color: var(--button-disable-color);
   color: var(--button-disable-text-color);
 
+}
+
+/* Responsive Designs */
+
+/* Mobile */
+@media (max-width: 639px) { 
+  button,
+  input[type="submit"] {
+    font-size:0.7rem;
+    padding: 0.8em 1.5em;
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1023px) { 
+  button,
+  input[type="submit"] {
+    font-size:0.7rem;
+  }
 }

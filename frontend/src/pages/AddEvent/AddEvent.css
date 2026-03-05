@@ -189,6 +189,19 @@ textarea {
 
 .input-with-icon input {
   padding-left: 40px; 
+}
+
+/* Responsive Designs */
+
+/* Mobile */
+@media (max-width: 639px) { 
+  .form-card{
+    width:75%;
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1023px) { }
   border-radius: 6px;
   border: 1px solid #ccc;
 }

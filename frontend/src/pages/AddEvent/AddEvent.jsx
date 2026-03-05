@@ -1,4 +1,5 @@
 import React from "react";
+import "../../css/defaultStyle.css"
 import Header from "../../components/Header/Header.jsx";
 import Button from "../../components/Button/Button.jsx";
 import "./AddEvent.css";
@@ -11,6 +12,10 @@ import CostIcon from "../../assets/icons/PriceIcon.svg";
 import SeatIcon from "../../assets/icons/SmileIcon.svg";
 import TimeIcon from "../../assets/icons/TimeIcon.svg";
 
+function AddEvent({setPage}) {
+  return (
+    <>
+      <Header setPage={setPage}/>
 function AddEvent() {
   const buildings = [
     "TRS", "SLC", "LIB", "POD",

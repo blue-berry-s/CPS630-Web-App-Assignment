@@ -1,0 +1,8 @@
+/* Mobile */
+@media (max-width: 639px) { 
+  #event-display{
+    display:flex;
+    flex-direction:column;
+    align-items:center; 
+  }
+}

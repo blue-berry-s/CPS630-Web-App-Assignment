@@ -54,7 +54,7 @@ function EventCard({title, description, formattedDate, time, location, organizat
     return (
         <>
             <div className="card-content">
-                <img src="/src/assets/logos/TMU.svg" alt="TMU Logo"/>
+                <img className="hide-on-compact" src="/src/assets/logos/TMU.svg" alt="TMU Logo"/>
 
                 <div className="details">
                 <div className="title-bar">
@@ -66,39 +66,37 @@ function EventCard({title, description, formattedDate, time, location, organizat
                     </div>
                 </div>
 
-                <div className="main-details">
-                    <p>{description || ""}</p>
+                <img className="hide-on-large" src="/src/assets/logos/TMU.svg" alt="TMU Logo"/>
 
-                    <div className="detail-rows">
-                    <div className="detail-cols">
-                        <div className="detail-item">
+                <p className="event-description">{description || ""}</p>
+
+                <div className="main-details">
+
+                    <div className="detail-item">
                         <img src="/src/assets/icons/DateIcon.svg" alt="Date Icon"/>
                         <p>{formattedDate}</p>
-                        </div>
-                        <div className="detail-item">
+                    </div>
+                    <div className="detail-item">
                         <img src="/src/assets/icons/TimeIcon.svg" alt="Time Icon"/>
                         <p>{time || ""}</p>
-                        </div>
-                        <div className="detail-item">
+                    </div>
+                    <div className="detail-item">
                         <img src="/src/assets/icons/LocationIcon.svg" alt="Location Icon"/>
                         <p>{location || ""}</p>
-                        </div>
                     </div>
-
-                    <div className="detail-cols">
-                        <div className="detail-item">
-                        <img src="/src/assets/icons/CreatorIcon.svg" alt="Creator Icon"/>
-                        <p>{organization || ""}</p>
-                        </div>
-                        <div className="detail-item">
-                        <img src="/src/assets/icons/AvailabilityIcon.svg" alt="Availability Icon"/>
-                        <p>{capacity || ""}</p>
-                        </div>
-                        <div className="detail-item">
+                    <div className="detail-item">
                         <img src="/src/assets/icons/PriceIcon.svg" alt="Price Icon"/>
                         <p>{cost || ""}</p>
-                        </div>
                     </div>
+
+                   
+                    <div className="detail-item hide-on-compact">
+                        <img src="/src/assets/icons/CreatorIcon.svg" alt="Creator Icon"/>
+                        <p>{organization || ""}</p>
+                    </div>
+                    <div className="detail-item hide-on-compact">
+                        <img src="/src/assets/icons/AvailabilityIcon.svg" alt="Availability Icon"/>
+                        <p>{capacity || ""}</p>
                     </div>
                 </div>
 

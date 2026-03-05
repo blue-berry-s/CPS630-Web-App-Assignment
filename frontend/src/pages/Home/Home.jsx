@@ -2,8 +2,11 @@ import React from "react";
 import Header from "../../components/Header/Header.jsx";
 import Filter from "../../components/Filter/Filter.jsx";
 import EventCard from "../../components/EventCard/EventCard.jsx";
+import "../../css/defaultStyle.css"
+import "./Home.css";
 
-function Home() {
+
+function Home({ setPage }) {
   // Sample events for now
   const events = [
     {
@@ -30,7 +33,8 @@ function Home() {
 
   return (
     <div>
-      <Header />
+      <Header setPage={setPage}/>
+      <Filter className="hide-on-large" setPage={setPage}/>
       <section id="upcoming-events">
         <h2>Upcoming Events</h2>
 
@@ -40,7 +44,7 @@ function Home() {
               <EventCard key={idx} {...event} />
             ))}
           </div>
-          <Filter />
+          <Filter className="hide-on-compact" setPage={setPage}/>
         </div>
       </section>
     </div>

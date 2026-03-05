@@ -4,7 +4,7 @@ import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import SearchDateIcon from "../../assets/icons/SearchDateIcon.svg";
 import Button from "../Button/Button";
 
-function Filter() {
+function Filter({ className, setPage }) {
   const [title, setTitle] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -31,10 +31,10 @@ function Filter() {
   const handleSearchDate = (e) => e.preventDefault();
 
   return (
-    <div id="filter">
+    <div className={className} id="filter">
       {/* Buttons */}
       <div className="button-row">
-        <Button text="Add Event" buttonType="btn-blue" onClick={() => console.log("Add Event")} />
+        <Button text="Add Event" buttonType="btn-blue" onClick={() => {setPage("addEvent"); console.log("Switch to add Event");}} />
         <Button text="View Map" buttonType="btn-blue" onClick={() => console.log("View Map")} />
       </div>
 
