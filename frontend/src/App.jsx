@@ -18,30 +18,6 @@ function App() {
 
       {page === "home" && <Home setPage={setPage} />}
       {page === "addEvent" && <AddEvent setPage={setPage} />} (
-        <>
-          {/* <Header />
-
-          <Button 
-            buttonType="btn-primary"
-            text="Add Event"
-          />
-
-          <Button 
-            buttonType="btn-primary"
-            text="Maps"
-          />
-
-          <EventCard
-            title="test title"
-            description="test description"
-            formattedDate="123"
-            time="456"
-            location="test location"
-            organization="test creators"
-            capacity="123/capacity"
-            cost="$123"
-          /> */}
-        </>
       )
     </>
   );

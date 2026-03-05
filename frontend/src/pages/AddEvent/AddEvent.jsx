@@ -11,10 +11,10 @@ import CostIcon from "../../assets/icons/PriceIcon.svg";
 import SeatIcon from "../../assets/icons/SmileIcon.svg";
 import TimeIcon from "../../assets/icons/TimeIcon.svg";
 
-function AddEvent() {
+function AddEvent({setPage}) {
   return (
     <>
-      <Header />
+      <Header setPage={setPage}/>
 
       <div className="add-event-container">
         <div className="form-card">

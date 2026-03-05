@@ -3,7 +3,7 @@ import Header from "../../components/Header/Header.jsx";
 import Filter from "../../components/Filter/Filter.jsx";
 import EventCard from "../../components/EventCard/EventCard.jsx";
 
-function Home() {
+function Home({ setPage }) {
   // Sample events for now
   const events = [
     {
@@ -30,7 +30,7 @@ function Home() {
 
   return (
     <div>
-      <Header />
+      <Header setPage={setPage}/>
       <section id="upcoming-events">
         <h2>Upcoming Events</h2>
 
@@ -40,7 +40,7 @@ function Home() {
               <EventCard key={idx} {...event} />
             ))}
           </div>
-          <Filter />
+          <Filter setPage={setPage}/>
         </div>
       </section>
     </div>
