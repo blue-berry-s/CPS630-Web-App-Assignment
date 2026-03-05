@@ -18,11 +18,6 @@ function App() {
   return (
     <>
       <CampusMap />
-      {page === "login" && <Login setPage={setPage} />}
-
-      {page === "home" && <Home setPage={setPage} />}
-      {page === "addEvent" && <AddEvent setPage={setPage} />} (
-      )
     </>
   );
 }

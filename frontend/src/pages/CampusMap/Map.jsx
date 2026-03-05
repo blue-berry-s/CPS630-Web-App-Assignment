@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import TMUMap from '../../assets/TMUMap.svg';
+import EventCard from '../../components/EventCard/EventCard'
 import './Map.css';
 
 const locations = [
@@ -24,9 +25,8 @@ function Map() {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
-    fetch('http://localhost:8080/api/events')
-      .then(response => response.text())
-      .then(text => console.log(text))
+    fetch('/api/events')
+      .then(response => response.json())
       .then(data => setEvents(data))
       .catch(err => console.error(err));
   }, []);
@@ -57,11 +57,8 @@ function Map() {
         <div id="locEvents">
           <h2 id="location">Events at {selectedId}</h2>
           <div>
-            {events.map(event => (
-              <div>
-                <h3>{event.title}</h3>
-                <p>{event.description}</p>
-              </div>
+            {events.map((event, idx) => (
+              <EventCard key={idx} {...event} />
             ))}
           </div>
         </div>
