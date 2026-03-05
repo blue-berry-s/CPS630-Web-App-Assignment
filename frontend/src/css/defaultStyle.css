@@ -121,8 +121,8 @@ input[type="checkbox"] {
   /* custom styling */
   font: inherit;
   color: var(--medium-blue);
-  width: 1.5em;
-  height: 1.5em;
+  width: 0.5em;
+  height: 1.7em;
   border: 0.15em solid var(--medium-blue);
   border-radius: 0.15em;
   transform: translateY(-0.076em);
@@ -160,8 +160,8 @@ input[type="radio"] {
   /* custom styling */
   font: inherit;
   color: var(--medium-blue);
-  width: 1.5em;
-  height: 1.5em;
+  width: 0.5em;
+  height: 1.7em;
   border: 0.15em solid var(--medium-blue);
   border-radius: 50%;
   transform: translateY(-0.076em);
