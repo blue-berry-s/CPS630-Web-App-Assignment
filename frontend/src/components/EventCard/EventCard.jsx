@@ -4,7 +4,7 @@ import './EventCard.css'
 
 
 
-function EventCard({ title, description, date, time, location, organization, availableSeatings, cost }) {
+function EventCard({ title, description, date, time, location, organization, availableSeatings, cost, isCompact }) {
   // REGISTER for event
   const handleRegister = async () => {
     try {
@@ -53,20 +53,27 @@ function EventCard({ title, description, date, time, location, organization, ava
 
   return (
     <>
-      <div className="card-content">
-        <img className="hide-on-compact" src="/src/assets/logos/TMU.svg" alt="TMU Logo" />
+      <div className={`card-content ${isCompact ? 'compact' : ''}`}>
+        {!isCompact && (
+          <img className="hide-on-compact" src="/src/assets/logos/TMU.svg" alt="TMU Logo" />
+        )}
 
         <div className="details">
           <div className="title-bar">
             <h3>{title}</h3>
 
-            <div className="title-icons">
-              <img src="/src/assets/icons/calendar.svg" alt="Calendar Icon" />
-              <img src="/src/assets/icons/star.svg" alt="Star Icon" />
-            </div>
+
+            {!isCompact && (
+              <div className="title-icons">
+                <img src="/src/assets/icons/calendar.svg" alt="Calendar Icon" />
+                <img src="/src/assets/icons/star.svg" alt="Star Icon" />
+              </div>
+            )}
           </div>
 
-          <img className="hide-on-large" src="/src/assets/logos/TMU.svg" alt="TMU Logo" />
+          {!isCompact && (
+            <img className="hide-on-large" src="/src/assets/logos/TMU.svg" alt="TMU Logo" />
+          )}
 
           <p className="event-description">{description || ""}</p>
 
@@ -100,22 +107,26 @@ function EventCard({ title, description, date, time, location, organization, ava
             </div>
           </div>
 
-          <CardTagDisplay
-            tags={["Networking", "Sports", "Academics", "Testing"]}
-          />
+          {!isCompact && (
+            <CardTagDisplay
+              tags={["Networking", "Sports", "Academics", "Testing"]}
+            />
+          )}
 
-          <div className="button-bar">
-            <Button
-              buttonType="btn-red"
-              text="DELETE"
-              onClick={handleDelete}
-            />
-            <Button
-              buttonType="btn-yellow"
-              text="REGISTER"
-              onClick={handleRegister}
-            />
-          </div>
+          {!isCompact && (
+            <div className="button-bar">
+              <Button
+                buttonType="btn-red"
+                text="DELETE"
+                onClick={handleDelete}
+              />
+              <Button
+                buttonType="btn-yellow"
+                text="REGISTER"
+                onClick={handleRegister}
+              />
+            </div>
+          )}
         </div>
       </div>
 

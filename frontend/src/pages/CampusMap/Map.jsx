@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import TMUMap from '../../assets/TMUMap.svg';
-import CompactCard from './CompactCard.jsx';
+import EventCard from '../../components/EventCard/EventCard';
 import './Map.css';
 
 const locations = [
@@ -24,6 +24,7 @@ function Map() {
   const [selectedId, setSelectedId] = useState("MAC");
   const [selectedLoc, setSelectedLoc] = useState("Mattamy Athletic Centre");
   const [events, setEvents] = useState([]);
+  const filteredEvents = events.filter(event => event.building === selectedId);
 
   useEffect(() => {
     fetch('/api/events')
@@ -31,6 +32,7 @@ function Map() {
       .then(data => setEvents(data))
       .catch(err => console.error(err));
   }, []);
+
 
   return (
     <>
@@ -58,19 +60,18 @@ function Map() {
         </div>
 
         <div id="locEvents">
-          <h2>{selectedLoc}</h2>
+          <h2>Events at {selectedLoc}</h2>
+
           <div id="eventDisplay">
-            {events
-              .filter(event => event.building === selectedId)
-              .map((event, idx) => (
+            {filteredEvents.length > 0 ? (
+              filteredEvents.map(event => (
                 <div key={event._id} className="map-page-card">
-                  <CompactCard
-                    key={event._id}
-                    {...event}
-                    isCompact={true} // This "removes" the extra things for this page only
-                  />
+                  <EventCard {...event} isCompact={true} />
                 </div>
-              ))}
+              ))
+            ) : (
+              <p className="empty-state">No events found for this building at the moment</p>
+            )}
           </div>
         </div>
       </div>
