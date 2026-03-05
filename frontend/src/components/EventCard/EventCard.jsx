@@ -4,7 +4,7 @@ import './EventCard.css'
 
 
 
-function EventCard({ title, description, formattedDate, time, location, organization, capacity, cost }) {
+function EventCard({ title, description, date, time, location, organization, availableSeatings, cost }) {
   // REGISTER for event
   const handleRegister = async () => {
     try {
@@ -74,7 +74,7 @@ function EventCard({ title, description, formattedDate, time, location, organiza
 
             <div className="detail-item">
               <img src="/src/assets/icons/DateIcon.svg" alt="Date Icon" />
-              <p>{formattedDate}</p>
+              <p>{date}</p>
             </div>
             <div className="detail-item">
               <img src="/src/assets/icons/TimeIcon.svg" alt="Time Icon" />
@@ -96,7 +96,7 @@ function EventCard({ title, description, formattedDate, time, location, organiza
             </div>
             <div className="detail-item hide-on-compact">
               <img src="/src/assets/icons/AvailabilityIcon.svg" alt="Availability Icon" />
-              <p>{capacity || ""}</p>
+              <p>{availableSeatings || ""}</p>
             </div>
           </div>
 
