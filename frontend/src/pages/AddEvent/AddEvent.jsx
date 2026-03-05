@@ -1,4 +1,5 @@
 import React from "react";
+import "../../css/defaultStyle.css"
 import Header from "../../components/Header/Header.jsx";
 import Button from "../../components/Button/Button.jsx";
 import "./AddEvent.css";

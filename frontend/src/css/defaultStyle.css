@@ -183,3 +183,16 @@ input[type="radio"]::before {
 input[type="radio"]:checked::before {
   transform: scale(1);
 }
+
+.hide-on-large{
+  display: none !important;
+}
+
+@media (max-width: 639px) {
+  .hide-on-large{
+    display: block !important;
+  }
+  .hide-on-compact{
+    display: none !important;
+  }
+}

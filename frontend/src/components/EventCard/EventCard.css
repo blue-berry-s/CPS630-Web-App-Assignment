@@ -101,7 +101,7 @@
 /* Mobile */
 @media (max-width: 639px) { 
   /* Hide the last two items (creator, availability) */
-  .hide-on-compact, .event-description{
+  .event-description{
     display: none;
   }
 
@@ -118,12 +118,18 @@
 
   .details {
     width:90%;
+    font-size:1em;
   }
 
   #event-cards {
-    width: 100%;
+    width: 90%;
     padding: 0 10px; /* optional, small padding */
   }
+
+  .detail-item img{
+    width:1.5em;
+  }
+
 }
 
 /* Tablet */

@@ -66,10 +66,34 @@
 
 /* Mobile */
 @media (max-width: 639px) { 
-  #filter{
+  
+   #filter:not(.hide-on-compact){
+    display: flex !important;
+    align-items: center;
+   }
+  
+  #filter > :not(:nth-child(-n + 1)){
     display: none;
+  }
+
+  #filter > #search-event{
+    display: block;
+    width: 80%;
+  }
+
+  .button-row{
+    width:80%;
+  }
+
+  .button-row > button{
+    font-size: 1em !important;
+    width: 100%;
   }
 }
 
 /* Tablet */
-@media (min-width: 640px) and (max-width: 1023px) { }
+@media (min-width: 640px) and (max-width: 1023px) { 
+  #filter{
+    width:25%;
+  }
+}
