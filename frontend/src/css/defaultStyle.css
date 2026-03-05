@@ -14,6 +14,7 @@ styles included for the following components:
 :root {
   --white: rgb(255, 255, 255);
   --off-white: #E9E9E9;
+  --grey:#999999;
   --black: #363636;
 
   --dark-blue: #002D72;
@@ -39,10 +40,6 @@ styles included for the following components:
 
   --button-disable-color: #919191;
   --button-disable-text-color: #000000;
-
-  /*  */
-  --text-input-color: #E9E9E9;
-  --text-input-text-color: #999999;
 
 
   /* Box Shadows */
@@ -95,10 +92,10 @@ textarea,
 input[type="text"],
 input[type="number"],
 input[type="date"] {
-  background-color: var(--text-input-color);
+  background-color: var(--off-white);
+  color: var(--black);
   font-family: "Inter", sans-serif;
   font-weight: bold;
-  border-radius: 8px;
   border: none;
   padding: 0.8em 1em;
 }
@@ -106,7 +103,7 @@ input[type="date"] {
 
 textarea::placeholder,
 input::placeholder {
-  color: var(--text-input-text-color);
+  color: var(--grey);
 }
 
 
