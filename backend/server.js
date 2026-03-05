@@ -2,7 +2,6 @@
 // IMPORTING LIBRARIES
 // ==============================
 
-
 const express = require("express");
 
 // Path helps safely build file paths (so they work on Windows/Mac/Linux)
@@ -11,14 +10,8 @@ const path = require("path");
 // mongoose is a library that helps node.js talk to MongoDB
 const mongoose = require("mongoose");
 
-// Get the required data models
-const Event = require('./models/Event.js');
-
-
-
-// dotenv lets the app read variables from a .env file
-// Example: database URL, port, etc.
-//require("dotenv").config();
+// dotenv REMOVED (you said to delete dotenv)
+// require("dotenv").config();
 
 
 // ==============================
@@ -41,21 +34,6 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../frontend/public")));
 
 
-// ========================================================
-// OLD VERSION VS NEW VERSION of SERVER.JS
-// ========================================================
-
-// OLD VERSION:
-// - Used fs
-// - Used events.json file
-// - Used readEvents() and saveEvents()
-// - Stored data manually in a file
-
-// NEW VERSION:
-// - Uses MongoDB database
-// - Uses Mongoose to define schema
-// - Data is stored in a real database collection
-// - No more fs or JSON file
 
 
 // ==============================
@@ -80,6 +58,60 @@ db.on("open", function () {
 
 
 // ==============================
+// DEFINING THE EVENT MODEL
+// ==============================
+
+// A Schema describes what an event looks like inside the database. converting json -> schema
+
+const EventSchema = new mongoose.Schema({
+
+  // Required title field
+  title: { type: String, required: true },
+
+  // Optional description
+  description: { type: String, default: "" },
+
+  // Required date field
+  date: { type: String, required: true },
+
+  // Optional time
+  time: { type: String, default: "" },
+
+  // Optional location
+  location: { type: String, default: "" },
+
+  // Optional organization
+  organization: { type: String, default: "" },
+
+  // Optional cost
+  cost: { type: String, default: "" },
+
+  // Tags stored as an array of strings
+  tags: { type: [String], default: [] },
+
+  // total number of seats available
+  availableSeatings: { type: Number, required: true, min: 0 },
+
+  // how many seats are already taken
+  registeredSeatings: { type: Number, default: 0, min: 0 }
+
+});
+
+// Virtual field (not stored in DB, calculated automatically)
+// Checks if event is full
+EventSchema.virtual("isFull").get(function () {
+  return this.registeredSeatings >= this.availableSeatings;
+});
+
+// This ensures virtual fields appear in JSON responses
+EventSchema.set("toJSON", { virtuals: true });
+
+// Create the model from the schema
+// "Event" becomes the collection name "events" in MongoDB
+const Event = mongoose.model("Event", EventSchema);
+
+
+// ==============================
 // SEED FUNCTION (TEST DATA)
 // =================================
 
@@ -95,16 +127,20 @@ async function seedIfEmpty() {
 
     console.log("Adding test events to database...");
 
-    const data = require('./data/events.json');
-
-    data.forEach(event => {
-            //since it was already created as an object, we can just add it
-            const newEvent = new Event(event);
-            //actually inputs into the database (save is asynch function)
-            newEvent.save()
-                .then(()=> console.log(event.title + "added to database"))
-                .catch(err => console.error('ERROR adding event "'+ event.title + '"' + " \n" + err));
-        })
+    await Event.insertMany([
+      {
+        title: "Test Event A",
+        description: "Seeded example event",
+        date: "2026-03-10",
+        time: "10:00",
+        location: "Campus",
+        organization: "CPS630",
+        cost: "Free",
+        tags: ["test"],
+        availableSeatings: 10,
+        registeredSeatings: 2
+      }
+    ]);
 
   } else {
     console.log("Events already exist. No seed added.");
@@ -120,7 +156,7 @@ seedIfEmpty();
 // ==============================
 
 app.get("/", (req, res) => {
-res.sendFile(path.join(__dirname, "../frontend/public", "home.html"));
+  res.sendFile(path.join(__dirname, "../frontend/public", "home.html"));
 });
 
 app.get("/addEvent", (req, res) => {
@@ -173,40 +209,35 @@ app.post("/api/login", (req, res) => {
 // REST API ROUTES (CRUD)
 // ==============================
 
+// Helper: get today's date in local time as "YYYY-MM-DD"
+function getTodayLocalYYYYMMDD() {
+  const now = new Date();
+  const y = now.getFullYear();
+  const m = String(now.getMonth() + 1).padStart(2, "0");
+  const d = String(now.getDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
 
 // READ ALL EVENTS
+// By default: return only today's and future events (so past events won't show on home page).
+// If we want ALL events (including past), call: /api/events?all=true
 app.get("/api/events", async (req, res) => {
 
   try {
-    const events = await Event.find(); // get all events from DB
+    const wantAll = String(req.query.all || "").toLowerCase() === "true";
+
+    const query = wantAll
+      ? {}
+      : { date: { $gte: getTodayLocalYYYYMMDD() } };
+
+    const events = await Event.find(query).sort({ date: 1, time: 1 });
     res.status(200).json(events);
 
   } catch (err) {
     res.status(500).json({ error: "Server error" });
   }
 });
-
-// GET ALL EVENT TAGS
-app.get("/api/tags", async (req, res) => {
-
-  try {
-    const events = await Event.find({}, 'tags'); // get all the tags from all the events in DB
-
-    const tagSet = new Set();
-
-    events.forEach(event => {
-      if (Array.isArray(event.tags)) {
-        event.tags.forEach(tag => tagSet.add(tag));
-      }
-    });
-
-    res.status(200).json(Array.from(tagSet).sort());
-
-  } catch (err) {
-    res.status(500).json({ error: "Server error" });
-  }
-});
-
 
 
 // READ ONE EVENT BY ID
@@ -237,7 +268,6 @@ app.post("/api/events", async (req, res) => {
       description,
       date,
       time,
-      building,
       location,
       organization,
       cost,
@@ -256,7 +286,6 @@ app.post("/api/events", async (req, res) => {
       description: description || "",
       date,
       time: time || "",
-      building: building || "",
       location: location || "",
       organization: organization || "",
       cost: cost || "",
@@ -295,51 +324,65 @@ app.put("/api/events/:id", async (req, res) => {
   }
 });
 
-// UPDATE EVENT - UNREGISTER FOR AN EVENT
-app.put("/api/events/unregister/:id", async (req, res) => {
+
+// REGISTER FOR EVENT (PATCH)
+app.patch("/api/events/:id/register", async (req, res) => {
 
   try {
+    const id = req.params.id;
 
+    // Atomically increment only if NOT full
     const updated = await Event.findOneAndUpdate(
-      {_id:req.params.id, 
-        $expr: { $gt: ["$registeredSeatings", 0] }
-      },
-      {$inc: { registeredSeatings: -1 }},
-      { new: true } // return updated document
+      { _id: id, $expr: { $lt: ["$registeredSeatings", "$availableSeatings"] } },
+      { $inc: { registeredSeatings: 1 } },
+      { new: true }
     );
 
-    if (!updated) {
-      return res.status(404).json({ error: "Event not found or has no registrations" });
+    if (updated) {
+      return res.status(200).json(updated);
     }
 
-    res.status(200).json(updated);
+    // If update failed, figure out why (not found vs full)
+    const exists = await Event.findById(id);
+    if (!exists) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    return res.status(409).json({ error: "Event is full" });
 
   } catch (err) {
-    res.status(400).json({ error: "Unregistration Failed" });
+    res.status(400).json({ error: "Invalid ID" });
   }
 });
 
-// UPDATE EVENT - REGISTER FOR AN EVENT
-app.put("/api/events/register/:id", async (req, res) => {
+
+// UNREGISTER FROM EVENT (PATCH)
+app.patch("/api/events/:id/unregister", async (req, res) => {
 
   try {
+    const id = req.params.id;
 
+    // Atomically decrement only if registeredSeatings > 0
     const updated = await Event.findOneAndUpdate(
-      {_id:req.params.id, 
-        $expr: { $lt: ["$registeredSeatings", "$availableSeatings"] }
-      },
-      {$inc: { registeredSeatings: 1 }},
-      { new: true } // return updated document
+      { _id: id, registeredSeatings: { $gt: 0 } },
+      { $inc: { registeredSeatings: -1 } },
+      { new: true }
     );
 
-    if (!updated) {
-      return res.status(404).json({ error: "Event not found or is full" });
+    if (updated) {
+      return res.status(200).json(updated);
     }
 
-    res.status(200).json(updated);
+    // If update failed, figure out why (not found vs already 0)
+    const exists = await Event.findById(id);
+    if (!exists) {
+      return res.status(404).json({ error: "Event not found" });
+    }
+
+    return res.status(409).json({ error: "No registrations to remove" });
 
   } catch (err) {
-    res.status(400).json({ error: "Registration Failed" });
+    res.status(400).json({ error: "Invalid ID" });
   }
 });
 
