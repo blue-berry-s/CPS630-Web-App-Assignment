@@ -4,7 +4,7 @@ input[type="submit"] {
   font-weight: bold;
   border-radius: 0.8em;
   padding: 0.8em 3.5em;
-  align-items: center;
+  text-align: center;
   box-shadow: var(--box-shadow-1);
   transition:
     background-color 0.2s,
@@ -107,7 +107,7 @@ input[type="submit"]:active {
 @media (max-width: 639px) { 
   button,
   input[type="submit"] {
-    font-size:1rem;
+    font-size:10px;
   }
 }
 

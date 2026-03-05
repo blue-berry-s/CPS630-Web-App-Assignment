@@ -63,3 +63,13 @@
   cursor: pointer;
   padding: 0;
 }
+
+/* Mobile */
+@media (max-width: 639px) { 
+  #filter{
+    display: none;
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1023px) { }

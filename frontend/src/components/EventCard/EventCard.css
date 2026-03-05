@@ -1,3 +1,7 @@
+.hide-on-large{
+  display: none;
+}
+
 #upcoming-events {
   margin: 30px;
   color: #363636;
@@ -25,6 +29,7 @@
   padding: 10px;
   gap: 10px;
   box-shadow: var(--box-shadow-1);
+  align-items: center;
 }
 
 .card-content img {
@@ -51,34 +56,29 @@
 }
 
 .title-icons img {
-  width: 32px;
+  width: 2em;
   gap: 10px;
 }
 
 .main-details {
-  font-size: 14px;
-}
-
-.detail-rows {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-}
-
-.detail-cols {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 10px;
 }
 
 .detail-item {
   display: flex;
-  flex-direction: row;
+  align-items: center;
   gap: 5px;
 }
 
 .detail-item img {
-  width: 24px;
+  width: 2.5em;
+}
+
+/* By default, show all items (2x3 grid) */
+.detail-item {
+  display: flex;
 }
 
 .category-bar {
@@ -95,3 +95,36 @@
   gap: 15px;
   padding: 10px 0px;
 }
+
+/* Responsive Designs */
+
+/* Mobile */
+@media (max-width: 639px) { 
+  /* Hide the last two items (creator, availability) */
+  .hide-on-compact, .event-description{
+    display: none;
+  }
+
+
+  .hide-on-large{
+    display: block;
+    width: 100% !important;
+  }
+  
+  .card-content {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .details {
+    width:90%;
+  }
+
+  #event-cards {
+    width: 100%;
+    padding: 0 10px; /* optional, small padding */
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1023px) { }

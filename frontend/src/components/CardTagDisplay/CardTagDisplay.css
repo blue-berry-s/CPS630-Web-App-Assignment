@@ -5,3 +5,22 @@
   align-items: center;
   column-gap: 1em;
 }
+
+/* Responsive design */
+
+/* Mobile */
+@media (max-width: 639px) { 
+
+  .category-bar *{
+    display: none;
+  }
+
+  .category-bar > :nth-child(-n + 3){
+    display: block;
+  }
+
+  
+}
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1023px) { }
