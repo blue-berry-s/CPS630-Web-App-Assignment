@@ -130,7 +130,7 @@ function AddEvent({setPage}) {
           <div className="section-content registration-section">
           
             <div className="registration-row">
-              <span className="registration-title">Requires Registration?</span>
+              <span className="registration-title">Requires External Registration?</span>
           
               <div className="radio-options">
                 <label className="radio-option">
