@@ -13,18 +13,14 @@ import SeatIcon from "../../assets/icons/SmileIcon.svg";
 import TimeIcon from "../../assets/icons/TimeIcon.svg";
 
 function AddEvent({setPage}) {
-  return (
-    <>
-      <Header setPage={setPage}/>
-function AddEvent() {
   const buildings = [
     "TRS", "SLC", "LIB", "POD",
     "JOR", "KHB", "RAC", "RCC",
     "ENG", "EPH", "MAC", "DSQ"
   ];
   return (
-    <>
-      <Header />
+      <>
+       <Header setPage={setPage}/>
       <div className="topText">
         <h2>Add an Event!</h2>
         <p>Description Text here about adding events - follow the form and whatever blah blah blah don’t need to read that much this is so much 

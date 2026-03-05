@@ -201,10 +201,12 @@ textarea {
 }
 
 /* Tablet */
-@media (min-width: 640px) and (max-width: 1023px) { }
-  border-radius: 6px;
-  border: 1px solid #ccc;
+@media (min-width: 640px) and (max-width: 1023px) {
+  .form-card
+  {border-radius: 6px;
+  border: 1px solid #ccc}
 }
+
 .input-with-icon select {
   height: 42px;               /* same as other inputs */
   padding: 8px 12px 8px 40px;
