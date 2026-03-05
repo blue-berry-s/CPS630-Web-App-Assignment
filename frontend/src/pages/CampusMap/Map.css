@@ -1,0 +1,65 @@
+#events {
+  padding: 5px 25px;
+}
+
+#events h1 {
+  color: #363636;
+  font-size: 2rem;
+}
+
+.map-wrapper {
+  position: relative;
+  width: 90%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.map-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+.pin-button {
+  position: absolute;
+  padding: 10px;
+  width: 1.5em;
+  height: 1.5em;
+  background-image: url('../../assets/mapPinOff.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transform: translate(-50%, -100%);
+}
+
+.pin-button.active {
+  background-image: url('../../assets/mapPin.png');
+}
+
+.pin-button:focus,
+.pin-button:active {
+  outline: none;
+  border: none;
+}
+
+#locEvents h2 {
+  text-align: center;
+  text-decoration: underline;
+  text-underline-offset: 8px;
+}
+
+#eventDisplay {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 10px;
+  align-items: center;
+}
+
+.map-page-card {
+  width: 45%;
+}

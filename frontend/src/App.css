@@ -9,10 +9,5 @@ body {
   margin: 0;
   display: block;
   min-height: 100vh;
-  background-color: #ffffff;
-}
-
-.logo {
-  height: auto;
-  display: block;
+  background-color: #e9e9e9;
 }
