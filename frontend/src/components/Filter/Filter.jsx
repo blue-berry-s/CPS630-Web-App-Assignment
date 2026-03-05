@@ -35,7 +35,7 @@ function Filter({ className, setPage }) {
       {/* Buttons */}
       <div className="button-row">
         <Button text="Add Event" buttonType="btn-blue" onClick={() => {setPage("addEvent"); console.log("Switch to add Event");}} />
-        <Button text="View Map" buttonType="btn-blue" onClick={() => console.log("View Map")} />
+        <Button text="View Map" buttonType="btn-blue" onClick={() => {setPage("campusMap"); console.log("Switch to campus Map");}} />
       </div>
 
       {/* Notice Section */}
