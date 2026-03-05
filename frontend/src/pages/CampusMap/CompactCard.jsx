@@ -1,0 +1,72 @@
+
+import './CompactCard.css'
+
+function CompactCard({ title, description, date, time, location, organization, availableSeatings, cost }) {
+  return (
+    <>
+      <div className="card-content">
+
+        <div className="details">
+          <div className="title-bar">
+            <h3>{title}</h3>
+
+            <div className="title-icons">
+              <img src="/src/assets/icons/calendar.svg" alt="Calendar Icon" />
+              <img src="/src/assets/icons/star.svg" alt="Star Icon" />
+            </div>
+          </div>
+
+          <img className="hide-on-large" src="/src/assets/logos/TMU.svg" alt="TMU Logo" />
+
+          <p className="event-description">{description || ""}</p>
+
+          <div className="main-details">
+
+            <div className="detail-item">
+              <img src="/src/assets/icons/DateIcon.svg" alt="Date Icon" />
+              <p>{date}</p>
+            </div>
+            <div className="detail-item">
+              <img src="/src/assets/icons/TimeIcon.svg" alt="Time Icon" />
+              <p>{time || ""}</p>
+            </div>
+            <div className="detail-item">
+              <img src="/src/assets/icons/LocationIcon.svg" alt="Location Icon" />
+              <p>{location || ""}</p>
+            </div>
+            <div className="detail-item">
+              <img src="/src/assets/icons/PriceIcon.svg" alt="Price Icon" />
+              <p>{cost || ""}</p>
+            </div>
+
+
+            <div className="detail-item hide-on-compact">
+              <img src="/src/assets/icons/CreatorIcon.svg" alt="Creator Icon" />
+              <p>{organization || ""}</p>
+            </div>
+            <div className="detail-item hide-on-compact">
+              <img src="/src/assets/icons/AvailabilityIcon.svg" alt="Availability Icon" />
+              <p>{availableSeatings || ""}</p>
+            </div>
+          </div>
+
+          <div className="button-bar">
+            <Button
+              buttonType="btn-red"
+              text="DELETE"
+              onClick={handleDelete}
+            />
+            <Button
+              buttonType="btn-yellow"
+              text="REGISTER"
+              onClick={handleRegister}
+            />
+          </div>
+        </div>
+      </div>
+
+    </>
+  );
+}
+
+export default CompactCard;
