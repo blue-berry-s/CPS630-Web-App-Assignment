@@ -9,6 +9,10 @@ import "./Home.css";
 function Home({ setPage }) {
   const [events, setEvents] = useState([]);
 
+  const refreshEvents = (deletedId) => {
+    setEvents(prev => prev.filter(event => event._id !== deletedId));
+  };
+
   useEffect(() => {
     fetch('/api/events')
       .then(response => response.json())
@@ -26,7 +30,12 @@ function Home({ setPage }) {
         <div id="event-display">
           <div id="event-cards">
             {events.map((event, idx) => (
-              <EventCard key={idx} {...event} />
+              <EventCard
+                key={idx}
+                id={event._id}
+                onUpdate={refreshEvents}
+                {...event}
+              />
             ))}
           </div>
           <Filter className="hide-on-compact hide-on-medium" setPage={setPage} />

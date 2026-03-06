@@ -204,7 +204,7 @@ app.post("/", (req, res) => {
   const { email, password } = req.body;
 
   if (email === HARDCODED_USER.email &&
-      password === HARDCODED_USER.password) {
+    password === HARDCODED_USER.password) {
 
     return res.redirect("/");
   }
@@ -219,7 +219,7 @@ app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
   if (email === HARDCODED_USER.email &&
-      password === HARDCODED_USER.password) {
+    password === HARDCODED_USER.password) {
 
     return res.status(200).json({ message: "Login successful" });
   }

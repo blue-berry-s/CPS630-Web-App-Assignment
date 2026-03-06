@@ -4,13 +4,13 @@ import './EventCard.css'
 
 
 
-function EventCard({ title, description, date, time, location, organization, availableSeatings, cost, isCompact }) {
+function EventCard({ id, title, description, date, time, location, organization, availableSeatings, cost, isCompact, onUpdate }) {
 
   // REGISTER for event
   const handleRegister = async () => {
     try {
-      const response = await fetch(`/api/events/register/${_id}`, {
-        method: 'PUT',
+      const response = await fetch(`/api/events/register/${id}`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' }
       });
 
@@ -32,7 +32,7 @@ function EventCard({ title, description, date, time, location, organization, ava
     if (!window.confirm(`Are you sure you want to delete "${title}"?`)) return;
 
     try {
-      const response = await fetch(`/api/events/${_id}`, {
+      const response = await fetch(`/api/events/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -41,7 +41,7 @@ function EventCard({ title, description, date, time, location, organization, ava
 
       if (response.ok) {
         alert(`Event "${title}" deleted successfully!`);
-        // Optional: remove card from UI or trigger parent refresh
+        if (onUpdate) onUpdate(id);
       } else {
         alert(data.error || "Delete failed");
       }
