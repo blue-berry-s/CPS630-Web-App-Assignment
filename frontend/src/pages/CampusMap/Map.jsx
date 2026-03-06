@@ -33,7 +33,6 @@ function Map() {
       .catch(err => console.error(err));
   }, []);
 
-
   return (
     <>
       <div id="events">
