@@ -44,7 +44,7 @@ function Home({ setPage }) {
               <EventCard key={idx} {...event} />
             ))}
           </div>
-          <Filter className="hide-on-compact" setPage={setPage}/>
+          <Filter className="hide-on-compact hide-on-medium" setPage={setPage}/>
         </div>
       </section>
     </div>

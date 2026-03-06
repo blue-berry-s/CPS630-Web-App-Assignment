@@ -150,4 +150,42 @@
 }
 
 /* Tablet */
-@media (min-width: 640px) and (max-width: 1023px) {}
+@media (min-width: 640px) and (max-width: 1023px) {
+  /* Hide the last two items (creator, availability) */
+  .event-description {
+    display: none;
+  }
+
+  .card-content img{
+    width:100%;
+  }
+
+
+  .hide-on-large {
+    display: block;
+    width: 100% !important;
+  }
+
+  .card-content {
+    flex-direction: column;
+    gap: 0em;
+  }
+
+  .details {
+    width: 90%;
+    font-size: 1.em;
+  }
+
+  #event-cards {
+    padding: 0 10px;
+  }
+
+  .detail-item img {
+    width: 1.2em;
+  }
+
+  .main-details { 
+    gap: 0em;
+  }
+
+}

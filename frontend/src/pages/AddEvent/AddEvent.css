@@ -231,6 +231,10 @@ textarea {
   left:auto;
 }
 
+.radio-option{
+  color: var(--black);
+}
+
 /* Responsive Designs */
 
 /* Mobile */
@@ -238,13 +242,57 @@ textarea {
   .form-card{
     width:75%;
   }
+
+  .two-column{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tags-grid {
+    grid-template-columns: auto;
+  }
+
+  .radio-options{
+    display: block;
+  }
+
+  .radio-option{
+    margin:0.5em 0em;
+  }
+  
+  .registration-row{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-section {
+    grid-template-columns: 40% auto;
+  }
+
 }
 
 /* Tablet */
 @media (min-width: 640px) and (max-width: 1023px) {
-  .form-card
-  {border-radius: 6px;
-  border: 1px solid #ccc}
+  .form-card{
+    width: 75%;
+  }
+
+  .radio-options{
+    display: block;
+  }
+
+  .radio-option{
+    margin:0.5em 0em;
+  }
+  
+  .registration-row{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-section {
+    grid-template-columns: 40% auto;
+  }
 }
 
 .input-with-icon select {

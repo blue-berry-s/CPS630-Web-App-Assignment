@@ -115,6 +115,6 @@ input[type="submit"]:active {
 @media (min-width: 640px) and (max-width: 1023px) { 
   button,
   input[type="submit"] {
-    font-size:0.7rem;
+    font-size:0.6em;
   }
 }
