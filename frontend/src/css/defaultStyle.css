@@ -106,8 +106,8 @@ input::placeholder {
   color: var(--grey);
 }
 
-input[type="date"]{
-  
+ input {
+  color-scheme: light !important;
 }
 
 
