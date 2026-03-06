@@ -7,6 +7,10 @@
   margin-bottom:5em;
 }
 
+label, input[type="checkbox"], .registration-title{
+  font-weight:700;
+}
+
 .topText {
   padding-left: 30px;
 }
@@ -60,8 +64,28 @@
 }
 
 .upload-icons img {
-  width: 20px;
+  width: 2em;
+}
+
+.upload-button {
+  display: flex;
+  gap: 10px;
   cursor: pointer;
+  align-items: center;
+  border: none;
+  font-weight: bold;
+  border-style: solid;
+  border-radius: 0.8em;
+  padding: 0.8em 3.5em;
+  text-align: center;
+  box-shadow: var(--box-shadow-1);
+  transition:
+    background-color 0.2s,
+    box-shdaow 0.4s;
+}
+
+.upload-button:active{
+   box-shadow: none;
 }
 
 /* Form Grid Layout */
@@ -124,7 +148,7 @@ textarea {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 400;
+ 
 }
 
 
@@ -146,7 +170,6 @@ textarea {
 
 .registration-title {
   min-width: 220px;
-  font-weight: 500;
 }
 
 .radio-options {
@@ -160,6 +183,7 @@ textarea {
   display: flex;
   gap: 8px;
   cursor: pointer;
+  align-items: center; 
 }
 
 .radio-option input[type="radio"] {
@@ -233,4 +257,12 @@ textarea {
   font-size: 14px;
   background-color: #E9E9E9;     /* same as other inputs */
   appearance: none;           /* remove default browser arrow */
+}
+
+.hide_registration{
+  display: none;
+}
+
+.show_registration{
+  display: flex;
 }

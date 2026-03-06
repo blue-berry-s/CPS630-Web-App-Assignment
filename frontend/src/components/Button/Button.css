@@ -19,7 +19,6 @@ input[type="submit"]:hover {
 button:active,
 input[type="submit"]:active {
   box-shadow: none;
-  ;
 }
 
 
