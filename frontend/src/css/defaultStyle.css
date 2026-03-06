@@ -198,3 +198,9 @@ input[type="radio"]:checked::before {
     display: none !important;
   }
 }
+
+@media (min-width: 640px) and (max-width: 1023px) { 
+  .hide-on-medium{
+    display: none !important;
+  }
+}

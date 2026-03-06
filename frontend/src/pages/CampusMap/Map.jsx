@@ -39,39 +39,41 @@ function Map() {
       <div id="events">
         <h1>Events Happening On Campus</h1>
 
-        <div className="map-wrapper">
-          <img src={TMUMap} alt="Map of TMU"></img>
+        <div id="content">
+          <div className="map-wrapper">
+            <img src={TMUMap} alt="Map of TMU"></img>
 
-          {locations.map((loc) => (
-            <button
-              key={loc.id}
-              className={`pin-button ${selectedId === loc.id ? 'active' : ''}`}
-              style={{
-                left: `${loc.x}%`,
-                top: `${loc.y}%`,
-                position: 'absolute'
-              }}
-              onClick={() => {
-                setSelectedId(loc.id)
-                setSelectedLoc(loc.name)
-              }}
-            />
-          ))}
-        </div>
+            {locations.map((loc) => (
+              <button
+                key={loc.id}
+                className={`pin-button ${selectedId === loc.id ? 'active' : ''}`}
+                style={{
+                  left: `${loc.x}%`,
+                  top: `${loc.y}%`,
+                  position: 'absolute'
+                }}
+                onClick={() => {
+                  setSelectedId(loc.id)
+                  setSelectedLoc(loc.name)
+                }}
+              />
+            ))}
+          </div>
 
-        <div id="locEvents">
-          <h2>Events at {selectedLoc}</h2>
+          <div id="locEvents">
+            <h2>Events at {selectedLoc}</h2>
 
-          <div id="eventDisplay">
-            {filteredEvents.length > 0 ? (
-              filteredEvents.map(event => (
-                <div key={event._id} className="map-page-card">
-                  <EventCard {...event} isCompact={true} />
-                </div>
-              ))
-            ) : (
-              <p className="empty-state">No events found for this building at the moment</p>
-            )}
+            <div id="eventDisplay">
+              {filteredEvents.length > 0 ? (
+                filteredEvents.map(event => (
+                  <div key={event._id} className="map-page-card">
+                    <EventCard {...event} isCompact={true} />
+                  </div>
+                ))
+              ) : (
+                <p className="empty-state">No events found for this building at the moment</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
