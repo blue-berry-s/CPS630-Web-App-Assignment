@@ -31,7 +31,11 @@ function AddEvent({ setPage }) {
         if (!res.ok) throw new Error("Server returned status " + res.status);
 
         const allTags = await res.json();
-        setTags(Array.isArray(allTags) ? allTags : []);
+        setTags(
+          Array.isArray(allTags)
+            ? allTags.filter(tag => typeof tag === "string" && tag.trim() !== "")
+            : []
+        );
       } catch (err) {
         console.error("Could not load tags:", err);
       }
@@ -52,7 +56,8 @@ function AddEvent({ setPage }) {
       organization: document.getElementById('eventCreator').value,
       cost: document.getElementById('eventPrice').value,
       tags: Array.from(document.querySelectorAll('#tagsContainer input:checked'))
-        .map(el => el.nextSibling.textContent.trim()),
+  .map(el => el.value.trim())
+  .filter(tag => tag !== ""),
       capacity: document.getElementById('eventSeats').value
     };
 
@@ -179,9 +184,9 @@ function AddEvent({ setPage }) {
             <div id="tagsContainer" className="section-content tags-grid">
               {tags.length > 0 ? (
                 tags.map((tag) => (
-                  <label key={tag}>
-                    <input type="checkbox" /> {tag}
-                  </label>
+                 <label key={tag}>
+  <input type="checkbox" value={tag} /> {tag}
+</label>
                 ))
               ) : (
                 <p>No Tags Loaded</p>

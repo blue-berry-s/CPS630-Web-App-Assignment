@@ -18,7 +18,11 @@ function Filter({ className, setPage, selectedTags, setSelectedTags }) {
         if (!res.ok) throw new Error("Server returned status " + res.status);
 
         const allTags = await res.json();
-        setTags(Array.isArray(allTags) ? allTags : []);
+        setTags(
+  Array.isArray(allTags)
+    ? allTags.filter(tag => tag && tag.trim() !== "")
+    : []
+);
       } catch (err) {
         console.error("Could not load tags:", err);
       }
