@@ -1,14 +1,29 @@
 import Button from '../Button/Button.jsx';
 import CardTagDisplay from '../CardTagDisplay/CardTagDisplay.jsx';
 import './EventCard.css'
+import { useState, useEffect} from 'react';
 
 
 
-function EventCard({ id, title, description, date, time, location, organization, availableSeatings, registeredSeatings, cost, tags, isCompact, onUpdate }) {
+function EventCard({ id, title, description, date, time, location, organization, availableSeatings, cost, tags, isCompact, onUpdate }) {
   let today = new Date();
   today.setHours(0, 0, 0, 0);
-
+  const [registeredSeatingsDisplay, setRegisteredSeatings] = useState(null);
   const eventPassed = new Date(date) < today;
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const res = await fetch(`/api/events/${id}`);
+        const data = await res.json();
+        setRegisteredSeatings(data.registeredSeatings);
+      } catch (err) {
+        console.error("Failed to fetch event", err);
+      }
+    };
+
+    fetchEvent();
+  }, [id]);
 
 
   // REGISTER for event
@@ -22,6 +37,7 @@ function EventCard({ id, title, description, date, time, location, organization,
       const data = await response.json();
 
       if (response.ok) {
+        setRegisteredSeatings(data.registeredSeatings); // updates UI
         alert(`Registered successfully! Total registered: ${data.registeredSeatings}`);
       } else {
         alert(data.error || "Registration failed");
@@ -67,9 +83,9 @@ function EventCard({ id, title, description, date, time, location, organization,
   }
   else {
     newButton = <Button
-      buttonType={registeredSeatings < availableSeatings ?  "btn-yellow" : "btn-disabled"}
-      text={registeredSeatings < availableSeatings  ?  "REGISTER" : "FULL"}
-      onClick={registeredSeatings < availableSeatings  ?  handleRegister : undefined }
+      buttonType={registeredSeatingsDisplay < availableSeatings ?  "btn-yellow" : "btn-disabled"}
+      text={registeredSeatingsDisplay < availableSeatings  ?  "REGISTER" : "FULL"}
+      onClick={registeredSeatingsDisplay < availableSeatings  ?  handleRegister : undefined }
     />
   }
 
@@ -127,7 +143,7 @@ function EventCard({ id, title, description, date, time, location, organization,
             </div>
             <div className="detail-item hide-on-compact">
               <img src="/src/assets/icons/AvailabilityIcon.svg" alt="Availability Icon" />
-              <p>{`${availableSeatings} spots | ${availableSeatings - registeredSeatings} open` || ""}</p>
+              <p>{`${availableSeatings} spots | ${availableSeatings - registeredSeatingsDisplay} open` || ""}</p>
             </div>
           </div>
 
