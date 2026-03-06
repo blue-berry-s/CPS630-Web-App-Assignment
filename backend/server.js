@@ -204,7 +204,7 @@ app.post("/", (req, res) => {
   const { email, password } = req.body;
 
   if (email === HARDCODED_USER.email &&
-      password === HARDCODED_USER.password) {
+    password === HARDCODED_USER.password) {
 
     return res.redirect("/");
   }
@@ -219,7 +219,7 @@ app.post("/api/login", (req, res) => {
   const { email, password } = req.body;
 
   if (email === HARDCODED_USER.email &&
-      password === HARDCODED_USER.password) {
+    password === HARDCODED_USER.password) {
 
     return res.status(200).json({ message: "Login successful" });
   }
@@ -337,9 +337,9 @@ app.post("/api/events", async (req, res) => {
 
     const seats = parseCapacityToSeats(capacity);
 
-    if (!title || !date || Number.isNaN(seats)) {
+    if (!title || !date || Number.isNaN(seats) || seats < 0) {
       return res.status(400).json({
-        error: "Missing required fields"
+        error: "Invalid event data"
       });
     }
 
