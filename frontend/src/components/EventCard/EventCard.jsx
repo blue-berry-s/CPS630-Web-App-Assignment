@@ -37,7 +37,7 @@ function EventCard({ id, title, description, date, time, location, organization,
       const data = await response.json();
 
       if (response.ok) {
-        setRegisteredSeatings(data.registeredSeatings); // updates UI
+        setRegisteredSeatings(data.registeredSeatings);
         alert(`Registered successfully! Total registered: ${data.registeredSeatings}`);
       } else {
         alert(data.error || "Registration failed");
@@ -133,7 +133,7 @@ function EventCard({ id, title, description, date, time, location, organization,
             </div>
             <div className="detail-item">
               <img src="/src/assets/icons/PriceIcon.svg" alt="Price Icon" />
-              <p>{cost || ""}</p>
+              <p>{`${cost <= 0 || cost === "Free" ? "Free" : "$" + cost}` || ""}</p>
             </div>
 
 

@@ -15,7 +15,7 @@ function Home({ setPage }) {
   };
 
   useEffect(() => {
-    fetch('/api/events')
+    fetch('/api/events?all=true')
       .then(response => response.json())
       .then(data => setEvents(data))
       .catch(err => console.error(err));

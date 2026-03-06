@@ -7,7 +7,7 @@
     "building": "ENG",
     "location": "ENG 201",
     "organization": "Computer Science Society",
-    "cost": "Free",
+    "cost": 0,
     "tags": [
       "workshop",
       "tech",
@@ -23,7 +23,7 @@
     "building": "KHB",
     "location": "Kerr Hall Upper Gym",
     "organization": "TMU Anime",
-    "cost": "$30",
+    "cost": 30,
     "tags": [
       "social",
       "culture"
@@ -38,7 +38,7 @@
     "building": "SLC",
     "location": "SLC 3rd Floor",
     "organization": "Career & Co-op Centre",
-    "cost": "Free",
+    "cost": 0,
     "tags": [
       "career",
       "tech",
@@ -55,7 +55,7 @@
     "building": "MAC",
     "location": "The Mattamy Athletic Centre",
     "organization": "Student Life Committee",
-    "cost": "$25",
+    "cost": 25,
     "tags": [
       "social",
       "culture"
@@ -71,7 +71,7 @@
     "building": "ENG",
     "location": "ENG 103",
     "organization": "Computer Science Society",
-    "cost": "Free",
+    "cost": 0,
     "tags": [
       "tech",
       "workshop",
@@ -88,7 +88,7 @@
     "building": "ENG",
     "location": "George Vari Engineering Building",
     "organization": "Sustainability Hub",
-    "cost": "Free",
+    "cost": 0,
     "tags": [
       "panel",
       "social"
@@ -104,7 +104,7 @@
     "building": "KHB",
     "location": "Kerr Hall Lower Gym",
     "organization": "TMSU Athletics",
-    "cost": "Free",
+    "cost": 0,
     "tags": [
       "social"
     ],
@@ -119,7 +119,7 @@
     "building": "POD",
     "location": "POD 250",
     "organization": "Philosophy Department",
-    "cost": "Free",
+    "cost": 0,
     "tags": [
       "tech",
       "panel",
@@ -136,7 +136,7 @@
     "building": "KHB",
     "location": "Kerr Hall West 101",
     "organization": "Creative Arts Collective",
-    "cost": "$10",
+    "cost": 10,
     "tags": [
       "beginner",
       "workshop",
