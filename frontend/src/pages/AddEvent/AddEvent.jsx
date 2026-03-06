@@ -12,16 +12,33 @@ import SeatIcon from "../../assets/icons/SmileIcon.svg";
 import TimeIcon from "../../assets/icons/TimeIcon.svg";
 import DropDownArrow from "../../assets/icons/DropDownArrow.svg";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function AddEvent({ setPage }) {
   const [registrationRequired, openRegistration] = useState(true);
+  const [tags, setTags] = useState([]);
 
   const buildings = [
     "TRS", "SLC", "LIB", "POD",
     "JOR", "KHB", "RAC", "RCC",
     "ENG", "EPH", "MAC", "DSQ"
   ];
+
+  useEffect(() => {
+    async function displayTags() {
+      try {
+        const res = await fetch("/api/tags");
+        if (!res.ok) throw new Error("Server returned status " + res.status);
+
+        const allTags = await res.json();
+        setTags(Array.isArray(allTags) ? allTags : []);
+      } catch (err) {
+        console.error("Could not load tags:", err);
+      }
+    }
+
+    displayTags();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -160,16 +177,15 @@ function AddEvent({ setPage }) {
             <div className="section-label">Tags</div>
 
             <div id="tagsContainer" className="section-content tags-grid">
-              <label><input type="checkbox" /> tech</label>
-              <label><input type="checkbox" /> workshop</label>
-              <label><input type="checkbox" /> beginner</label>
-              <label><input type="checkbox" /> networking</label>
-              <label><input type="checkbox" /> career</label>
-              <label><input type="checkbox" /> food</label>
-              <label><input type="checkbox" /> culture</label>
-              <label><input type="checkbox" /> social</label>
-              <label><input type="checkbox" /> panel</label>
-              <label><input type="checkbox" /> engineering</label>
+              {tags.length > 0 ? (
+                tags.map((tag) => (
+                  <label key={tag}>
+                    <input type="checkbox" /> {tag}
+                  </label>
+                ))
+              ) : (
+                <p>No Tags Loaded</p>
+              )}
             </div>
           </div>
 
