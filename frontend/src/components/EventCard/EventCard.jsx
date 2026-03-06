@@ -5,8 +5,13 @@ import './EventCard.css'
 
 
 function EventCard({ id, title, description, date, time, location, organization, availableSeatings, cost, isCompact, onUpdate }) {
+  let today = new Date();
+  today.setHours(0,0,0,0);
 
-  // REGISTER for event
+  const eventPassed = new Date(date) < today;
+
+
+   // REGISTER for event
   const handleRegister = async () => {
     try {
       const response = await fetch(`/api/events/register/${id}`, {
@@ -51,6 +56,23 @@ function EventCard({ id, title, description, date, time, location, organization,
     }
   };
 
+  let newButton;
+  if (eventPassed){
+    newButton = <Button
+                buttonType="btn-disabled"
+                text="PASSED EVENT"
+                onClick={()=>{}}
+              />
+
+  }
+  else{
+    newButton = <Button
+                buttonType={availableSeatings <= 0 ? "btn-disabled" : "btn-yellow"}
+                text={availableSeatings <= 0 ? "FULL" : "REGISTER"}
+                onClick={availableSeatings <= 0 ? undefined : handleRegister}
+              />
+  }
+
 
   return (
     <>
@@ -60,6 +82,7 @@ function EventCard({ id, title, description, date, time, location, organization,
         )}
 
         <div className="details">
+          <div className={ `${eventPassed ? 'passedEvent' : 'currentEvent'}` } > This Event Has Passed! </div>
           <div className="title-bar">
             <h3>{title}</h3>
 
@@ -121,11 +144,7 @@ function EventCard({ id, title, description, date, time, location, organization,
                 text="DELETE"
                 onClick={handleDelete}
               />
-              <Button
-                buttonType={availableSeatings <= 0 ? "btn-disabled" : "btn-yellow"}
-                text={availableSeatings <= 0 ? "FULL" : "REGISTER"}
-                onClick={availableSeatings <= 0 ? undefined : handleRegister}
-              />
+              {newButton}
             </div>
           )}
         </div>

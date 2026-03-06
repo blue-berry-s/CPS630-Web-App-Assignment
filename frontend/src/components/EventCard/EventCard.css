@@ -22,7 +22,7 @@
 }
 
 .card-content {
-  background-color: white;
+  background-color: var(--white);
   border-radius: 10px;
   display: flex;
   flex-direction: row;
@@ -111,6 +111,21 @@
   overflow: hidden;
 }
 
+.currentEvent{
+  display: none;
+}
+
+.passedEvent{
+  display: block;
+  background-color: var(--yellow);
+  color: var(--dark-blue);
+  font-weight:bold;
+  font-size:2em;
+  text-align: center;
+}
+
+
+
 /* Responsive Designs */
 
 /* Mobile */
@@ -145,6 +160,10 @@
 
   .detail-item img {
     width: 1.5em;
+  }
+
+  .passedEvent{
+    font-size:1.5em;
   }
 
 }
