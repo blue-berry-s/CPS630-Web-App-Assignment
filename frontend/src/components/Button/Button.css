@@ -93,7 +93,7 @@ input[type="submit"]:active {
 /* Disabled Button styling */
 
 .btn-disabled {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
   box-shadow: none;
   background-color: var(--button-disable-color);
   color: var(--button-disable-text-color);

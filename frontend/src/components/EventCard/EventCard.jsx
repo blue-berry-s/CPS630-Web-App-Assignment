@@ -5,6 +5,7 @@ import './EventCard.css'
 
 
 function EventCard({ title, description, date, time, location, organization, availableSeatings, cost, isCompact }) {
+
   // REGISTER for event
   const handleRegister = async () => {
     try {
@@ -121,9 +122,9 @@ function EventCard({ title, description, date, time, location, organization, ava
                 onClick={handleDelete}
               />
               <Button
-                buttonType="btn-yellow"
-                text="REGISTER"
-                onClick={handleRegister}
+                buttonType={availableSeatings <= 0 ? "btn-disabled" : "btn-yellow"}
+                text={availableSeatings <= 0 ? "FULL" : "REGISTER"}
+                onClick={availableSeatings <= 0 ? undefined : handleRegister}
               />
             </div>
           )}

@@ -16,7 +16,7 @@ function Home({ setPage }) {
       time: "12:00 PM",
       location: "Toronto",
       organization: "TMU",
-      capacity: "100",
+      availableSeatings: 100,
       cost: "$20"
     },
     {
@@ -26,7 +26,7 @@ function Home({ setPage }) {
       time: "6:00 PM",
       location: "Toronto",
       organization: "TMU Club",
-      capacity: "50",
+      availableSeatings: 0,
       cost: "$10"
     }
   ];
