@@ -3,7 +3,7 @@
 }
 
 #events h1 {
-  color: #363636;
+  color: var(--black);
   font-size: 2rem;
 }
 
@@ -12,6 +12,8 @@
   width: 90%;
   max-width: 1000px;
   margin: 0 auto;
+  min-width:400px;
+
 }
 
 .map-wrapper img {
@@ -48,7 +50,8 @@
 #locEvents h2 {
   text-align: center;
   text-decoration: underline;
-  text-underline-offset: 8px;
+  text-underline-offset: 0.5em;
+  color:var(--dark-blue)
 }
 
 #eventDisplay {
@@ -62,4 +65,20 @@
 
 .map-page-card {
   width: 45%;
+}
+
+/* Responsive Design */
+
+/* Mobile */
+@media (max-width: 639px) {
+  .map-wrapper{
+    width:100%;
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1023px) {
+   .map-wrapper{
+    width:100%;
+  }
 }

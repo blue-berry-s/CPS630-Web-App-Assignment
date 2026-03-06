@@ -106,6 +106,10 @@ input::placeholder {
   color: var(--grey);
 }
 
+ input {
+  color-scheme: light !important;
+}
+
 
 
 /* Custom Checkbox Styling */
@@ -120,12 +124,13 @@ input[type="checkbox"] {
   color: var(--medium-blue);
   width: 0.5em;
   height: 1.7em;
-  border: 0.15em solid var(--medium-blue);
+  border: 0.15em solid var(--medium-blue) !important;
   border-radius: 0.15em;
   transform: translateY(-0.076em);
 
   display: grid;
   place-content: center;
+  cursor: pointer;
 }
 
 
@@ -159,7 +164,7 @@ input[type="radio"] {
   color: var(--medium-blue);
   width: 0.5em;
   height: 1.7em;
-  border: 0.15em solid var(--medium-blue);
+  border: 0.15em solid var(--medium-blue) !important;
   border-radius: 50%;
   transform: translateY(-0.076em);
 
@@ -190,6 +195,12 @@ input[type="radio"]:checked::before {
     display: block !important;
   }
   .hide-on-compact{
+    display: none !important;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) { 
+  .hide-on-medium{
     display: none !important;
   }
 }

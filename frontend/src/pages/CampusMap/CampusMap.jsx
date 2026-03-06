@@ -1,10 +1,10 @@
 import Header from '../../components/Header/Header';
 import Map from './Map.jsx';
 
-function CampusMap() {
+function CampusMap( { setPage }) {
   return (
     <>
-      <Header />
+      <Header setPage={setPage}/>
       <Map />
     </>
   )

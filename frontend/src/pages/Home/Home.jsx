@@ -12,21 +12,21 @@ function Home({ setPage }) {
     {
       title: "Sample Event",
       description: "This is a test event",
-      formattedDate: "2026-03-05",
+      date: "2026-03-05",
       time: "12:00 PM",
       location: "Toronto",
       organization: "TMU",
-      capacity: "100",
+      availableSeatings: 100,
       cost: "$20"
     },
     {
       title: "Networking Meetup",
       description: "Meet students and professionals",
-      formattedDate: "2026-03-10",
+      date: "2026-03-10",
       time: "6:00 PM",
       location: "Toronto",
       organization: "TMU Club",
-      capacity: "50",
+      availableSeatings: 0,
       cost: "$10"
     }
   ];
@@ -36,7 +36,7 @@ function Home({ setPage }) {
       <Header setPage={setPage}/>
       <Filter className="hide-on-large" setPage={setPage}/>
       <section id="upcoming-events">
-        <h2>Upcoming Events</h2>
+        <h1>Upcoming Events</h1>
 
         <div id="event-display">
           <div id="event-cards">
@@ -44,7 +44,7 @@ function Home({ setPage }) {
               <EventCard key={idx} {...event} />
             ))}
           </div>
-          <Filter className="hide-on-compact" setPage={setPage}/>
+          <Filter className="hide-on-compact hide-on-medium" setPage={setPage}/>
         </div>
       </section>
     </div>

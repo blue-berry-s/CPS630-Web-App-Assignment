@@ -11,8 +11,13 @@ import BuildingIcon from "../../assets/icons/LocationIcon.svg";
 import CostIcon from "../../assets/icons/PriceIcon.svg";
 import SeatIcon from "../../assets/icons/SmileIcon.svg";
 import TimeIcon from "../../assets/icons/TimeIcon.svg";
+import DropDownArrow from "../../assets/icons/DropDownArrow.svg";
+
+import { useState } from "react";
 
 function AddEvent({setPage}) {
+  const [registrationRequired, openRegistration] = useState(true);
+
   const buildings = [
     "TRS", "SLC", "LIB", "POD",
     "JOR", "KHB", "RAC", "RCC",
@@ -22,7 +27,7 @@ function AddEvent({setPage}) {
       <>
        <Header setPage={setPage}/>
       <div className="topText">
-        <h2>Add an Event!</h2>
+        <h1>Add an Event!</h1>
         <p>Description Text here about adding events - follow the form and whatever blah blah blah don’t need to read that much this is so much 
           fun writing filler text yadayadayada</p>
       </div>
@@ -35,9 +40,12 @@ function AddEvent({setPage}) {
           <div className="image-upload-box">
             <h3>Upload an Event Image</h3>
             <div className="upload-icons">
-              <label><img src={FileIcon} alt="File" /><input type="file" hidden /></label>
-              <label><img src={DriveIcon} alt="Drive" /><input type="file" hidden /></label>
-              <label><img src={DropboxIcon} alt="Dropbox" /><input type="file" hidden /></label>
+              <label className="upload-button">
+                <img src={FileIcon} alt="File" />
+                <img src={DriveIcon} alt="Drive" />
+                <img src={DropboxIcon} alt="Dropbox" />
+                <input type="file" id="eventImage" name="eventImage" accept="image/png, image/jpg, image/svg+xml" hidden />
+              </label>
             </div>
           </div>
 
@@ -45,23 +53,27 @@ function AddEvent({setPage}) {
             <div className="section-label">Information</div>
 
             <div className="section-content">
-              <label>Event Name</label>
-              <input type="text" placeholder="Event Name" />
+              <div>
+                <label>Event Name</label>
+                <input type="text" placeholder="Event Name" name="eventName"  id="eventName" required/>
+              </div>
 
               <div className="two-column">
                 <div>
                   <label>Creator</label>
-                  <input type="text" placeholder="Event Creator" />
+                  <input type="text" placeholder="Event Creator" name="eventCreator" id="eventCreator" required/>
                 </div>
 
                 <div>
                   <label>Date</label>
-                  <input type="date" />
+                  <input type="date" name="eventDate" id="eventDate" required/>
                 </div>
               </div>
 
-              <label>Event Description</label>
-              <textarea placeholder="A short description of the event here..." />
+              <div>
+                <label>Event Description</label>
+                <textarea placeholder="A short description of the event here..." id="eventDesc" name="eventDesc" rows="5"/>
+              </div>
             </div>
           </div>
 
@@ -73,8 +85,9 @@ function AddEvent({setPage}) {
              <div className="two-column">
          
              <div className="input-with-icon">
+            <img id="dropDown" src={DropDownArrow}/>
              <img src={BuildingIcon} alt="Building" className="input-icon" />
-              <select className="uniform-input" defaultValue="">
+              <select className="uniform-input" defaultValue="" id="eventBuilding" name="eventBuilding">
                 <option value="" disabled>
                   Building
                 </option>
@@ -86,23 +99,23 @@ function AddEvent({setPage}) {
               </select>
             </div>
          
-               <input type="text" placeholder="Location" />
+               <input type="text" placeholder="Location" name="eventLocation" id="eventLocation"/>
          
              </div>
          
              <div className="input-with-icon">
                <img src={CostIcon} alt="Cost" />
-               <input type="text" placeholder="Cost" />
+               <input type="number" placeholder="Cost" name="eventPrice" id="eventPrice"/>
              </div>
          
              <div className="input-with-icon">
                <img src={TimeIcon} alt="Time" />
-               <input type="text" placeholder="Time" />
+               <input type="text" placeholder="Time" name="eventTime" id="eventTime"/>
              </div>
          
              <div className="input-with-icon">
                <img src={SeatIcon} alt="Seats" />
-               <input type="text" placeholder="Seats" />
+               <input type="number" placeholder="Seats" name="eventSeats" id="eventSeats"/>
              </div>
          
            </div>
@@ -111,7 +124,7 @@ function AddEvent({setPage}) {
           <div className="form-section">
             <div className="section-label">Tags</div>
 
-            <div className="section-content tags-grid">
+            <div id="tagsContainer" className="section-content tags-grid">
               <label><input type="checkbox" /> Academics</label>
               <label><input type="checkbox" /> Sports</label>
               <label><input type="checkbox" /> Network</label>
@@ -134,36 +147,42 @@ function AddEvent({setPage}) {
           
               <div className="radio-options">
                 <label className="radio-option">
-                  <input type="radio" name="regRequired" value="yes" />
+                  <input type="radio" id="registrationTrue" name="regRequired" value="yes" defaultChecked onClick={() => openRegistration(true)}/>
                   <span>Yes</span>
                 </label>
           
                 <label className="radio-option">
-                  <input type="radio" name="regRequired" value="no" />
+                  <input type="radio" id="registrationFalse" name="regRequired" value="no" onClick={() => openRegistration(false)}/>
                   <span>No</span>
                 </label>
               </div>
             </div>
           
-            <div className="registration-row">
+            <div className={`registration-row ${registrationRequired ? "show_registration" : "hide_registration"}`}>
               <span className="registration-title">Registration Opens</span>
           
               <div className="radio-options">
                 <label className="radio-option">
-                  <input type="radio" name="regOpen" value="today" />
+                  <input type="radio" name="regOpen" value="today" id="dateToday" defaultChecked/>
                   <span>Today</span>
                 </label>
-          
-                <input type="date" className="uniform-input" />
+              </div>
+
+              <div className="radio-options">
+                <label className="radio-option">
+                  <input type="radio" name="regOpen" value="dateOther" id="dateOther"/>
+                  <input type="date" className="uniform-input" id="registrationDateDate"/>
+                </label>
               </div>
             </div>
           
-            <div className="registration-row column">
+            <div className={`registration-row column ${registrationRequired ? "show_registration" : "hide_registration"}`}>
               <label className="registration-title">Registration Link</label>
               <input
                 type="text"
                 placeholder="https://www.example.com/"
                 className="uniform-input"
+                id="registrationLink" name="registrationLink"
               />
             </div>
           

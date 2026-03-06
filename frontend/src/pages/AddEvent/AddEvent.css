@@ -2,20 +2,29 @@
 .add-event-container {
   display: flex;
   justify-content: center;
-  background: #E9E9E9;
-  margin-top: 20px;
+  background: var(--off-white);
+  margin-top: 2em;
+  margin-bottom:5em;
+}
+
+label, input[type="checkbox"], .registration-title{
+  font-weight:700;
 }
 
 .topText {
   padding-left: 30px;
-  font-size: 150%;
 }
+
+.topText h1{
+  font-size:2em;
+}
+
 .form-section {
   display: grid;
   align-items: start; 
   margin-bottom: 20px;
   border-bottom: 1px solid #ccc;
-  padding-bottom: 20px;
+  padding-bottom: 2em;
 }
 .form-section:last-of-type {
   border-bottom: none;
@@ -55,8 +64,28 @@
 }
 
 .upload-icons img {
-  width: 20px;
+  width: 2em;
+}
+
+.upload-button {
+  display: flex;
+  gap: 10px;
   cursor: pointer;
+  align-items: center;
+  border: none;
+  font-weight: bold;
+  border-style: solid;
+  border-radius: 0.8em;
+  padding: 0.8em 3.5em;
+  text-align: center;
+  box-shadow: var(--box-shadow-1);
+  transition:
+    background-color 0.2s,
+    box-shdaow 0.4s;
+}
+
+.upload-button:active{
+   box-shadow: none;
 }
 
 /* Form Grid Layout */
@@ -119,7 +148,7 @@ textarea {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 400;
+ 
 }
 
 
@@ -141,7 +170,6 @@ textarea {
 
 .registration-title {
   min-width: 220px;
-  font-weight: 500;
 }
 
 .radio-options {
@@ -155,6 +183,7 @@ textarea {
   display: flex;
   gap: 8px;
   cursor: pointer;
+  align-items: center; 
 }
 
 .radio-option input[type="radio"] {
@@ -184,12 +213,26 @@ textarea {
 .input-with-icon img {
   position: absolute;
   left: 12px;
-  width: 16px;
-  height: 16px;
+  width: 1.5em;
 }
 
 .input-with-icon input {
-  padding-left: 40px; 
+  padding-left: 3em; 
+}
+
+.uniform-input{
+  font-weight:bold;
+  color:var(--black);
+}
+
+#dropDown{
+  position:absolute;
+  right: 12px;
+  left:auto;
+}
+
+.radio-option{
+  color: var(--black);
 }
 
 /* Responsive Designs */
@@ -199,13 +242,57 @@ textarea {
   .form-card{
     width:75%;
   }
+
+  .two-column{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .tags-grid {
+    grid-template-columns: auto;
+  }
+
+  .radio-options{
+    display: block;
+  }
+
+  .radio-option{
+    margin:0.5em 0em;
+  }
+  
+  .registration-row{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-section {
+    grid-template-columns: 40% auto;
+  }
+
 }
 
 /* Tablet */
 @media (min-width: 640px) and (max-width: 1023px) {
-  .form-card
-  {border-radius: 6px;
-  border: 1px solid #ccc}
+  .form-card{
+    width: 75%;
+  }
+
+  .radio-options{
+    display: block;
+  }
+
+  .radio-option{
+    margin:0.5em 0em;
+  }
+  
+  .registration-row{
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form-section {
+    grid-template-columns: 40% auto;
+  }
 }
 
 .input-with-icon select {
@@ -218,4 +305,12 @@ textarea {
   font-size: 14px;
   background-color: #E9E9E9;     /* same as other inputs */
   appearance: none;           /* remove default browser arrow */
+}
+
+.hide_registration{
+  display: none;
+}
+
+.show_registration{
+  display: flex;
 }

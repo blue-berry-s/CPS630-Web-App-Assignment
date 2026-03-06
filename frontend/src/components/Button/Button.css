@@ -19,7 +19,6 @@ input[type="submit"]:hover {
 button:active,
 input[type="submit"]:active {
   box-shadow: none;
-  ;
 }
 
 
@@ -94,7 +93,7 @@ input[type="submit"]:active {
 /* Disabled Button styling */
 
 .btn-disabled {
-  cursor: not-allowed;
+  cursor: not-allowed !important;
   box-shadow: none;
   background-color: var(--button-disable-color);
   color: var(--button-disable-text-color);
@@ -116,6 +115,6 @@ input[type="submit"]:active {
 @media (min-width: 640px) and (max-width: 1023px) { 
   button,
   input[type="submit"] {
-    font-size:0.7rem;
+    font-size:0.6em;
   }
 }
