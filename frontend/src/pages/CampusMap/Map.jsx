@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import TMUMap from '../../assets/TMUMap.svg';
+import TMUMap from '../../assets/mapIcons/TMUMap.svg';
 import EventCard from '../../components/EventCard/EventCard';
 import './Map.css';
 

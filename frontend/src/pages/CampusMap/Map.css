@@ -28,7 +28,7 @@
   padding: 10px;
   width: 1.5em;
   height: 1.5em;
-  background-image: url('../../assets/mapPinOff.png');
+  background-image: url('../../assets/mapIcons/mapPinOff.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-color: transparent;
@@ -38,7 +38,7 @@
 }
 
 .pin-button.active {
-  background-image: url('../../assets/mapPin.png');
+  background-image: url('../../assets/mapIcons/mapPin.png');
 }
 
 .pin-button:focus,
