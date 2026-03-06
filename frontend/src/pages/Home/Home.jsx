@@ -12,7 +12,7 @@ function Home({ setPage }) {
     {
       title: "Sample Event",
       description: "This is a test event",
-      formattedDate: "2026-03-05",
+      date: "2026-03-05",
       time: "12:00 PM",
       location: "Toronto",
       organization: "TMU",
@@ -22,7 +22,7 @@ function Home({ setPage }) {
     {
       title: "Networking Meetup",
       description: "Meet students and professionals",
-      formattedDate: "2026-03-10",
+      date: "2026-03-10",
       time: "6:00 PM",
       location: "Toronto",
       organization: "TMU Club",
