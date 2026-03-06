@@ -343,6 +343,10 @@ app.post("/api/events", async (req, res) => {
       });
     }
 
+    if (cost && Number(cost) < 0) {
+      return res.status(400).json({ error: "Cost cannot be negative" });
+    }
+
     const newEvent = await Event.create({
       title,
       description: description || "",
