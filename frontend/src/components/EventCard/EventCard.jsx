@@ -4,7 +4,7 @@ import './EventCard.css'
 
 
 
-function EventCard({ id, title, description, date, time, location, organization, availableSeatings, cost, tags, isCompact, onUpdate }) {
+function EventCard({ id, title, description, date, time, location, organization, availableSeatings, registeredSeatings, cost, tags, isCompact, onUpdate }) {
   let today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -67,9 +67,9 @@ function EventCard({ id, title, description, date, time, location, organization,
   }
   else {
     newButton = <Button
-      buttonType={availableSeatings <= 0 ? "btn-disabled" : "btn-yellow"}
-      text={availableSeatings <= 0 ? "FULL" : "REGISTER"}
-      onClick={availableSeatings <= 0 ? undefined : handleRegister}
+      buttonType={registeredSeatings < availableSeatings ?  "btn-yellow" : "btn-disabled"}
+      text={registeredSeatings < availableSeatings  ?  "REGISTER" : "FULL"}
+      onClick={registeredSeatings < availableSeatings  ?  handleRegister : undefined }
     />
   }
 
@@ -127,7 +127,7 @@ function EventCard({ id, title, description, date, time, location, organization,
             </div>
             <div className="detail-item hide-on-compact">
               <img src="/src/assets/icons/AvailabilityIcon.svg" alt="Availability Icon" />
-              <p>{availableSeatings || ""}</p>
+              <p>{`${availableSeatings} spots | ${availableSeatings - registeredSeatings} open` || ""}</p>
             </div>
           </div>
 
