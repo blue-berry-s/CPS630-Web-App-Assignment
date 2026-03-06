@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // Collect all checked tag checkboxes
         const tags = Array.from(
             document.querySelectorAll('input[name="eventTags"]:checked')
-        ).map(cb => cb.id);
+        ).map(cb => cb.value);
 
 
         // Build payload to match event JSON format
@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            
+
             setNotice("success", "Success!", "Event Successfully Created!");
             window.scrollTo(0, 0);
             //window.location.href = "/"; // go back to home
@@ -76,10 +76,10 @@ const notice = document.getElementById("notice");
 const noticeType = document.getElementById("noticeType");
 const noticeInfo = document.getElementById("noticeInfo");
 
-function setNotice(className, type, info){
-        notice.className = "";
-        notice.className = className;
-        notice.style.display = "flex";
-        noticeType.innerText = type;
-        noticeInfo.innerText = info;
+function setNotice(className, type, info) {
+    notice.className = "";
+    notice.className = className;
+    notice.style.display = "flex";
+    noticeType.innerText = type;
+    noticeInfo.innerText = info;
 }

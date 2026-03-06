@@ -168,21 +168,21 @@ async function loadTagFilters() {
 
 // Filter allEvents based on checked tags
 function applyTagFilters() {
-  // Find all checked tag checkboxes
   const selectedTags = Array.from(
-    document.querySelectorAll("#filter input[type='checkbox']:checked")
+    document.querySelectorAll("#event-category input[type='checkbox']:checked")
   ).map(cb => cb.value);
 
-  // If nothing checked, show all
   if (selectedTags.length === 0) {
     displayEvents(allEvents);
     return;
   }
 
-  // Keep events that contain ANY of the selected tags
   const filtered = allEvents.filter(event => {
     if (!Array.isArray(event.tags)) return false;
-    return selectedTags.some(tag => event.tags.includes(tag));
+
+    return selectedTags.some(tag =>
+      event.tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())
+    );
   });
 
   displayEvents(filtered);

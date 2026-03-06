@@ -51,7 +51,8 @@ function AddEvent({ setPage }) {
       location: document.getElementById('eventBuilding').value,
       organization: document.getElementById('eventCreator').value,
       cost: document.getElementById('eventPrice').value,
-      tags: Array.from(document.querySelectorAll('#tagsContainer input:checked')).map(el => el.parentElement.innerText.trim()),
+      tags: Array.from(document.querySelectorAll('#tagsContainer input:checked'))
+        .map(el => el.nextSibling.textContent.trim()),
       capacity: document.getElementById('eventSeats').value
     };
 
@@ -177,15 +178,15 @@ function AddEvent({ setPage }) {
 
             <div id="tagsContainer" className="section-content tags-grid">
               {tags.length > 0 ? (
-                  tags.map((tag) => (
-                    <div key={tag} className="selector">
-                      <input type="checkbox" id={tag} name="eventTags" />
-                      <label htmlFor={tag}>{tag}</label>
-                    </div>
-                  ))
-                ) : (
-                  <p>No Tags Loaded</p>
-                )}
+                tags.map((tag) => (
+                  <div key={tag} className="selector">
+                    <input type="checkbox" id={tag} name="eventTags" />
+                    <label htmlFor={tag}>{tag}</label>
+                  </div>
+                ))
+              ) : (
+                <p>No Tags Loaded</p>
+              )}
             </div>
           </div>
 

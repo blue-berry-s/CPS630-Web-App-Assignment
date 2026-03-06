@@ -9,14 +9,13 @@
     "organization": "Computer Science Society",
     "cost": "Free",
     "tags": [
-      "Academics",
-      "Workshop",
-      "Technology"
+      "workshop",
+      "tech",
+      "beginner"
     ],
     "availableSeatings": 40
   },
   {
-   
     "title": "Cosplay Volleyball Social",
     "description": "Come play volleyball with your favourite anime characters!",
     "date": "2026-08-28",
@@ -26,14 +25,12 @@
     "organization": "TMU Anime",
     "cost": "$30",
     "tags": [
-      "Sports",
-      "Social",
-      "Arts & Culture"
-      ],
+      "social",
+      "culture"
+    ],
     "availableSeatings": 30
   },
   {
-   
     "title": "Resume Blitz: Tech Edition",
     "description": "Get your resume critiqued by industry professionals from Google and Amazon. Focus on software engineering and data science roles.",
     "date": "2026-02-15",
@@ -43,15 +40,14 @@
     "organization": "Career & Co-op Centre",
     "cost": "Free",
     "tags": [
-      "Career",
-      "Professional Development",
-      "Technology"
+      "career",
+      "tech",
+      "panel"
     ],
     "availableSeatings": 100,
     "registeredSeatings": 78
   },
   {
-   
     "title": "Winter Gala 2026",
     "description": "A night of formal dining and dancing to celebrate the end of the winter midterms. Semi-formal attire required.",
     "date": "2026-09-05",
@@ -61,14 +57,13 @@
     "organization": "Student Life Committee",
     "cost": "$25",
     "tags": [
-      "Social",
-      "Arts & Culture"
+      "social",
+      "culture"
     ],
     "availableSeatings": 500,
     "registeredSeatings": 455
   },
   {
-    
     "title": "Algorithm Whiteboarding",
     "description": "Preparing for technical interviews? Join us to solve LeetCode medium/hard problems on the big boards. Pizza will be provided.",
     "date": "2026-02-18",
@@ -78,15 +73,14 @@
     "organization": "Computer Science Society",
     "cost": "Free",
     "tags": [
-      "Academics",
-      "Technology",
-      "Workshop"
+      "tech",
+      "workshop",
+      "career"
     ],
     "availableSeatings": 30,
     "registeredSeatings": 5
   },
   {
-   
     "title": "Sustainable Living Panel",
     "description": "Discussion on urban gardening and zero-waste lifestyles in a downtown campus environment.",
     "date": "2026-11-12",
@@ -96,14 +90,13 @@
     "organization": "Sustainability Hub",
     "cost": "Free",
     "tags": [
-      "Environment",
-      "Community"
+      "panel",
+      "social"
     ],
     "availableSeatings": 60,
     "registeredSeatings": 40
   },
   {
-    
     "title": "Intramural Basketball Finals",
     "description": "The final championship game of the winter season. Come cheer on the Computer Science Tigers!",
     "date": "2026-05-20",
@@ -113,14 +106,12 @@
     "organization": "TMSU Athletics",
     "cost": "Free",
     "tags": [
-      "Sports",
-      "Social"
+      "social"
     ],
     "availableSeatings": 200,
     "registeredSeatings": 50
   },
   {
-    
     "title": "AI Ethics Seminar",
     "description": "A deep dive into the legal and ethical implications of Large Language Models in higher education.",
     "date": "2026-03-10",
@@ -130,15 +121,14 @@
     "organization": "Philosophy Department",
     "cost": "Free",
     "tags": [
-      "Academics",
-      "Seminar",
-      "Technology"
+      "tech",
+      "panel",
+      "engineering"
     ],
     "availableSeatings": 80,
     "registeredSeatings": 70
   },
   {
-   
     "title": "Beginner Pottery Workshop",
     "description": "Learn the basics of wheel throwing and hand-building. All materials provided. Beginners welcome!",
     "date": "2026-02-25",
@@ -148,8 +138,9 @@
     "organization": "Creative Arts Collective",
     "cost": "$10",
     "tags": [
-      "Arts & Culture",
-      "Workshop"
+      "beginner",
+      "workshop",
+      "culture"
     ],
     "availableSeatings": 15,
     "registeredSeatings": 15
