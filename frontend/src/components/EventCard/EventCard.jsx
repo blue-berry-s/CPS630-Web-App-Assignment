@@ -4,14 +4,14 @@ import './EventCard.css'
 
 
 
-function EventCard({ id, title, description, date, time, location, organization, availableSeatings, cost, isCompact, onUpdate }) {
+function EventCard({ id, title, description, date, time, location, organization, availableSeatings, cost, tags, isCompact, onUpdate }) {
   let today = new Date();
-  today.setHours(0,0,0,0);
+  today.setHours(0, 0, 0, 0);
 
   const eventPassed = new Date(date) < today;
 
 
-   // REGISTER for event
+  // REGISTER for event
   const handleRegister = async () => {
     try {
       const response = await fetch(`/api/events/register/${id}`, {
@@ -57,20 +57,20 @@ function EventCard({ id, title, description, date, time, location, organization,
   };
 
   let newButton;
-  if (eventPassed){
+  if (eventPassed) {
     newButton = <Button
-                buttonType="btn-disabled"
-                text="PASSED EVENT"
-                onClick={()=>{}}
-              />
+      buttonType="btn-disabled"
+      text="PASSED EVENT"
+      onClick={() => { }}
+    />
 
   }
-  else{
+  else {
     newButton = <Button
-                buttonType={availableSeatings <= 0 ? "btn-disabled" : "btn-yellow"}
-                text={availableSeatings <= 0 ? "FULL" : "REGISTER"}
-                onClick={availableSeatings <= 0 ? undefined : handleRegister}
-              />
+      buttonType={availableSeatings <= 0 ? "btn-disabled" : "btn-yellow"}
+      text={availableSeatings <= 0 ? "FULL" : "REGISTER"}
+      onClick={availableSeatings <= 0 ? undefined : handleRegister}
+    />
   }
 
 
@@ -82,7 +82,7 @@ function EventCard({ id, title, description, date, time, location, organization,
         )}
 
         <div className="details">
-          <div className={ `${eventPassed ? 'passedEvent' : 'currentEvent'}` } > This Event Has Passed! </div>
+          <div className={`${eventPassed ? 'passedEvent' : 'currentEvent'}`} > This Event Has Passed! </div>
           <div className="title-bar">
             <h3>{title}</h3>
 
@@ -133,7 +133,7 @@ function EventCard({ id, title, description, date, time, location, organization,
 
           {!isCompact && (
             <CardTagDisplay
-              tags={["Networking", "Sports", "Academics", "Testing"]}
+              tags={tags || []}
             />
           )}
 
