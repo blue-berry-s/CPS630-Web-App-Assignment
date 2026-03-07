@@ -281,10 +281,14 @@ if (Array.isArray(tags)) {
 
     const seats = parseCapacityToSeats(capacity);
 
-    if (!title || !date || Number.isNaN(seats)) {
+    if (!title || !date || Number.isNaN(seats) || seats < 0) {
       return res.status(400).json({
-        error: "Missing required fields"
+        error: "Invalid event data"
       });
+    }
+
+    if (cost && Number(cost) < 0) {
+      return res.status(400).json({ error: "Cost cannot be negative" });
     }
 
     const newEvent = await Event.create({
