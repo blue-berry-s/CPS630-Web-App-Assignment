@@ -4,8 +4,8 @@ import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import SearchDateIcon from "../../assets/icons/SearchDateIcon.svg";
 import Button from "../Button/Button";
 
-function Filter({ className, setPage, selectedTags, setSelectedTags }) {
-  const [title, setTitle] = useState("");
+function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle, setSearchTitle }) {
+  const [title, setTitle] = useState(searchTitle || ""); // ADDED
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [tags, setTags] = useState([]);
@@ -19,10 +19,10 @@ function Filter({ className, setPage, selectedTags, setSelectedTags }) {
 
         const allTags = await res.json();
         setTags(
-  Array.isArray(allTags)
-    ? allTags.filter(tag => tag && tag.trim() !== "")
-    : []
-);
+          Array.isArray(allTags)
+            ? allTags.filter(tag => tag && tag.trim() !== "")
+            : []
+        );
       } catch (err) {
         console.error("Could not load tags:", err);
       }
@@ -39,7 +39,12 @@ function Filter({ className, setPage, selectedTags, setSelectedTags }) {
     }
   };
 
-  const handleSearchTitle = (e) => e.preventDefault();
+  // ADDED
+  const handleSearchTitle = (e) => {
+    e.preventDefault();
+    setSearchTitle(title);
+  };
+
   const handleSearchDate = (e) => e.preventDefault();
 
   return (
@@ -60,6 +65,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags }) {
 
       {/* Filters Section */}
       <h2 className="section-title">Filters</h2>
+
       <form id="search-event" onSubmit={handleSearchTitle}>
         <div className="input-with-icon">
           <input
@@ -67,7 +73,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags }) {
             name="title"
             placeholder="Search (name or description)"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setTitle(e.target.value)}   // still your state
           />
           <button type="submit" className="icon-button">
             <img src={SearchIcon} alt="Search" />
