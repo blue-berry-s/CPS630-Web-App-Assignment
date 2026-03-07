@@ -11,6 +11,8 @@ const path = require("path");
 // mongoose lets node talk to MongoDB
 const mongoose = require("mongoose");
 
+// import Model
+const Event = require("./models/Event.js");
 
 // ==============================
 // BASIC SERVER SETUP
@@ -29,6 +31,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "../frontend/public")));
 
 
+const seedEvents = require("./data/events.json");
+
 // ==============================
 // CONNECT TO MONGODB
 // ==============================
@@ -36,7 +40,6 @@ app.use(express.static(path.join(__dirname, "../frontend/public")));
 // connect to our local MongoDB database
 mongoose.connect("mongodb://127.0.0.1:27017/events_db");
 
-// mongoose connection object
 const db = mongoose.connection;
 
 // if there is an error connecting
@@ -44,62 +47,29 @@ db.on("error", function (err) {
   console.log("Database connection error:", err);
 });
 
-// if connection works
-db.on("open", function () {
+
+// this checks if the MongoDB "events" collection is empty.
+// If no events exist, it inserts sample test data from events.json.
+async function seedIfEmpty() {
+  const count = await Event.countDocuments();
+
+  if (count === 0) {
+    console.log("Seeding database with sample events...");
+    await Event.insertMany(seedEvents);
+  } else {
+    console.log("Database already has events. No seed added.");
+  }
+}
+
+db.once("open", async function () {
   console.log("Database connected successfully");
+
+  try {
+    await seedIfEmpty();
+  } catch (err) {
+    console.log("Error while seeding database:", err);
+  }
 });
-
-
-// ==============================
-// EVENT MODEL (SCHEMA)
-// ==============================
-
-// this defines the structure of an event inside MongoDB
-const EventSchema = new mongoose.Schema({
-
-  // title is required
-  title: { type: String, required: true },
-
-  // description is optional
-  description: { type: String, default: "" },
-
-  // date is required
-  date: { type: String, required: true },
-
-  // optional event time
-  time: { type: String, default: "" },
-
-  // optional location
-  location: { type: String, default: "" },
-
-  // optional organization hosting event
-  organization: { type: String, default: "" },
-
-  // optional price
-  cost: { type: String, default: "" },
-
-  // tags for filtering events
-  tags: { type: [String], default: [] },
-
-  // total seats available
-  availableSeatings: { type: Number, required: true, min: 0 },
-
-  // seats already taken
-  registeredSeatings: { type: Number, default: 0, min: 0 }
-
-});
-
-// virtual property (not stored in database)
-// checks if event is already full
-EventSchema.virtual("isFull").get(function () {
-  return this.registeredSeatings >= this.availableSeatings;
-});
-
-// make sure virtual fields appear when sending JSON
-EventSchema.set("toJSON", { virtuals: true });
-
-// create model so we can interact with events collection
-const Event = mongoose.model("Event", EventSchema);
 
 
 // ==============================
@@ -133,40 +103,6 @@ function parseCapacityToSeats(capacity) {
 
   return Number(match[0]);
 }
-
-
-// ==============================
-// ADD TEST DATA IF DATABASE EMPTY
-// ==============================
-
-// this just inserts a test event if there are none
-async function seedIfEmpty() {
-
-  const count = await Event.countDocuments();
-
-  if (count === 0) {
-
-    console.log("Adding test events...");
-
-    await Event.insertMany([
-      {
-        title: "Test Event A",
-        description: "Seeded example event",
-        date: "2026-03-10",
-        time: "10:00",
-        location: "Campus",
-        organization: "CPS630",
-        cost: "Free",
-        tags: ["test"],
-        availableSeatings: 10,
-        registeredSeatings: 2
-      }
-    ]);
-
-  }
-}
-
-seedIfEmpty();
 
 
 // ==============================
@@ -335,6 +271,14 @@ app.post("/api/events", async (req, res) => {
       capacity
     } = req.body;
 
+    let finalTags = [];
+
+if (Array.isArray(tags)) {
+  finalTags = tags;
+} else if (tags) {
+  finalTags = [tags];
+}
+
     const seats = parseCapacityToSeats(capacity);
 
     if (!title || !date || Number.isNaN(seats) || seats < 0) {
@@ -355,7 +299,7 @@ app.post("/api/events", async (req, res) => {
       location: location || "",
       organization: organization || "",
       cost: cost || "",
-      tags: Array.isArray(tags) ? tags : [],
+      tags: finalTags,
       availableSeatings: seats,
       registeredSeatings: 0
     });

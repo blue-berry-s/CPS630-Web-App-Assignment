@@ -4,7 +4,7 @@ import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import SearchDateIcon from "../../assets/icons/SearchDateIcon.svg";
 import Button from "../Button/Button";
 
-function Filter({ className, setPage }) {
+function Filter({ className, setPage, selectedTags, setSelectedTags }) {
   const [title, setTitle] = useState("");
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
@@ -18,7 +18,11 @@ function Filter({ className, setPage }) {
         if (!res.ok) throw new Error("Server returned status " + res.status);
 
         const allTags = await res.json();
-        setTags(Array.isArray(allTags) ? allTags : []);
+        setTags(
+  Array.isArray(allTags)
+    ? allTags.filter(tag => tag && tag.trim() !== "")
+    : []
+);
       } catch (err) {
         console.error("Could not load tags:", err);
       }
@@ -27,6 +31,14 @@ function Filter({ className, setPage }) {
     displayTags();
   }, []);
 
+  const handleTagChange = (tag) => {
+    if (selectedTags.includes(tag)) {
+      setSelectedTags(selectedTags.filter(t => t !== tag));
+    } else {
+      setSelectedTags([...selectedTags, tag]);
+    }
+  };
+
   const handleSearchTitle = (e) => e.preventDefault();
   const handleSearchDate = (e) => e.preventDefault();
 
@@ -34,8 +46,8 @@ function Filter({ className, setPage }) {
     <div className={className} id="filter">
       {/* Buttons */}
       <div className="button-row">
-        <Button text="Add Event" buttonType="btn-blue" onClick={() => {setPage("addEvent"); console.log("Switch to add Event");}} />
-        <Button text="View Map" buttonType="btn-blue" onClick={() => {setPage("campusMap"); console.log("Switch to campus Map");}} />
+        <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+        <Button text="View Map" buttonType="btn-blue" onClick={() => { setPage("campusMap"); console.log("Switch to campus Map"); }} />
       </div>
 
       {/* Notice Section */}
@@ -111,7 +123,13 @@ function Filter({ className, setPage }) {
         {tags.length > 0 ? (
           tags.map((tag) => (
             <div key={tag} className="selector">
-              <input type="checkbox" id={tag} name="eventTags" />
+              <input
+                type="checkbox"
+                id={tag}
+                name="eventTags"
+                checked={selectedTags.includes(tag)}
+                onChange={() => handleTagChange(tag)}
+              />
               <label htmlFor={tag}>{tag}</label>
             </div>
           ))

@@ -30,7 +30,7 @@ const EventSchema = new mongoose.Schema({
   organization: { type: String, default: "" },
 
   // Optional cost
-  cost: { type: String, default: "" },
+  cost: { type: Number, min: 0 },
 
   // Tags stored as an array of strings
   tags: { type: [String], default: [] },

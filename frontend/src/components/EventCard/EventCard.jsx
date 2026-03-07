@@ -1,22 +1,43 @@
 import Button from '../Button/Button.jsx';
 import CardTagDisplay from '../CardTagDisplay/CardTagDisplay.jsx';
 import './EventCard.css'
+import { useState, useEffect} from 'react';
 
 
 
-function EventCard({ title, description, date, time, location, organization, availableSeatings, cost, isCompact }) {
+function EventCard({ id, title, description, date, time, location, organization, availableSeatings, cost, tags, isCompact, onUpdate }) {
+  let today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const [registeredSeatingsDisplay, setRegisteredSeatings] = useState(null);
+  const eventPassed = new Date(date) < today;
+
+  useEffect(() => {
+    const fetchEvent = async () => {
+      try {
+        const res = await fetch(`/api/events/${id}`);
+        const data = await res.json();
+        setRegisteredSeatings(data.registeredSeatings);
+      } catch (err) {
+        console.error("Failed to fetch event", err);
+      }
+    };
+
+    fetchEvent();
+  }, [id]);
+
 
   // REGISTER for event
   const handleRegister = async () => {
     try {
-      const response = await fetch(`/api/events/register/${_id}`, {
-        method: 'PUT',
+      const response = await fetch(`/api/events/register/${id}`, {
+        method: 'PATCH',
         headers: { 'Content-Type': 'application/json' }
       });
 
       const data = await response.json();
 
       if (response.ok) {
+        setRegisteredSeatings(data.registeredSeatings);
         alert(`Registered successfully! Total registered: ${data.registeredSeatings}`);
       } else {
         alert(data.error || "Registration failed");
@@ -32,7 +53,7 @@ function EventCard({ title, description, date, time, location, organization, ava
     if (!window.confirm(`Are you sure you want to delete "${title}"?`)) return;
 
     try {
-      const response = await fetch(`/api/events/${_id}`, {
+      const response = await fetch(`/api/events/${id}`, {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' }
       });
@@ -41,7 +62,7 @@ function EventCard({ title, description, date, time, location, organization, ava
 
       if (response.ok) {
         alert(`Event "${title}" deleted successfully!`);
-        // Optional: remove card from UI or trigger parent refresh
+        if (onUpdate) onUpdate(id);
       } else {
         alert(data.error || "Delete failed");
       }
@@ -50,6 +71,23 @@ function EventCard({ title, description, date, time, location, organization, ava
       alert("Delete failed. Try again.");
     }
   };
+
+  let newButton;
+  if (eventPassed) {
+    newButton = <Button
+      buttonType="btn-disabled"
+      text="PASSED EVENT"
+      onClick={() => { }}
+    />
+
+  }
+  else {
+    newButton = <Button
+      buttonType={registeredSeatingsDisplay < availableSeatings ?  "btn-yellow" : "btn-disabled"}
+      text={registeredSeatingsDisplay < availableSeatings  ?  "REGISTER" : "FULL"}
+      onClick={registeredSeatingsDisplay < availableSeatings  ?  handleRegister : undefined }
+    />
+  }
 
 
   return (
@@ -60,6 +98,7 @@ function EventCard({ title, description, date, time, location, organization, ava
         )}
 
         <div className="details">
+          <div className={`${eventPassed ? 'passedEvent' : 'currentEvent'}`} > This Event Has Passed! </div>
           <div className="title-bar">
             <h3>{title}</h3>
 
@@ -94,7 +133,7 @@ function EventCard({ title, description, date, time, location, organization, ava
             </div>
             <div className="detail-item">
               <img src="/src/assets/icons/PriceIcon.svg" alt="Price Icon" />
-              <p>{cost || ""}</p>
+              <p>{`${cost <= 0 || cost === "Free" ? "Free" : "$" + cost}` || ""}</p>
             </div>
 
 
@@ -104,13 +143,13 @@ function EventCard({ title, description, date, time, location, organization, ava
             </div>
             <div className="detail-item hide-on-compact">
               <img src="/src/assets/icons/AvailabilityIcon.svg" alt="Availability Icon" />
-              <p>{availableSeatings || ""}</p>
+              <p>{`${availableSeatings} spots | ${availableSeatings - registeredSeatingsDisplay} open` || ""}</p>
             </div>
           </div>
 
           {!isCompact && (
             <CardTagDisplay
-              tags={["Networking", "Sports", "Academics", "Testing"]}
+              tags={tags || []}
             />
           )}
 
@@ -121,11 +160,7 @@ function EventCard({ title, description, date, time, location, organization, ava
                 text="DELETE"
                 onClick={handleDelete}
               />
-              <Button
-                buttonType={availableSeatings <= 0 ? "btn-disabled" : "btn-yellow"}
-                text={availableSeatings <= 0 ? "FULL" : "REGISTER"}
-                onClick={availableSeatings <= 0 ? undefined : handleRegister}
-              />
+              {newButton}
             </div>
           )}
         </div>

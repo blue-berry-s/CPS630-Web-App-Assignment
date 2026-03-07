@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/Header/Header.jsx";
 import Filter from "../../components/Filter/Filter.jsx";
 import EventCard from "../../components/EventCard/EventCard.jsx";
@@ -7,44 +7,51 @@ import "./Home.css";
 
 
 function Home({ setPage }) {
-  // Sample events for now
-  const events = [
-    {
-      title: "Sample Event",
-      description: "This is a test event",
-      date: "2026-03-05",
-      time: "12:00 PM",
-      location: "Toronto",
-      organization: "TMU",
-      availableSeatings: 100,
-      cost: "$20"
-    },
-    {
-      title: "Networking Meetup",
-      description: "Meet students and professionals",
-      date: "2026-03-10",
-      time: "6:00 PM",
-      location: "Toronto",
-      organization: "TMU Club",
-      availableSeatings: 0,
-      cost: "$10"
-    }
-  ];
+  const [events, setEvents] = useState([]);
+  const [selectedTags, setSelectedTags] = useState([]);
 
+  const refreshEvents = (deletedId) => {
+    setEvents(prev => prev.filter(event => event._id !== deletedId));
+  };
+
+  useEffect(() => {
+    fetch('/api/events?all=true')
+      .then(response => response.json())
+      .then(data => setEvents(data))
+      .catch(err => console.error(err));
+  }, []);
+
+  console.log("selectedTags:", selectedTags);
+  console.log("events:", events);
   return (
     <div>
-      <Header setPage={setPage}/>
-      <Filter className="hide-on-large" setPage={setPage}/>
+      <Header setPage={setPage} />
+      <Filter className="hide-on-large" setPage={setPage} selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
       <section id="upcoming-events">
         <h1>Upcoming Events</h1>
 
         <div id="event-display">
           <div id="event-cards">
-            {events.map((event, idx) => (
-              <EventCard key={idx} {...event} />
-            ))}
+            {events
+              .filter((event) =>
+                selectedTags.length === 0 ||
+                (Array.isArray(event.tags) &&
+                  event.tags.some((tag) =>
+                    selectedTags.some((selectedTag) =>
+                      String(tag).trim().toLowerCase() === selectedTag.trim().toLowerCase()
+                    )
+                  ))
+              )
+              .map((event, idx) => (
+                <EventCard
+                  key={idx}
+                  id={event._id}
+                  onUpdate={refreshEvents}
+                  {...event}
+                />
+              ))}
           </div>
-          <Filter className="hide-on-compact hide-on-medium" setPage={setPage}/>
+          <Filter className="hide-on-compact hide-on-medium" setPage={setPage} selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
         </div>
       </section>
     </div>
