@@ -185,8 +185,8 @@ function AddEvent({ setPage }) {
               {tags.length > 0 ? (
                 tags.map((tag) => (
                  <label key={tag}>
-  <input type="checkbox" value={tag} /> {tag}
-</label>
+                  <input type="checkbox" value={tag} /> {tag}
+                </label>
                 ))
               ) : (
                 <p>No Tags Loaded</p>
