@@ -1,0 +1,150 @@
+[
+  {
+    "title": "JS Workshop: Node.js Basics",
+    "description": "A hands-on lab covering Express, Nodemon, and API routing. Perfect for students working on their CPS630 or CPS530 web development projects.",
+    "date": "2026-02-22",
+    "time": "1:00 PM EST - 3:00 PM EST",
+    "building": "ENG",
+    "location": "ENG 201",
+    "organization": "Computer Science Society",
+    "cost": 0,
+    "tags": [
+      "Workshop",
+      "Technology & Science",
+      "Beginner"
+    ],
+    "availableSeatings": 40
+  },
+  {
+    "title": "Cosplay Volleyball Social",
+    "description": "Come play volleyball with your favourite anime characters!",
+    "date": "2026-08-28",
+    "time": "1:00 PM - 2:30 PM",
+    "building": "KHB",
+    "location": "Kerr Hall Upper Gym",
+    "organization": "TMU Anime",
+    "cost": 30,
+    "tags": [
+      "Social",
+      "Arts & Culture",
+      "Sports"
+    ],
+    "availableSeatings": 30
+  },
+  {
+    "title": "Resume Blitz: Technology & Science Edition",
+    "description": "Get your resume critiqued by industry professionals from Google and Amazon. Focus on software Engineering and data science roles.",
+    "date": "2026-02-15",
+    "time": "10:00 AM EST - 4:00 PM EST",
+    "building": "SLC",
+    "location": "SLC 3rd Floor",
+    "organization": "Career & Co-op Centre",
+    "cost": 0,
+    "tags": [
+      "Career",
+      "Technology & Science",
+      "Panel & Guest Speakers"
+    ],
+    "availableSeatings": 100,
+    "registeredSeatings": 78
+  },
+  {
+    "title": "Winter Gala 2026",
+    "description": "A night of formal dining and dancing to celebrate the end of the winter midterms. Semi-formal attire required.",
+    "date": "2026-09-05",
+    "time": "7:00 PM EST - 11:30 PM EST",
+    "building": "MAC",
+    "location": "The Mattamy Athletic Centre",
+    "organization": "Student Life Committee",
+    "cost": 25,
+    "tags": [
+      "Social",
+      "Arts & Culture"
+    ],
+    "availableSeatings": 500,
+    "registeredSeatings": 455
+  },
+  {
+    "title": "Algorithm Whiteboarding",
+    "description": "Preparing for Technology & Sciencenical interviews? Join us to solve LeetCode medium/hard problems on the big boards. Pizza will be provided.",
+    "date": "2026-02-18",
+    "time": "5:30 PM EST - 8:00 PM EST",
+    "building": "ENG",
+    "location": "ENG 103",
+    "organization": "Computer Science Society",
+    "cost": 0,
+    "tags": [
+      "Technology & Science",
+      "Workshop",
+      "Career"
+    ],
+    "availableSeatings": 30,
+    "registeredSeatings": 5
+  },
+  {
+    "title": "Sustainable Living Panel & Guest Speakers",
+    "description": "Discussion on urban gardening and zero-waste lifestyles in a downtown campus environment.",
+    "date": "2026-11-12",
+    "time": "12:00 PM EST - 1:30 PM EST",
+    "building": "ENG",
+    "location": "George Vari Engineering Building",
+    "organization": "Sustainability Hub",
+    "cost": 0,
+    "tags": [
+      "Panel & Guest Speakers",
+      "Social"
+    ],
+    "availableSeatings": 60,
+    "registeredSeatings": 40
+  },
+  {
+    "title": "Intramural Basketball Finals",
+    "description": "The final championship game of the winter season. Come cheer on the Computer Science Tigers!",
+    "date": "2026-05-20",
+    "time": "6:00 PM EST - 9:00 PM EST",
+    "building": "KHB",
+    "location": "Kerr Hall Lower Gym",
+    "organization": "TMSU Athletics",
+    "cost": 0,
+    "tags": [
+      "Social",
+      "Sports"
+    ],
+    "availableSeatings": 200,
+    "registeredSeatings": 50
+  },
+  {
+    "title": "AI Ethics Seminar",
+    "description": "A deep dive into the legal and ethical implications of Large Language Models in higher education.",
+    "date": "2026-03-10",
+    "time": "2:00 PM EST - 4:00 PM EST",
+    "building": "POD",
+    "location": "POD 250",
+    "organization": "Philosophy Department",
+    "cost": 0,
+    "tags": [
+      "Technology & Science",
+      "Panel & Guest Speakers",
+      "Academic"
+    ],
+    "availableSeatings": 80,
+    "registeredSeatings": 70
+  },
+  {
+    "title": "Beginner Pottery Workshop",
+    "description": "Learn the basics of wheel throwing and hand-building. All materials provided. Beginners welcome!",
+    "date": "2026-02-25",
+    "time": "4:00 PM EST - 6:00 PM EST",
+    "building": "KHB",
+    "location": "Kerr Hall West 101",
+    "organization": "Creative Arts Collective",
+    "cost": 10,
+    "tags": [
+      "Beginner",
+      "Workshop",
+      "Arts & Culture"
+    ],
+    "availableSeatings": 15,
+    "registeredSeatings": 15
+  }
+]

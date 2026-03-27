@@ -1,0 +1,120 @@
+button,
+input[type="submit"] {
+  border: none;
+  font-weight: bold;
+  border-radius: 0.8em;
+  padding: 0.8em 3.5em;
+  text-align: center;
+  box-shadow: var(--box-shadow-1);
+  transition:
+    background-color 0.2s,
+    box-shdaow 0.4s;
+}
+
+button:hover,
+input[type="submit"]:hover {
+  cursor: pointer;
+}
+
+button:active,
+input[type="submit"]:active {
+  box-shadow: none;
+}
+
+
+
+
+/* Yellow button styling: See figma for button classifications */
+.btn-yellow {
+  background-color: var(--yellow);
+  color: var(--dark-blue);
+}
+
+.btn-yellow:hover {
+  background-color: var(--yellow-hover);
+}
+
+.btn-yellow:active {
+  background-color: var(--yellow-active);
+}
+
+
+/* Red button styling: See figma for button classifications */
+.btn-red {
+  font-weight: 800;
+  background-color: var(--red);
+  color: var(--white);
+}
+
+.btn-red:hover {
+  background-color: var(--red-hover);
+}
+
+.btn-red:active {
+  background-color: var(--red-active);
+}
+
+
+/* Blue button styling: See figma for button classifications */
+.btn-blue {
+  background-color: var(--medium-blue);
+  color: var(--white);
+}
+
+.btn-blue:hover {
+  background-color: var(--medium-blue-hover);
+}
+
+.btn-blue:active {
+  background-color: var(--medium-blue-active);
+}
+
+
+/* White button styling: See figma for button classifications */
+.btn-white {
+  background-color: var(--white);
+  border-style: solid;
+  border-width: 0.2em;
+  border-color:var(--medium-blue);
+  color: var(--medium-blue);
+}
+
+.btn-white:hover {
+  color: var(--medium-blue-hover);
+  border-color:var(--medium-blue-hover);
+}
+
+.btn-white:active {
+  color: var(--medium-blue-active);
+   border-color:var(--medium-blue-active);
+  background-color: var(--off-white);
+}
+
+/* Disabled Button styling */
+
+.btn-disabled {
+  cursor: not-allowed !important;
+  box-shadow: none;
+  background-color: var(--button-disable-color);
+  color: var(--button-disable-text-color);
+
+}
+
+/* Responsive Designs */
+
+/* Mobile */
+@media (max-width: 639px) { 
+  button,
+  input[type="submit"] {
+    font-size:0.7rem;
+    padding: 0.8em 1.5em;
+  }
+}
+
+/* Tablet */
+@media (min-width: 640px) and (max-width: 1023px) { 
+  button,
+  input[type="submit"] {
+    font-size:0.6em;
+  }
+}
