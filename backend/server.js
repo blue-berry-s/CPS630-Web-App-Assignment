@@ -264,6 +264,7 @@ app.post("/api/events", async (req, res) => {
       description,
       date,
       time,
+      building,
       location,
       organization,
       cost,
@@ -273,11 +274,11 @@ app.post("/api/events", async (req, res) => {
 
     let finalTags = [];
 
-if (Array.isArray(tags)) {
-  finalTags = tags;
-} else if (tags) {
-  finalTags = [tags];
-}
+    if (Array.isArray(tags)) {
+      finalTags = tags;
+    } else if (tags) {
+      finalTags = [tags];
+    }
 
     const seats = parseCapacityToSeats(capacity);
 
@@ -296,6 +297,7 @@ if (Array.isArray(tags)) {
       description: description || "",
       date,
       time: time || "",
+      building,
       location: location || "",
       organization: organization || "",
       cost: cost || "",
