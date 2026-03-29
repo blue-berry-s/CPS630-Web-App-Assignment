@@ -11,8 +11,11 @@ const path = require("path");
 // mongoose lets node talk to MongoDB
 const mongoose = require("mongoose");
 
-// import Model
+const bcrypt = require("bcryptjs"); // used to hash passwords
+const jwt = require("jsonwebtoken"); // used to create login tokens
+const cors = require("cors"); // allows frontend requests
 const Event = require("./models/Event.js");
+const User = require("./models/User.js"); // user model
 
 // ==============================
 // BASIC SERVER SETUP
@@ -21,11 +24,16 @@ const Event = require("./models/Event.js");
 const app = express();
 const PORT = 8080; // the port our server will run on
 
+// secret key used to create login tokens
+// okay to keep simple for class project
+const JWT_SECRET = "my_secret_key";
+
 // allows the server to read JSON data sent from frontend
 app.use(express.json());
 
 // allows the server to read form data
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 // serve the frontend files (html, css, js)
 app.use(express.static(path.join(__dirname, "../frontend/public")));
@@ -126,43 +134,129 @@ app.get("/login", (req, res) => {
 
 
 // ==============================
-// LOGIN 
+// AUTH ROUTES
 // ==============================
 
-// simple login info (just for demo purposes)
-const HARDCODED_USER = {
-  email: "student@torontomu.ca",
-  password: "password123"
-};
+// REGISTER NEW USER
+// This lets a new user create an account in MongoDB.
+app.post("/api/auth/register", async (req, res) => {
+  try {
+    // get data sent from frontend
+    const { name, email, password } = req.body;
 
-app.post("/", (req, res) => {
+    // basic check so empty fields are not allowed
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        error: "Name, email, and password are required"
+      });
+    }
 
-  const { email, password } = req.body;
+    // check if a user with this email already exists
+    const existingUser = await User.findOne({
+      email: email.toLowerCase()
+    });
 
-  if (email === HARDCODED_USER.email &&
-    password === HARDCODED_USER.password) {
+    if (existingUser) {
+      return res.status(409).json({
+        error: "Email already exists"
+      });
+    }
 
-    return res.redirect("/");
+    // turn plain password into a secure hashed password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    // create the new user
+    const newUser = await User.create({
+      name,
+      email: email.toLowerCase(),
+      password: hashedPassword,
+      role: "student" // default role for normal signup
+    });
+
+    // send safe user info back to frontend
+    // do NOT send password back
+    res.status(201).json({
+      message: "User created",
+      user: {
+        _id: newUser._id,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role
+      }
+    });
+
+  } catch (err) {
+    console.log("Register error:", err);
+    res.status(500).json({ error: "Server error" });
   }
-
-  return res.redirect("/login");
 });
 
 
-// login api for frontend
-app.post("/api/login", (req, res) => {
 
-  const { email, password } = req.body;
+// ==============================
+// LOGIN USER
+// ==============================
 
-  if (email === HARDCODED_USER.email &&
-    password === HARDCODED_USER.password) {
+// This checks if email/password are correct and returns a token.
+app.post("/api/auth/login", async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-    return res.status(200).json({ message: "Login successful" });
+    // basic check for missing fields
+    if (!email || !password) {
+      return res.status(400).json({
+        error: "Email and password are required"
+      });
+    }
+
+    // find user by email
+    const user = await User.findOne({
+      email: email.toLowerCase()
+    });
+
+    // if email does not exist
+    if (!user) {
+      return res.status(401).json({
+        error: "Invalid email or password"
+      });
+    }
+
+    // compare plain password with hashed password in database
+    const passwordsMatch = await bcrypt.compare(password, user.password);
+
+    if (!passwordsMatch) {
+      return res.status(401).json({
+        error: "Invalid email or password"
+      });
+    }
+
+    // create token so frontend can prove user is logged in later
+    const token = jwt.sign(
+      {
+        userId: user._id,
+        role: user.role
+      },
+      JWT_SECRET,
+      { expiresIn: "1d" }
+    );
+
+    // send token + user info back to frontend
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      user: {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+
+  } catch (err) {
+    console.log("Login error:", err);
+    res.status(500).json({ error: "Server error" });
   }
-
-  res.status(401).json({ error: "Invalid email or password" });
 });
-
 
 // ==============================
 // HELPER FUNCTION FOR DATE
