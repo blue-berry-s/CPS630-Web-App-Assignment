@@ -39,9 +39,17 @@ const EventSchema = new mongoose.Schema({
   // total number of seats available
   availableSeatings: { type: Number, required: true, min: 0 },
 
-  // how many seats are already taken
-  registeredSeatings: { type: Number, default: 0, min: 0}
+// how many seats are already taken
+registeredSeatings: { type: Number, default: 0, min: 0 },
 
+// NEW: store which users registered
+registeredUsers: {
+  type: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
+  default: []
+}
 });
 
 // Virtual field (not stored in DB, calculated automatically)
