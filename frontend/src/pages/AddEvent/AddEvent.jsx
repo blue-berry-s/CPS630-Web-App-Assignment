@@ -91,7 +91,7 @@ function AddEvent({ setPage }) {
       </div>
 
       
-      <form className="add-event-container">
+      <form className="add-event-container" onSubmit={handleSubmit}>
         <div className="form-card">
 
           <h2 className="form-title">NEW EVENT FORM</h2>
@@ -252,7 +252,7 @@ function AddEvent({ setPage }) {
 
           <div className="button-row">
             <Button buttonType="btn-white" text="Cancel" onClick={() => setPage('home')} />
-            <input className="btn-blue" type="submit" onSubmit={handleSubmit}/>
+            <input className="btn-blue" type="submit"/>
           </div>
 
         </div>
