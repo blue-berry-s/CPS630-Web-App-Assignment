@@ -21,8 +21,8 @@ function Home({ setPage }) {
       .catch(err => console.error(err));
   }, []);
 
-  console.log("selectedTags:", selectedTags);
-  console.log("events:", events);
+  // console.log("selectedTags:", selectedTags);
+  // console.log("events:", events);
 
   return (
     <div>
