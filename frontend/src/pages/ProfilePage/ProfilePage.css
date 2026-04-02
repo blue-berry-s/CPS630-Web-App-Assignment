@@ -6,6 +6,8 @@
   display: flex;
 }
 
+/* Profile Section */
+
 #profile {
   width: 35%;
   display: flex;
@@ -72,6 +74,16 @@
   font-size: 0.8rem;
   font-weight: 500;
 }
+
+.profile-button {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+/* Events Section */
 
 #events {
   width: 65%;

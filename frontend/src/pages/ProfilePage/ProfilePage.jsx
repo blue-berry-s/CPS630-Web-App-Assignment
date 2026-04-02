@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Header from "../../components/Header/Header.jsx";
+import Button from "../../components/Button/Button.jsx";
 
 import "../../css/defaultStyle.css"
 import "./ProfilePage.css";
@@ -35,6 +36,12 @@ function ProfilePage({ setPage }) {
               <p>Major: </p>
               <p>Email: </p>
             </div>
+          </div>
+
+          <div className="profile-button">
+            <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); }} />
+            <Button text="View All Event" buttonType="btn-blue" onClick={() => { setPage("home"); }} />
+            <Button text="View Map" buttonType="btn-blue" onClick={() => { setPage("campusMap"); }} />
           </div>
         </div>
 
