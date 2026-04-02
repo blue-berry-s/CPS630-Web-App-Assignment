@@ -49,12 +49,6 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
 
   return (
     <div className={className} id="filter">
-      {/* Buttons */}
-      <div className="button-row">
-        <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
-        <Button text="View Map" buttonType="btn-blue" onClick={() => { setPage("campusMap"); console.log("Switch to campus Map"); }} />
-      </div>
-
       {/* Notice Section */}
       {notice && (
         <div id="notice" className={notice.className} style={{ display: "flex" }}>

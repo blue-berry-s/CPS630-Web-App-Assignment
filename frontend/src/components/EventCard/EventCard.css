@@ -2,25 +2,6 @@
   display: none;
 }
 
-#upcoming-events {
-  margin: 30px;
-  color: #363636;
-}
-
-#event-display {
-  display: flex;
-  flex-direction: row;
-  padding: 10px 0px;
-  gap: 30px;
-}
-
-#event-cards {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
 .card-content {
   background-color: var(--white);
   border-radius: 10px;
@@ -30,6 +11,8 @@
   gap: 10px;
   box-shadow: var(--box-shadow-1);
   align-items: center;
+   max-width:70vw;
+   margin:1em;
 }
 
 .card-content img {
