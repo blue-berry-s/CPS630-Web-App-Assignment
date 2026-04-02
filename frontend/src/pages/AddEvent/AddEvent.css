@@ -204,6 +204,11 @@ textarea {
   margin-top: 30px;
 }
 
+input[type="submit"]{
+  width:auto;
+  
+}
+
 .input-with-icon {
   position: relative;
   display: flex;
@@ -314,3 +319,4 @@ textarea {
 .show_registration{
   display: flex;
 }
+

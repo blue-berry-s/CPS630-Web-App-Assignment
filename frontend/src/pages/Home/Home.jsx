@@ -2,13 +2,24 @@ import { useState, useEffect } from "react";
 import Header from "../../components/Header/Header.jsx";
 import Filter from "../../components/Filter/Filter.jsx";
 import EventCard from "../../components/EventCard/EventCard.jsx";
+import Button from "../../components/Button/Button.jsx";
+
+import TMUSplashImage from '../../assets/photos/TMUSplashImage.png';
+import TMUGroupStudents from '../../assets/photos/TMUGroupStudents.png'
+import SearchIcon from "../../assets/icons/SearchIcon.svg";
+
 import "../../css/defaultStyle.css"
 import "./Home.css";
+
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 function Home({ setPage }) {
   const [events, setEvents] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [searchTitle, setSearchTitle] = useState(""); 
+  const [title, setTitle] = useState("");
+  
 
   const refreshEvents = (deletedId) => {
     setEvents(prev => prev.filter(event => event._id !== deletedId));
@@ -21,8 +32,29 @@ function Home({ setPage }) {
       .catch(err => console.error(err));
   }, []);
 
-  console.log("selectedTags:", selectedTags);
-  console.log("events:", events);
+
+  const responsive = {
+    superLargeDesktop: {
+      // the naming can be any, depends on you.
+      breakpoint: { max: 4000, min: 3000 },
+      items: 1
+    },
+    desktop: {
+      breakpoint: { max: 3000, min: 1024 },
+      items: 1
+    },
+    tablet: {
+      breakpoint: { max: 1024, min: 464 },
+      items: 1
+    },
+    mobile: {
+      breakpoint: { max: 464, min: 0 },
+      items: 1
+    }
+  };
+
+  // console.log("selectedTags:", selectedTags);
+  // console.log("events:", events);
 
   return (
     <div>
@@ -36,6 +68,69 @@ function Home({ setPage }) {
         searchTitle={searchTitle}          
         setSearchTitle={setSearchTitle}    
       />
+
+      <div id="hero-landing">
+        <img src={TMUSplashImage} alt="Photo of TMU Student Learning Center Building" />
+        <div>
+          <h1>Stay Connected To Your <span> Student Life </span></h1>
+
+          <form id="search-all-event">
+                  <div className="input-with-icon">
+                    <input
+                      type="text"
+                      name="title"
+                      placeholder="Search (name or description)"
+                      value={title}
+                      onChange={(e) => {}}
+                    />
+                    <button type="submit" className="icon-button">
+                      <img src={SearchIcon} alt="Search" />
+                    </button>
+                  </div>
+          </form>
+
+          {/* Buttons */}
+          <div className="button-row">
+            <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+            <Button text="View Map" buttonType="btn-blue" onClick={() => { setPage("campusMap"); console.log("Switch to campus Map"); }} />
+          </div>
+
+        </div>
+      </div>
+
+      <section id="popular-events">
+
+         <h1>Popular Events</h1>
+
+
+        <Carousel 
+          showDots={true}
+          infinite={true}
+          responsive={responsive}
+          centerMode={true}
+          itemClass={"carousel-cards"}
+          >
+          <EventCard  title="Test1"/>
+          <EventCard  title="Test2"/>
+          <EventCard  title="Test3"/>
+        </Carousel>;
+
+      </section>
+
+      <section id="add-events">
+        <h1> Missing an Event?</h1>
+        <div id="text-content">
+          <div id="text-and-button">
+            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+             <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+          </div>
+          <div>
+            <img src={TMUGroupStudents} alt="Group of students smiling"/>
+          </div>
+        </div>
+
+      </section>
 
       <section id="upcoming-events">
         <h1>Upcoming Events</h1>

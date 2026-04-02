@@ -90,7 +90,8 @@ function AddEvent({ setPage }) {
           fun writing filler text yadayadayada</p>
       </div>
 
-      <div className="add-event-container">
+      
+      <form className="add-event-container" onSubmit={handleSubmit}>
         <div className="form-card">
 
           <h2 className="form-title">NEW EVENT FORM</h2>
@@ -113,18 +114,18 @@ function AddEvent({ setPage }) {
             <div className="section-content">
               <div>
                 <label>Event Name</label>
-                <input type="text" placeholder="Event Name" name="eventName" id="eventName" required />
+                <input required type="text" placeholder="Event Name" name="eventName" id="eventName"/>
               </div>
 
               <div className="two-column">
                 <div>
                   <label>Creator</label>
-                  <input type="text" placeholder="Event Creator" name="eventCreator" id="eventCreator" required />
+                  <input required type="text" placeholder="Event Creator" name="eventCreator" id="eventCreator"/>
                 </div>
 
                 <div>
                   <label>Date</label>
-                  <input type="date" name="eventDate" id="eventDate" required />
+                  <input required type="date" name="eventDate" id="eventDate"/>
                 </div>
               </div>
 
@@ -173,7 +174,7 @@ function AddEvent({ setPage }) {
 
               <div className="input-with-icon">
                 <img src={SeatIcon} alt="Seats" />
-                <input type="number" placeholder="Seats" name="eventSeats" id="eventSeats" />
+                <input required type="number" placeholder="Seats" name="eventSeats" id="eventSeats" />
               </div>
 
             </div>
@@ -251,11 +252,11 @@ function AddEvent({ setPage }) {
 
           <div className="button-row">
             <Button buttonType="btn-white" text="Cancel" onClick={() => setPage('home')} />
-            <Button buttonType="btn-blue" text="Submit" onClick={handleSubmit} />
+            <input className="btn-blue" type="submit"/>
           </div>
 
         </div>
-      </div >
+      </form >
     </>
   );
 }
