@@ -4,7 +4,7 @@ import Header from "../../components/Header/Header.jsx";
 import "../../css/defaultStyle.css"
 import "./ProfilePage.css";
 
-function ProfilePage() {
+function ProfilePage({ setPage }) {
   const [selectedEvents, setSelectedEvents] = useState("upcoming");
 
   window.onload = function () {
@@ -13,7 +13,7 @@ function ProfilePage() {
 
   return (
     <>
-      <Header />
+      <Header setPage={setPage} />
       <h2 id="title">My Profile</h2>
 
       <div id="section">
