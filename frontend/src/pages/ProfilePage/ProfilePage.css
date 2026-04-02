@@ -85,13 +85,14 @@
 
 /* Events Section */
 
-#events {
+#events-section {
   width: 65%;
+  padding: 0rem 1rem;
 }
 
 #event-heading {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
   border-bottom: 2px solid var(--black);
   padding-bottom: 5px;
 }

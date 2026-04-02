@@ -45,7 +45,7 @@ function ProfilePage({ setPage }) {
           </div>
         </div>
 
-        <div id="events">
+        <div id="events-section">
           <div id="event-heading">
             <button
               type="button"
