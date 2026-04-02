@@ -1,0 +1,114 @@
+#title {
+  padding: 0rem 1rem;
+}
+
+#section {
+  display: flex;
+}
+
+#profile {
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#profile-info {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background-color: var(--white);
+  border-radius: 10px;
+  padding: 0rem 0rem 1rem 0rem;
+}
+
+#profile-info h3,
+#profile-info p,
+#event-heading h2 {
+  margin: 0;
+}
+
+#profile-info img {
+  width: 12rem;
+}
+
+#name {
+  color: var(--light-blue);
+}
+
+#accountType {
+  color: var(--medium-blue);
+  font-weight: bold;
+  border: var(--medium-blue) solid 1px;
+  border-radius: 20px;
+  padding: 5px;
+  font-size: 0.7rem;
+
+}
+
+#numOfEvents {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#numOfEvents {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+#more-info {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  width: 100%;
+  padding-left: 10%;
+  gap: 10px;
+}
+
+#more-info p {
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+#events {
+  width: 65%;
+}
+
+#event-heading {
+  display: flex;
+  gap: 1rem;
+  border-bottom: 2px solid var(--black);
+  padding-bottom: 5px;
+}
+
+.header-button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: var(--grey);
+  box-shadow: none;
+  outline: none;
+}
+
+.header-button.active {
+  color: var(--black);
+}
+
+.header-button,
+.header-button:active {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  background: transparent;
+}
+
+.header-button.active {
+  color: var(--black);
+  outline: none;
+  box-shadow: none;
+}
