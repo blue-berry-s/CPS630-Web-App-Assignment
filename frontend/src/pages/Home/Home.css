@@ -1,6 +1,6 @@
 section > h1{
   font-size:2em;
-  margin: 30px;
+  margin: 1em;
   color: #363636;
 }
 
@@ -86,4 +86,12 @@ section > h1{
   background: none;
   cursor: pointer;
   padding: 0;
+}
+
+#text-content{
+  display: flex;
+}
+
+#text-content{
+  margin:3em;
 }

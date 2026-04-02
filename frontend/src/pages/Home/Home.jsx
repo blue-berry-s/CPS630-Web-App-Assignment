@@ -5,6 +5,7 @@ import EventCard from "../../components/EventCard/EventCard.jsx";
 import Button from "../../components/Button/Button.jsx";
 
 import TMUSplashImage from '../../assets/photos/TMUSplashImage.png';
+import TMUGroupStudents from '../../assets/photos/TMUGroupStudents.png'
 import SearchIcon from "../../assets/icons/SearchIcon.svg";
 
 import "../../css/defaultStyle.css"
@@ -113,6 +114,21 @@ function Home({ setPage }) {
           <EventCard  title="Test2"/>
           <EventCard  title="Test3"/>
         </Carousel>;
+
+      </section>
+
+      <section id="add-events">
+        <h1> Missing an Event?</h1>
+        <div id="text-content">
+          <div id="text-and-button">
+            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+             <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+          </div>
+          <div>
+            <img src={TMUGroupStudents} alt="Group of students smiling"/>
+          </div>
+        </div>
 
       </section>
 
