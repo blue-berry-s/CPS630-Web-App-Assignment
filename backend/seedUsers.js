@@ -20,12 +20,13 @@ db.once("open", async () => {
       continue;
     }
 
-    const newUser = new User({
-      name: user.name,
-      email: user.email.toLowerCase(),
-      password: hashedPassword,
-      role: user.role
-    });
+  const newUser = new User({
+    name: user.name,
+    major: user.major,
+    email: user.email.toLowerCase(),
+    password: hashedPassword,
+    role: user.role
+  });
 
     await newUser.save();
     console.log(`User ${user.email} added`);

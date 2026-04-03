@@ -12,6 +12,14 @@ const UserSchema = new mongoose.Schema({
     required: true,
     trim: true
   },
+  
+  major: {
+  type: String,
+  required: function () {
+    return this.role === "student";
+  },
+  trim: true
+},
 
   // email used to log in
   email: {
