@@ -35,6 +35,8 @@ function ProfilePage({ setPage }) {
               <p>Name: </p>
               <p>Major: </p>
               <p>Email: </p>
+
+              <Button text="Logout" buttonType="btn-red" onClick={() => { setPage("login"); }} />
             </div>
           </div>
 
