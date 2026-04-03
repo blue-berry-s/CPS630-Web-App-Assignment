@@ -47,7 +47,7 @@ const pastEvents = registeredEvents.filter(
 );
 
   return (
-    <>
+  <>
       <Header setPage={setPage} />
       <h2 id="title">My Profile</h2>
 
@@ -58,29 +58,25 @@ const pastEvents = registeredEvents.filter(
             <img src="/src/assets/icons/profile.svg" alt="Profile Picture" />
             <h3 id="name">{user?.name || "Loading..."}</h3>
             <p id="accountType">{user?.role || "Loading..."}</p>
+          
+<div id="numOfEvents">
+  <p>Number of Events Registered:</p>
+  <p>{registeredEvents.length}</p>
+</div>
 
-            <div id="numOfEvents">
-              <p>Number of Events Registered:</p>
-              <p>{registeredEvents.length}</p>
-            </div>
-            
-            <div id="more-info">
-              <h3>Info</h3>
-<<<<<<< HEAD
-              <p>Name: {user?.name || "Loading..."}</p>
-             <p> Major: {user?.role === "student" ? user.major : "N/A"} </p>
-              <p>Email: {user?.email || "Loading..."}</p>
-              </div>
-=======
-              <p>Name: </p>
-              <p>Major: </p>
-              <p>Email: </p>
+<div id="more-info">
+  <h3>Info</h3>
+  <p>Name: {user?.name || "Loading..."}</p>
+  <p>Major: {user?.role === "student" ? user.major : "N/A"}</p>
+  <p>Email: {user?.email || "Loading..."}</p>
 
-              <Button text="Logout" buttonType="btn-red" onClick={() => { setPage("login"); }} />
-            </div>
->>>>>>> origin/feature/profile-page
-          </div>
-
+  <Button
+    text="Logout"
+    buttonType="btn-red"
+    onClick={() => { setPage("login"); }}
+  />
+</div>
+</div>
           <div className="profile-button">
            {user?.role === "staff" && ( 
             <Button 
@@ -93,6 +89,7 @@ const pastEvents = registeredEvents.filter(
             <Button text="View Map" buttonType="btn-blue" onClick={() => { setPage("campusMap"); }} />
           </div>
         </div>
+    
 
         <div id="events-section">
   <div id="event-heading">
@@ -128,6 +125,7 @@ const pastEvents = registeredEvents.filter(
     )}
   </div>
 </div>
+
 
       </div>
     </>

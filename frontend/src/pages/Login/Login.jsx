@@ -28,18 +28,19 @@ function Login({ setPage, setUser }) {
 
       const data = await res.json();
 
-      if (res.ok) {
-        setError("");
-        setUser(data.user); // store user info including role
-        // redirect based on role
-        if (data.user.role === "staff") {
-          setPage("home"); // staff page
-        } else {
-          setPage("home"); // student page
-        }
-      } else {
-        setError(data.error || "Login failed");
-      }
+if (res.ok) {
+  setError("");
+  localStorage.setItem("token", data.token);
+  setUser(data.user); // store user info including role
+
+  if (data.user.role === "staff") {
+    setPage("home");
+  } else {
+    setPage("home");
+  }
+} else {
+  setError(data.error || "Login failed");
+}
     } catch (err) {
       console.error(err);
       setError("Server error. Please try again later.");

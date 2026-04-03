@@ -22,7 +22,7 @@ function Home({ setPage }) {
   
 
   const refreshEvents = (deletedId) => {
-    setEvents(prev => prev.filter(event => event._id !== deletedId));
+    setEvents(prev => prev.filter(event => event.id !== deletedId));
   };
 
   useEffect(() => {
@@ -158,7 +158,7 @@ function Home({ setPage }) {
               .map((event, idx) => (
                 <EventCard
                   key={idx}
-                  id={event._id}
+                  id={event.id}
                   onUpdate={refreshEvents}
                   {...event}
                 />
