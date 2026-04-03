@@ -1,14 +1,14 @@
 [
 {
   "name": "staff",
-  "email": "staff@test.com",
+  "email": "staff@torontomu.ca",
   "password": "123456",
   "role": "staff"
 },
   {
     "name": "student",
     "major": "Computer Science",
-    "email": "student@test.com",
+    "email": "student@torontomu.ca",
     "password": "123456",
     "role": "student"
   }
