@@ -27,11 +27,16 @@ function Map() {
   const filteredEvents = events.filter(event => event.building === selectedId);
 
   useEffect(() => {
-    fetch('/api/events')
+    fetch('/api/events?all=true')
       .then(response => response.json())
-      .then(data => setEvents(data))
+      .then(data => {
+        console.log("Fetched Data:", data);
+        setEvents(data);
+      })
       .catch(err => console.error(err));
   }, []);
+
+
 
   return (
     <>

@@ -52,12 +52,13 @@ function AddEvent({ setPage }) {
       description: document.getElementById('eventDesc').value,
       date: document.getElementById('eventDate').value,
       time: document.getElementById('eventTime').value,
-      location: document.getElementById('eventBuilding').value,
+      building: document.getElementById('eventBuilding').value,
+      location: document.getElementById('eventLocation').value,
       organization: document.getElementById('eventCreator').value,
       cost: document.getElementById('eventPrice').value,
       tags: Array.from(document.querySelectorAll('#tagsContainer input:checked'))
-  .map(el => el.value.trim())
-  .filter(tag => tag !== ""),
+        .map(el => el.value.trim())
+        .filter(tag => tag !== ""),
       capacity: document.getElementById('eventSeats').value
     };
 
@@ -184,9 +185,9 @@ function AddEvent({ setPage }) {
             <div id="tagsContainer" className="section-content tags-grid">
               {tags.length > 0 ? (
                 tags.map((tag) => (
-                 <label key={tag}>
-                  <input type="checkbox" value={tag} /> {tag}
-                </label>
+                  <label key={tag}>
+                    <input type="checkbox" value={tag} /> {tag}
+                  </label>
                 ))
               ) : (
                 <p>No Tags Loaded</p>
