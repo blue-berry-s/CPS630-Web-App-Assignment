@@ -66,10 +66,19 @@ const pastEvents = registeredEvents.filter(
             
             <div id="more-info">
               <h3>Info</h3>
+<<<<<<< HEAD
               <p>Name: {user?.name || "Loading..."}</p>
              <p> Major: {user?.role === "student" ? user.major : "N/A"} </p>
               <p>Email: {user?.email || "Loading..."}</p>
               </div>
+=======
+              <p>Name: </p>
+              <p>Major: </p>
+              <p>Email: </p>
+
+              <Button text="Logout" buttonType="btn-red" onClick={() => { setPage("login"); }} />
+            </div>
+>>>>>>> origin/feature/profile-page
           </div>
 
           <div className="profile-button">

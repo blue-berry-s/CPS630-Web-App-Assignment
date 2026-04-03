@@ -1,5 +1,6 @@
 #title {
-  padding: 0rem 1rem;
+  padding: 0rem 2rem;
+  font-size: 2rem;
 }
 
 #section {
@@ -45,8 +46,8 @@
   font-weight: bold;
   border: var(--medium-blue) solid 1px;
   border-radius: 20px;
-  padding: 5px;
-  font-size: 0.7rem;
+  padding: 5px 10px;
+  font-size: 1rem;
 
 }
 
@@ -57,7 +58,7 @@
 }
 
 #numOfEvents {
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -71,8 +72,13 @@
 }
 
 #more-info p {
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
+}
+
+#more-info Button {
+  margin: 10px 0px;
+  width: 80%;
 }
 
 .profile-button {
