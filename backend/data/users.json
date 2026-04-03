@@ -2,13 +2,13 @@
     {
       "name": "staff",
       "email": "staff@test.com",
-      "password": "123456",
+      "password": "password123",
       "role": "staff"
     },
     {
       "name": "student",
       "email": "student@test.com",
-      "password": "123456",
+      "password": "password123",
       "role": "student"
     }
   ]
