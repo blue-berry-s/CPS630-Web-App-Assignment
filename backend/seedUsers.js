@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const User = require("./models/User");
-const users = require("./data/users.json"); 
+const users = require("./data/users.json");
 
 mongoose.connect("mongodb://127.0.0.1:27017/events_db");
 
@@ -20,13 +20,14 @@ db.once("open", async () => {
       continue;
     }
 
-  const newUser = new User({
-    name: user.name,
-    major: user.major,
-    email: user.email.toLowerCase(),
-    password: hashedPassword,
-    role: user.role
-  });
+    const newUser = new User({
+      name: user.name,
+      joinYear: user.joinYear,
+      major: user.major,
+      email: user.email.toLowerCase(),
+      password: hashedPassword,
+      role: user.role
+    });
 
     await newUser.save();
     console.log(`User ${user.email} added`);

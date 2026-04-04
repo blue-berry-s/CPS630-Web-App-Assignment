@@ -66,7 +66,7 @@ function ProfilePage({ setPage, user, setUser }) {
 
             <div id="more-info">
               <h3>Info</h3>
-              <p>Name: {user?.name || "Loading..."}</p>
+              <p>Member Since: {user?.joinYear || "Loading..."}</p>
               <p>Major: {user?.role === "student" ? user.major : "N/A"}</p>
               <p>Email: {user?.email || "Loading..."}</p>
 

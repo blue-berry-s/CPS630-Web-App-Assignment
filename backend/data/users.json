@@ -1,12 +1,14 @@
 [
-{
-  "name": "staff",
-  "email": "staff@torontomu.ca",
-  "password": "password123",
-  "role": "staff"
-},
+  {
+    "name": "staff",
+    "joinYear": 2024,
+    "email": "staff@torontomu.ca",
+    "password": "password123",
+    "role": "staff"
+  },
   {
     "name": "student",
+    "joinYear": 2025,
     "major": "Computer Science",
     "email": "student@torontomu.ca",
     "password": "password123",

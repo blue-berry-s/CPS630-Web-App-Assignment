@@ -198,7 +198,7 @@ app.post("/api/auth/register", async (req, res) => {
     const { name, major, email, password } = req.body;
 
     // basic check so empty fields are not allowed
-    if (!name ||!major || !email || !password) {
+    if (!name || !major || !email || !password) {
       return res.status(400).json({
         error: "Name, email, and password are required"
       });
@@ -221,6 +221,7 @@ app.post("/api/auth/register", async (req, res) => {
     // create the new user
     const newUser = await User.create({
       name,
+      joinYear,
       major,
       email: email.toLowerCase(),
       password: hashedPassword,
@@ -234,6 +235,7 @@ app.post("/api/auth/register", async (req, res) => {
       user: {
         _id: newUser._id,
         name: newUser.name,
+        joinYear: newUser.joinYear,
         major: newUser.major,
         email: newUser.email,
         role: newUser.role
@@ -302,6 +304,7 @@ app.post("/api/auth/login", async (req, res) => {
       user: {
         _id: user._id,
         name: user.name,
+        joinYear: user.joinYear,
         major: user.major,
         email: user.email,
         role: user.role
