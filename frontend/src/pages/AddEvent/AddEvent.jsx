@@ -63,11 +63,16 @@ function AddEvent({ setPage }) {
     };
 
     try {
-      const response = await fetch('/api/events', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(eventData),
-      });
+const token = localStorage.getItem("token");
+
+const response = await fetch('/api/events', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+  body: JSON.stringify(eventData),
+});
 
       if (response.ok) {
         alert("Event added successfully!");

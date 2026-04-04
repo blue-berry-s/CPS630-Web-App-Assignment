@@ -5,16 +5,12 @@ import "./Login.css";
 
 
 
-function Login({ setPage }) {
+function Login({ setPage, setUser }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  // Hardcoded correct credentials
-  const correctEmail = "student@torontomu.ca";
-  const correctPassword = "password123";
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Check if fields are empty
@@ -23,12 +19,31 @@ function Login({ setPage }) {
       return;
     }
 
-    // Check credentials
-    if (email === correctEmail && password === correctPassword) {
-      setError("");
-      setPage("home"); // redirect to Home.jsx
-    } else {
-      setError("Invalid email or password");
+    try {
+      const res = await fetch("http://localhost:8080/api/auth/login", { //  backend endpoint
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+
+if (res.ok) {
+  setError("");
+  localStorage.setItem("token", data.token);
+  setUser(data.user); // store user info including role
+
+  if (data.user.role === "staff") {
+    setPage("home");
+  } else {
+    setPage("home");
+  }
+} else {
+  setError(data.error || "Login failed");
+}
+    } catch (err) {
+      console.error(err);
+      setError("Server error. Please try again later.");
     }
   };
 
@@ -77,7 +92,7 @@ function Login({ setPage }) {
            </div>
 
 
-           <p id="error" className="text-red-600 text-sm hidden"></p>
+           {error && <p className="text-red-600 text-sm">{error}</p>}
 
 
            <div className="flex justify-start w-full px-6">
