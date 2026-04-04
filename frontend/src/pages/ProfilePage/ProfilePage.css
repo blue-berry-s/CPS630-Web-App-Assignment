@@ -1,5 +1,5 @@
 #title {
-  padding: 0rem 2rem;
+  padding: 0rem 2%;
   font-size: 2rem;
 }
 
@@ -39,6 +39,7 @@
 
 #name {
   color: var(--light-blue);
+  font-size: 2rem;
 }
 
 #accountType {
@@ -69,6 +70,7 @@
   width: 100%;
   padding-left: 10%;
   gap: 10px;
+  font-size: 1.2rem;
 }
 
 #more-info p {
