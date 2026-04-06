@@ -56,12 +56,15 @@ function ProfilePage({ setPage, user, setUser }) {
         <div id="profile">
           <div id="profile-info">
             <img src="/src/assets/icons/profile.svg" alt="Profile Picture" />
-            <h3 id="name">{user?.name || "Loading..."}</h3>
-            <p id="accountType">{user?.role || "Loading..."}</p>
 
-            <div id="numOfEvents">
-              <p>Number of Events Registered:</p>
-              <p>{registeredEvents.length}</p>
+            <div id="primary-info">
+              <h3 id="name">{user?.name || "Loading..."}</h3>
+              <p id="accountType">{user?.role || "Loading..."}</p>
+              <div>
+                <p>Total Events Registered:</p>
+                <p id="accountEvents">{registeredEvents.length}</p>
+              </div>
+
             </div>
 
             <div id="more-info">
@@ -69,19 +72,19 @@ function ProfilePage({ setPage, user, setUser }) {
               <p>Member Since: {user?.joinYear || "Loading..."}</p>
               <p>Major: {user?.role === "student" ? user.major : "N/A"}</p>
               <p>Email: {user?.email || "Loading..."}</p>
-
-              <Button
-                text="Logout"
-                buttonType="btn-red"
-                onClick={() => {
-                  setUser(null);
-                  localStorage.removeItem("token");
-                  setPage("login");
-                }}
-              />
             </div>
           </div>
+
           <div className="profile-button">
+            <Button
+              text="Logout"
+              buttonType="btn-red"
+              onClick={() => {
+                setUser(null);
+                localStorage.removeItem("token");
+                setPage("login");
+              }}
+            />
             {user?.role === "staff" && (
               <Button
                 text="Add Event"

@@ -1,5 +1,5 @@
 #title {
-  padding: 0rem 2%;
+  padding: 0rem 4%;
   font-size: 2rem;
 }
 
@@ -49,26 +49,33 @@
   border-radius: 20px;
   padding: 5px 10px;
   font-size: 1rem;
-
 }
 
-#numOfEvents {
+#primary-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-#numOfEvents {
   font-size: 1rem;
   font-weight: 500;
+  gap: 10px;
+}
+
+#primary-info div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+#accountEvents {
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 #more-info {
   display: flex;
   flex-direction: column;
-  align-self: flex-start;
-  width: 100%;
-  padding-left: 10%;
   gap: 10px;
   font-size: 1.2rem;
 }
@@ -76,11 +83,6 @@
 #more-info p {
   font-size: 1rem;
   font-weight: 500;
-}
-
-#more-info Button {
-  margin: 10px 0px;
-  width: 80%;
 }
 
 .profile-button {
@@ -132,4 +134,94 @@
   color: var(--black);
   outline: none;
   box-shadow: none;
+}
+
+/* Responsive design */
+@media (max-width: 639px) {
+  #section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  #profile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    gap: 0rem;
+  }
+
+  #profile-info img {
+    display: none;
+  }
+
+  .profile-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+  }
+
+  .profile-button>* {
+    width: 90%;
+    font-size: 0.8rem;
+  }
+
+  #events-section {
+    width: 90%;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  #section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  #profile {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  #profile-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    padding: 10px;
+  }
+
+  #profile-info img {
+    width: 8rem;
+  }
+
+  .profile-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 90%;
+  }
+
+  .profile-button>* {
+    width: 90%;
+    font-size: 0.8rem;
+  }
+
+  #events-section {
+    width: 90%;
+  }
 }
