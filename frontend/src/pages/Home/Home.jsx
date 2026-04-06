@@ -17,9 +17,9 @@ import "react-multi-carousel/lib/styles.css";
 function Home({ setPage }) {
   const [events, setEvents] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [searchTitle, setSearchTitle] = useState(""); 
+  const [searchTitle, setSearchTitle] = useState("");
   const [title, setTitle] = useState("");
-  
+
 
   const refreshEvents = (deletedId) => {
     setEvents(prev => prev.filter(event => event._id !== deletedId));
@@ -65,8 +65,8 @@ function Home({ setPage }) {
         setPage={setPage}
         selectedTags={selectedTags}
         setSelectedTags={setSelectedTags}
-        searchTitle={searchTitle}          
-        setSearchTitle={setSearchTitle}    
+        searchTitle={searchTitle}
+        setSearchTitle={setSearchTitle}
       />
 
       <div id="hero-landing">
@@ -75,18 +75,18 @@ function Home({ setPage }) {
           <h1>Stay Connected To Your <span> Student Life </span></h1>
 
           <form id="search-all-event">
-                  <div className="input-with-icon">
-                    <input
-                      type="text"
-                      name="title"
-                      placeholder="Search (name or description)"
-                      value={title}
-                      onChange={(e) => {}}
-                    />
-                    <button type="submit" className="icon-button">
-                      <img src={SearchIcon} alt="Search" />
-                    </button>
-                  </div>
+            <div className="input-with-icon">
+              <input
+                type="text"
+                name="title"
+                placeholder="Search (name or description)"
+                value={title}
+                onChange={(e) => { }}
+              />
+              <button type="submit" className="icon-button">
+                <img src={SearchIcon} alt="Search" />
+              </button>
+            </div>
           </form>
 
           {/* Buttons */}
@@ -100,19 +100,19 @@ function Home({ setPage }) {
 
       <section id="popular-events">
 
-         <h1>Popular Events</h1>
+        <h1>Popular Events</h1>
 
 
-        <Carousel 
+        <Carousel
           showDots={true}
           infinite={true}
           responsive={responsive}
           centerMode={true}
           itemClass={"carousel-cards"}
-          >
-          <EventCard  title="Test1"/>
-          <EventCard  title="Test2"/>
-          <EventCard  title="Test3"/>
+        >
+          <EventCard title="Test1" />
+          <EventCard title="Test2" />
+          <EventCard title="Test3" />
         </Carousel>;
 
       </section>
@@ -121,12 +121,15 @@ function Home({ setPage }) {
         <h1> Missing an Event?</h1>
         <div id="text-content">
           <div id="text-and-button">
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-             <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+            <p> Hosting a guest speaker, a club social, or a department workshop that isn't on the list? We want to make sure every corner of TMU campus life is represented. By sharing your event on our platform, you’re not just filling a slot on the calendar; you’re helping students discover new passions and build a stronger, more connected community across our downtown campus. </p>
+            <p> Adding your event is quick and easy. Simply click the button below to provide the essential details—like date, time, and location—to ensure your session gets the visibility it deserves. Whether it’s a small study group in the SLC or a major competition at the Mattamy Athletic Centre, get your event on the map and start reaching more students today! </p>
+            <div>
+              <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+            </div>
           </div>
-          <div>
-            <img src={TMUGroupStudents} alt="Group of students smiling"/>
+
+          <div id="student-img">
+            <img src={TMUGroupStudents} alt="Group of students smiling" />
           </div>
         </div>
 
@@ -170,8 +173,8 @@ function Home({ setPage }) {
             setPage={setPage}
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}
-            searchTitle={searchTitle}          
-            setSearchTitle={setSearchTitle}    
+            searchTitle={searchTitle}
+            setSearchTitle={setSearchTitle}
           />
         </div>
       </section>
