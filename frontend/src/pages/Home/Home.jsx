@@ -60,35 +60,10 @@ function Home({ setPage }) {
     <div>
       <Header setPage={setPage} />
 
-      <Filter
-        className="hide-on-large"
-        setPage={setPage}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
-        searchTitle={searchTitle}
-        setSearchTitle={setSearchTitle}
-      />
-
       <div id="hero-landing">
         <img src={TMUSplashImage} alt="Photo of TMU Student Learning Center Building" />
         <div>
           <h1>Stay Connected To Your <span> Student Life </span></h1>
-
-          <form id="search-all-event">
-            <div className="input-with-icon">
-              <input
-                type="text"
-                name="title"
-                placeholder="Search (name or description)"
-                value={title}
-                onChange={(e) => { }}
-              />
-              <button type="submit" className="icon-button">
-                <img src={SearchIcon} alt="Search" />
-              </button>
-            </div>
-          </form>
-
           {/* Buttons */}
           <div className="button-row">
             <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
@@ -137,6 +112,15 @@ function Home({ setPage }) {
 
       <section id="upcoming-events">
         <h1>Upcoming Events</h1>
+
+        <Filter
+        className="hide-on-large"
+        setPage={setPage}
+        selectedTags={selectedTags}
+        setSelectedTags={setSelectedTags}
+        searchTitle={searchTitle}
+        setSearchTitle={setSearchTitle}
+      />
 
         <div id="event-display">
           <div id="event-cards">

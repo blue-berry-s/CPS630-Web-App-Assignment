@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./Filter.css";
+import "../../css/defaultStyle.css"
 import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import SearchDateIcon from "../../assets/icons/SearchDateIcon.svg";
 import Button from "../Button/Button";
@@ -73,12 +74,33 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
             <img src={SearchIcon} alt="Search" />
           </button>
         </div>
+
+        <div id="switch-inpu-group">
+          <div className="switch-input">
+            <label className="switch">
+              <input id="upcoming-only" type="checkbox"/>
+              <span className="slider"></span>
+            </label>
+
+            <label htmlFor="upcoming-only">Upcoming Events Only</label>
+          </div>
+
+          <div className="switch-input">
+            <label className="switch">
+              <input id="avaiable-only" type="checkbox"/>
+              <span className="slider"></span>
+            </label>
+
+            <label htmlFor="avaiable-only">Avaiable Events Only</label>
+          </div>
+        </div>
       </form>
 
       {/* Event Date Section */}
       <h2 className="section-title">Event Date</h2>
       <div id="date-filter">
         <form id="search-date" onSubmit={handleSearchDate}>
+
           <label htmlFor="from-date">From: </label>
           <div className="input-with-icon">
             <input
