@@ -103,6 +103,12 @@ function toFrontendEvent(doc) {
   // frontend expects capacity as text like "40 seats"
   obj.capacity = `${obj.availableSeatings} seats`;
 
+  //registered user
+  obj.isRegistered = obj.registeredUsers.some(
+    u => String(u) === String(userId)
+  );
+
+
   return obj;
 }
 

@@ -31,7 +31,9 @@ function Login({ setPage, setUser }) {
 if (res.ok) {
   setError("");
   localStorage.setItem("token", data.token);
+  localStorage.setItem("userId", data.user._id);
   setUser(data.user); // store user info including role
+  
 
   if (data.user.role === "staff") {
     setPage("home");
