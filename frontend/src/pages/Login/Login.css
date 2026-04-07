@@ -53,4 +53,12 @@
     background-color: #09529D;
     color:#F1F1F1;
   }
+
+  .text-red-600{
+    color:var(--red);
+  }
+
+  .text-sm{
+    font-size:0.8em;
+  }
   
