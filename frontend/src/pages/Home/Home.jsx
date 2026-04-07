@@ -155,6 +155,9 @@ function Home({ setPage }) {
                 &&(
                   switchInput.upcoming === false || new Date(event.date) >= new Date()
                 )
+                &&(
+                  switchInput.available === false || event.registeredSeatings < event.availableSeatings
+                )
               )
               .map((event, idx) => (
                 <EventCard

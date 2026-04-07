@@ -5,7 +5,7 @@ import { useState, useEffect} from 'react';
 
 
 
-function EventCard({ id, title, description, date, time, location, organization, availableSeatings, cost, tags, isCompact, onUpdate }) {
+function EventCard({ id, title, description, date, time, location, organization, registeredSeatings, availableSeatings, cost, tags, isCompact, onUpdate }) {
   let today = new Date();
   today.setHours(0, 0, 0, 0);
   const [registeredSeatingsDisplay, setRegisteredSeatings] = useState(null);
@@ -83,9 +83,9 @@ function EventCard({ id, title, description, date, time, location, organization,
   }
   else {
     newButton = <Button
-      buttonType={registeredSeatingsDisplay < availableSeatings ?  "btn-yellow" : "btn-disabled"}
-      text={registeredSeatingsDisplay < availableSeatings  ?  "REGISTER" : "FULL"}
-      onClick={registeredSeatingsDisplay < availableSeatings  ?  handleRegister : undefined }
+      buttonType={registeredSeatings < availableSeatings ?  "btn-yellow" : "btn-disabled"}
+      text={registeredSeatings < availableSeatings  ?  "REGISTER" : "FULL"}
+      onClick={registeredSeatings < availableSeatings  ?  handleRegister : undefined }
     />
   }
 
