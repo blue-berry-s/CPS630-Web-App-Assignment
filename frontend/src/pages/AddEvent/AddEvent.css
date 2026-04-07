@@ -19,6 +19,7 @@ label, input[type="checkbox"], .registration-title{
   font-size:2em;
 }
 
+
 .form-section {
   display: grid;
   align-items: start; 
@@ -206,6 +207,8 @@ textarea {
 
 input[type="submit"]{
   width:auto;
+  font-size:1em;
+  height:auto !important;
   
 }
 

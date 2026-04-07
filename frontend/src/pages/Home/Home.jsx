@@ -27,6 +27,9 @@ function Home({ setPage }) {
     setEvents(prev => prev.filter(event => event._id !== deletedId));
   };
 
+  const today = new Date();
+  today.setDate(today.getDate() - 1)
+
   useEffect(() => {
     fetch('/api/events?all=true')
       .then(response => response.json())
@@ -153,7 +156,7 @@ function Home({ setPage }) {
                  (!searchFromDate || new Date(event.date) >= new Date(searchFromDate)) && (!searchToDate || new Date(event.date) <= new Date(searchToDate))
                 )
                 &&(
-                  switchInput.upcoming === false || new Date(event.date) >= new Date()
+                  switchInput.upcoming === false || new Date(event.date) >= today
                 )
                 &&(
                   switchInput.available === false || event.registeredSeatings < event.availableSeatings
