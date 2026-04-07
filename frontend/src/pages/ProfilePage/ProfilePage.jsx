@@ -5,7 +5,7 @@ import Button from "../../components/Button/Button.jsx";
 import "../../css/defaultStyle.css"
 import "./ProfilePage.css";
 
-function ProfilePage({ setPage, user }) {
+function ProfilePage({ setPage, user, setUser }) {
   const [selectedEvents, setSelectedEvents] = useState("upcoming");
   const [registeredEvents, setRegisteredEvents] = useState([]);
 
@@ -73,7 +73,13 @@ const pastEvents = registeredEvents.filter(
   <Button
     text="Logout"
     buttonType="btn-red"
-    onClick={() => { setPage("login"); }}
+    onClick={() => { 
+      localStorage.removeItem("token"); // remove token
+      setUser(null);
+      setPage("login");
+      // window.location.reload(); // reset app state 
+
+     }}
   />
 </div>
 </div>
