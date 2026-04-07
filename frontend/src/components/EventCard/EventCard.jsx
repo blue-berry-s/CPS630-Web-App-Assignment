@@ -23,9 +23,6 @@ function EventCard({ id, title, description, date, time, location, organization,
         setRegisteredSeatings(data.registeredSeatings);
         const registeredUsers = data.registeredUsers || [];
         setIsRegistered(registeredUsers.some(u => String(u) === String(userId)));
-        console.log("EVENT DATA:", data);
-        console.log("REGISTERED USERS:", data.registeredUsers);
-        console.log("USER ID:", userId);
       } catch (err) {
         console.error("Failed to fetch event", err);
       }
