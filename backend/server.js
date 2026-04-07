@@ -5,6 +5,13 @@
 // express lets us build the server and create routes
 const express = require("express");
 
+ // import HTTP module for socket.io
+const http = require("http");
+
+// import socket.io
+const { Server } = require("socket.io"); 
+
+
 // path helps us safely find files like html/css/js
 const path = require("path");
 
@@ -467,6 +474,31 @@ app.post("/api/events", requireAuth, requireStaff, async (req, res) => {
 
 
 // ==============================
+// START SERVER WITH SOCKET.IO
+// ==============================
+
+  // creates HTTP server from Express app
+  const server = http.createServer(app);
+
+  // creates Socket.io server
+  const io = new Server(server, {
+    cors: {
+      origin: "*", 
+      methods: ["GET", "POST", "PATCH"]
+    }
+  });
+  
+  // listen for client connections
+  io.on("connection", (socket) => {
+    console.log("A user connected: " + socket.id);
+  
+    socket.on("disconnect", () => {
+      console.log("A user disconnected: " + socket.id);
+    });
+  });
+  
+  
+// ==============================
 // REGISTER FOR EVENT
 // ==============================
 
@@ -507,6 +539,9 @@ app.patch("/api/events/register/:id", requireAuth, async (req, res) => {
 
     // save changes to database
     await event.save();
+
+    //io
+    io.to(event._id.toString()).emit("eventUpdated", toFrontendEvent(event));
 
     // return updated event
     return res.status(200).json(toFrontendEvent(event));
@@ -553,6 +588,10 @@ app.patch("/api/events/unregister/:id", requireAuth, async (req, res) => {
 
     // save changes
     await event.save();
+
+    //io
+    io.to(event._id.toString()).emit("eventUpdated", toFrontendEvent(event));
+
 
     // return updated event
     return res.status(200).json(toFrontendEvent(event));

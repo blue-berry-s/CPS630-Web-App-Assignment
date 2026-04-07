@@ -10,6 +10,8 @@ function EventCard({ id, title, description, date, time, location, organization,
   today.setHours(0, 0, 0, 0);
   const [registeredSeatingsDisplay, setRegisteredSeatings] = useState(null);
   const eventPassed = new Date(date) < today;
+  const token = localStorage.getItem("token"); // get token from browser
+
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -31,7 +33,11 @@ function EventCard({ id, title, description, date, time, location, organization,
     try {
       const response = await fetch(`/api/events/register/${id}`, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+
+      
+      }
       });
 
       const data = await response.json();
