@@ -5,10 +5,10 @@ import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import SearchDateIcon from "../../assets/icons/SearchDateIcon.svg";
 import Button from "../Button/Button";
 
-function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle, setSearchTitle }) {
+function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle, setSearchTitle, setFromDate, setToDate}) {
   const [title, setTitle] = useState(searchTitle || ""); // ADDED
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDateVar] = useState("");
+  const [toDate, setToDateVar] = useState("");
   const [tags, setTags] = useState([]);
   const [notice, setNoticeState] = useState(null);
 
@@ -46,7 +46,11 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
     setSearchTitle(title);
   };
 
-  const handleSearchDate = (e) => e.preventDefault();
+  const handleSearchDate = (e) => {
+    e.preventDefault();
+    setFromDate(fromDate);
+    setToDate(toDate);
+  };
 
   return (
     <div className={className} id="filter">
@@ -99,7 +103,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
       {/* Event Date Section */}
       <h2 className="section-title">Event Date</h2>
       <div id="date-filter">
-        <form id="search-date" onSubmit={handleSearchDate}>
+        <form id="search-date">
 
           <label htmlFor="from-date">From: </label>
           <div className="input-with-icon">
@@ -108,7 +112,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
               id="from-date"
               name="from-date"
               value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
+              onChange={(e) => setFromDateVar(e.target.value)}
             />
             <button
               type="button"
@@ -126,7 +130,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
               id="to-date"
               name="to-date"
               value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
+              onChange={(e) => setToDateVar(e.target.value)}
             />
             <button
               type="button"
@@ -136,6 +140,11 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
               <img src={SearchDateIcon} alt="Search To Date" />
             </button>
           </div>
+          <Button
+            buttonType="btn-blue"
+            text="Apply"
+            onClick={handleSearchDate}
+          />
         </form>
       </div>
 

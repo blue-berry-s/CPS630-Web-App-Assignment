@@ -18,7 +18,10 @@ function Home({ setPage }) {
   const [events, setEvents] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [searchTitle, setSearchTitle] = useState("");
+  const [searchFromDate, setFromDate] = useState("");
+  const [searchToDate, setToDate] = useState("");
   const [title, setTitle] = useState("");
+
 
 
   const refreshEvents = (deletedId) => {
@@ -120,6 +123,8 @@ function Home({ setPage }) {
         setSelectedTags={setSelectedTags}
         searchTitle={searchTitle}
         setSearchTitle={setSearchTitle}
+        setFromDate={setFromDate}
+        setToDate={setToDate}
       />
 
         <div id="event-display">
@@ -141,6 +146,9 @@ function Home({ setPage }) {
                   new RegExp(`\\b${searchTitle.toLowerCase()}\\b`, "i").test(event.title || "") ||
                   new RegExp(`\\b${searchTitle.toLowerCase()}\\b`, "i").test(event.description || "")
                 )
+                &&(
+                 (!searchFromDate || new Date(event.date) >= new Date(searchFromDate)) && (!searchToDate || new Date(event.date) <= new Date(searchToDate))
+                )
               )
               .map((event, idx) => (
                 <EventCard
@@ -159,6 +167,8 @@ function Home({ setPage }) {
             setSelectedTags={setSelectedTags}
             searchTitle={searchTitle}
             setSearchTitle={setSearchTitle}
+            setFromDate={setFromDate}
+            setToDate={setToDate}
           />
         </div>
       </section>
