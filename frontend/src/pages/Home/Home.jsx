@@ -21,8 +21,7 @@ function Home({ setPage }) {
   const [searchFromDate, setFromDate] = useState("");
   const [searchToDate, setToDate] = useState("");
   const [title, setTitle] = useState("");
-
-
+  const [switchInput, setSwitchInput] = useState({});
 
   const refreshEvents = (deletedId) => {
     setEvents(prev => prev.filter(event => event._id !== deletedId));
@@ -33,6 +32,8 @@ function Home({ setPage }) {
       .then(response => response.json())
       .then(data => setEvents(data))
       .catch(err => console.error(err));
+
+    setSwitchInput({"upcoming":false, "available":false});
   }, []);
 
 
@@ -125,6 +126,8 @@ function Home({ setPage }) {
         setSearchTitle={setSearchTitle}
         setFromDate={setFromDate}
         setToDate={setToDate}
+        setSwitchInput={setSwitchInput}
+        switchInput={switchInput}
       />
 
         <div id="event-display">
@@ -149,6 +152,9 @@ function Home({ setPage }) {
                 &&(
                  (!searchFromDate || new Date(event.date) >= new Date(searchFromDate)) && (!searchToDate || new Date(event.date) <= new Date(searchToDate))
                 )
+                &&(
+                  switchInput.upcoming === false || new Date(event.date) >= new Date()
+                )
               )
               .map((event, idx) => (
                 <EventCard
@@ -169,6 +175,8 @@ function Home({ setPage }) {
             setSearchTitle={setSearchTitle}
             setFromDate={setFromDate}
             setToDate={setToDate}
+            setSwitchInput={setSwitchInput}
+            switchInput={switchInput}
           />
         </div>
       </section>

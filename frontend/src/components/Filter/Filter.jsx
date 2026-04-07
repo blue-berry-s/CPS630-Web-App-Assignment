@@ -5,7 +5,7 @@ import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import SearchDateIcon from "../../assets/icons/SearchDateIcon.svg";
 import Button from "../Button/Button";
 
-function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle, setSearchTitle, setFromDate, setToDate}) {
+function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle, setSearchTitle, setFromDate, setToDate, switchInput, setSwitchInput}) {
   const [title, setTitle] = useState(searchTitle || ""); // ADDED
   const [fromDate, setFromDateVar] = useState("");
   const [toDate, setToDateVar] = useState("");
@@ -31,6 +31,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
 
     displayTags();
   }, []);
+  
 
   const handleTagChange = (tag) => {
     if (selectedTags.includes(tag)) {
@@ -51,6 +52,13 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
     setFromDate(fromDate);
     setToDate(toDate);
   };
+
+  const handleSwitchChange = (e) => {
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    setSwitchInput(values => ({...values, [name]: value}))
+  }
 
   return (
     <div className={className} id="filter">
@@ -79,10 +87,10 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
           </button>
         </div>
 
-        <div id="switch-inpu-group">
+        <div id="switch-input-group">
           <div className="switch-input">
             <label className="switch">
-              <input id="upcoming-only" type="checkbox"/>
+              <input id="upcoming-only" name= "upcoming" type="checkbox" checked={switchInput.upcoming} onChange={handleSwitchChange}/>
               <span className="slider"></span>
             </label>
 
@@ -91,11 +99,11 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
 
           <div className="switch-input">
             <label className="switch">
-              <input id="avaiable-only" type="checkbox"/>
+              <input id="available-only" name= "available" type="checkbox" checked={switchInput.available} onChange={handleSwitchChange}/>
               <span className="slider"></span>
             </label>
 
-            <label htmlFor="avaiable-only">Avaiable Events Only</label>
+            <label htmlFor="available-only">Available Events Only</label>
           </div>
         </div>
       </form>
