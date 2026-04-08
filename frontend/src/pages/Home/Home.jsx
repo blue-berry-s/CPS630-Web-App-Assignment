@@ -103,17 +103,22 @@ function Home({ setPage }) {
          <h1>Popular Events</h1>
 
 
-        <Carousel 
-          showDots={true}
-          infinite={true}
-          responsive={responsive}
-          centerMode={true}
-          itemClass={"carousel-cards"}
-          >
-          <EventCard  title="Test1"/>
-          <EventCard  title="Test2"/>
-          <EventCard  title="Test3"/>
-        </Carousel>;
+<Carousel 
+  showDots={true}
+  infinite={true}
+  responsive={responsive}
+  centerMode={true}
+  itemClass={"carousel-cards"}
+>
+  {events.slice(0, 3).map((event, idx) => (
+    <EventCard
+      key={idx}
+      id={event.id}
+      onUpdate={refreshEvents}
+      {...event}
+    />
+  ))}
+</Carousel>
 
       </section>
 
