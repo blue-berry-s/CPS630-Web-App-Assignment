@@ -495,6 +495,11 @@ app.post("/api/events", requireAuth, requireStaff, async (req, res) => {
   // listen for client connections
   io.on("connection", (socket) => {
     console.log("A user connected: " + socket.id);
+
+    socket.on("joinEvent", (eventId) => {
+      socket.join(eventId);
+      console.log(`Socket ${socket.id} joined room ${eventId}`);
+    });
   
     socket.on("disconnect", () => {
       console.log("A user disconnected: " + socket.id);
@@ -545,8 +550,7 @@ app.patch("/api/events/register/:id", requireAuth, async (req, res) => {
     await event.save();
 
     //io
-    io.to(event._id.toString()).emit("eventUpdated", toFrontendEvent(event));
-
+    io.emit("eventUpdated", toFrontendEvent(event));
     // return updated event
     return res.status(200).json(toFrontendEvent(event));
 
@@ -594,8 +598,7 @@ app.patch("/api/events/unregister/:id", requireAuth, async (req, res) => {
     await event.save();
 
     //io
-    io.to(event._id.toString()).emit("eventUpdated", toFrontendEvent(event));
-
+    io.emit("eventUpdated", toFrontendEvent(event));
 
     // return updated event
     return res.status(200).json(toFrontendEvent(event));
@@ -633,6 +636,6 @@ app.delete("/api/events/:id", requireAuth, requireStaff, async (req, res) => {
 // ==============================
 
 // start the server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("Server running at http://localhost:" + PORT);
 });

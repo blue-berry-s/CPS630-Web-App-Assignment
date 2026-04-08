@@ -2,6 +2,7 @@ import Button from '../Button/Button.jsx';
 import CardTagDisplay from '../CardTagDisplay/CardTagDisplay.jsx';
 import './EventCard.css'
 import { useState, useEffect} from 'react';
+import { io } from "socket.io-client";
 
 
 
@@ -13,6 +14,8 @@ function EventCard({ id, title, description, date, time, location, organization,
   const eventPassed = new Date(date) < today;
   const token = localStorage.getItem("token"); // get token from browser
   const userId = localStorage.getItem("userId");
+  const socket = io("http://localhost:8080");
+
 
 
   useEffect(() => {
@@ -31,6 +34,18 @@ function EventCard({ id, title, description, date, time, location, organization,
     fetchEvent();
   }, [id, userId]);
 
+  useEffect(() => {
+  socket.on("eventUpdated", (updatedEvent) => {
+    // only update THIS card if it's the same event
+    if (updatedEvent.id === id) {
+      setRegisteredSeatings(updatedEvent.registeredSeatings);
+    }
+  });
+
+  return () => {
+    socket.off("eventUpdated");
+  };
+}, [id]);
 
   // REGISTER for event
   const handleRegister = async () => {
