@@ -356,12 +356,23 @@ app.get("/api/events", async (req, res) => {
   try {
 
     const wantAll = String(req.query.all || "").toLowerCase() === "true";
+    const wantPopular = String(req.query.popular || "").toLowerCase() === "true";
 
     const query = wantAll
       ? {}
       : { date: { $gte: getTodayLocalYYYYMMDD() } };
 
-    const events = await Event.find(query).sort({ date: 1, time: 1 });
+  let events = await Event.find(query).sort({ date: 1, time: 1 });
+
+  if (wantPopular) {
+    events = events
+      .sort((a, b) => {
+        const aSeats = a.availableSeatings ?? 9999;
+        const bSeats = b.availableSeatings ?? 9999;
+        return aSeats - bSeats;
+      })
+      .slice(0, 3);
+  }
 
     res.status(200).json(events.map(toFrontendEvent));
 

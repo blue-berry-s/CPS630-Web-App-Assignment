@@ -16,6 +16,7 @@ import "react-multi-carousel/lib/styles.css";
 
 function Home({ setPage }) {
   const [events, setEvents] = useState([]);
+  const [popularEvents, setPopularEvents] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [searchTitle, setSearchTitle] = useState(""); 
   const [title, setTitle] = useState("");
@@ -31,6 +32,13 @@ function Home({ setPage }) {
       .then(data => setEvents(data))
       .catch(err => console.error(err));
   }, []);
+
+  useEffect(() => {
+  fetch('/api/events?popular=true')
+    .then(response => response.json())
+    .then(data => setPopularEvents(data))
+    .catch(err => console.error(err));
+}, []);
 
 
   const responsive = {
@@ -110,14 +118,14 @@ function Home({ setPage }) {
   centerMode={true}
   itemClass={"carousel-cards"}
 >
-  {events.slice(0, 3).map((event, idx) => (
-    <EventCard
-      key={idx}
-      id={event.id}
-      onUpdate={refreshEvents}
-      {...event}
-    />
-  ))}
+{popularEvents.map((event, idx) => (
+  <EventCard
+    key={idx}
+    id={event.id}
+    onUpdate={refreshEvents}
+    {...event}
+  />
+))}
 </Carousel>
 
       </section>
