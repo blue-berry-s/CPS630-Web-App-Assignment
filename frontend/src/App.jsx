@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './App.css';
 import './css/defaultStyle.css';
 
@@ -13,6 +13,14 @@ import ProfilePage from "./pages/ProfilePage/ProfilePage";
 function App() {
   const [page, setPage] = useState("login");
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      setPage("home"); 
+    }
+  }, []);
 
   // Not logged in
   if (!user) {
