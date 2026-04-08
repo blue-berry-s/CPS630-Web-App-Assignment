@@ -75,10 +75,10 @@ const pastEvents = registeredEvents.filter(
     buttonType="btn-red"
     onClick={() => { 
       localStorage.removeItem("token"); // remove token
+      localStorage.removeItem("user"); // remove user
+      localStorage.removeItem("userId"); 
       setUser(null);
       setPage("login");
-      // window.location.reload(); // reset app state 
-
      }}
   />
 </div>
