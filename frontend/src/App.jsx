@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './App.css';
 import './css/defaultStyle.css';
 
@@ -14,6 +14,14 @@ function App() {
   const [page, setPage] = useState("login");
   const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+      setPage("home"); 
+    }
+  }, []);
+
   // Not logged in
   if (!user) {
     return <Login setPage={setPage} setUser={setUser} />;
@@ -23,8 +31,6 @@ function App() {
   if (page === "addEvent") return <AddEvent setPage={setPage} />;
   if (page === "campusMap") return <CampusMap setPage={setPage} />;
   if (page === "profilePage") return <ProfilePage setPage={setPage} user={user} setUser={setUser} />;
-
-
   if (user.role === "staff") return <Home setPage={setPage} user={user} />; // will change to staff page later
   else return <Home setPage={setPage} user={user} />;
 

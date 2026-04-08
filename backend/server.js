@@ -5,6 +5,13 @@
 // express lets us build the server and create routes
 const express = require("express");
 
+ // import HTTP module for socket.io
+const http = require("http");
+
+// import socket.io
+const { Server } = require("socket.io"); 
+
+
 // path helps us safely find files like html/css/js
 const path = require("path");
 
@@ -95,6 +102,10 @@ function toFrontendEvent(doc) {
 
   // frontend expects capacity as text like "40 seats"
   obj.capacity = `${obj.availableSeatings} seats`;
+
+  //registered user
+  obj.isRegistered = false;
+
 
   return obj;
 }
@@ -470,6 +481,36 @@ app.post("/api/events", requireAuth, requireStaff, async (req, res) => {
 
 
 // ==============================
+// START SERVER WITH SOCKET.IO
+// ==============================
+
+  // creates HTTP server from Express app
+  const server = http.createServer(app);
+
+  // creates Socket.io server
+  const io = new Server(server, {
+    cors: {
+      origin: "*", 
+      methods: ["GET", "POST", "PATCH"]
+    }
+  });
+  
+  // listen for client connections
+  io.on("connection", (socket) => {
+    console.log("A user connected: " + socket.id);
+
+    socket.on("joinEvent", (eventId) => {
+      socket.join(eventId);
+      console.log(`Socket ${socket.id} joined room ${eventId}`);
+    });
+  
+    socket.on("disconnect", () => {
+      console.log("A user disconnected: " + socket.id);
+    });
+  });
+  
+  
+// ==============================
 // REGISTER FOR EVENT
 // ==============================
 
@@ -511,6 +552,8 @@ app.patch("/api/events/register/:id", requireAuth, async (req, res) => {
     // save changes to database
     await event.save();
 
+    //io
+    io.emit("eventUpdated", toFrontendEvent(event));
     // return updated event
     return res.status(200).json(toFrontendEvent(event));
 
@@ -557,6 +600,9 @@ app.patch("/api/events/unregister/:id", requireAuth, async (req, res) => {
     // save changes
     await event.save();
 
+    //io
+    io.emit("eventUpdated", toFrontendEvent(event));
+
     // return updated event
     return res.status(200).json(toFrontendEvent(event));
 
@@ -593,6 +639,6 @@ app.delete("/api/events/:id", requireAuth, requireStaff, async (req, res) => {
 // ==============================
 
 // start the server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("Server running at http://localhost:" + PORT);
 });

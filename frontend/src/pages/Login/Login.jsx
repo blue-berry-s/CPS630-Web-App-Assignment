@@ -28,10 +28,15 @@ function Login({ setPage, setUser }) {
 
       const data = await res.json();
 
-      if (res.ok) {
-        setError("");
-        localStorage.setItem("token", data.token);
-        setUser(data.user); // store user info including role
+
+if (res.ok) {
+  setError("");
+  localStorage.setItem("token", data.token);
+  localStorage.setItem("userId", data.user._id);
+  localStorage.setItem("user", JSON.stringify(data.user));
+  
+  setUser(data.user); // store user info including role
+  
 
         if (data.user.role === "staff") {
           setPage("home");

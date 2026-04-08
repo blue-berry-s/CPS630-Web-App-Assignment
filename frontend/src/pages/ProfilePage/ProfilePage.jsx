@@ -80,9 +80,12 @@ function ProfilePage({ setPage, user, setUser }) {
               text="Logout"
               buttonType="btn-red"
               onClick={() => {
+                localStorage.removeItem("token"); // remove token
+                localStorage.removeItem("user"); // remove user
+                localStorage.removeItem("userId"); 
                 setUser(null);
-                localStorage.removeItem("token");
                 setPage("login");
+
               }}
             />
             {user?.role === "staff" && (
