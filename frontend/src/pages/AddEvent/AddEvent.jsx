@@ -2,6 +2,7 @@ import "../../css/defaultStyle.css"
 import Header from "../../components/Header/Header.jsx";
 import Button from "../../components/Button/Button.jsx";
 import "./AddEvent.css";
+import EventCard from "../../components/EventCard/EventCard.jsx"
 
 import FileIcon from "../../assets/icons/File.svg";
 import DriveIcon from "../../assets/icons/Drive.svg";
@@ -11,12 +12,14 @@ import CostIcon from "../../assets/icons/PriceIcon.svg";
 import SeatIcon from "../../assets/icons/SmileIcon.svg";
 import TimeIcon from "../../assets/icons/TimeIcon.svg";
 import DropDownArrow from "../../assets/icons/DropDownArrow.svg";
+import CheckmarkIcon from "../../assets/icons/CheckmarkIcon.svg";
 
 import { useState, useEffect } from "react";
 
 function AddEvent({ setPage }) {
   const [registrationRequired, openRegistration] = useState(true);
   const [tags, setTags] = useState([]);
+  const [newEvent, setNewEvent] = useState(null);
 
   const buildings = [
     "TRS", "SLC", "LIB", "POD",
@@ -70,8 +73,11 @@ function AddEvent({ setPage }) {
       });
 
       if (response.ok) {
-        alert("Event added successfully!");
-        setPage('home');
+        const createdEvent = await response.json(); 
+        //alert("Event added successfully!");
+        setNewEvent(createdEvent); 
+
+        //setPage('home');
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.error}`);
@@ -84,14 +90,9 @@ function AddEvent({ setPage }) {
   return (
     <>
       <Header setPage={setPage} />
-      <div className="topText">
-        <h1>Add an Event!</h1>
-        <p>Description Text here about adding events - follow the form and whatever blah blah blah don’t need to read that much this is so much
-          fun writing filler text yadayadayada</p>
-      </div>
 
-      
-      <form className="add-event-container" onSubmit={handleSubmit}>
+      {newEvent == null ? (
+        <form className="add-event-container" onSubmit={handleSubmit}>
         <div className="form-card">
 
           <h2 className="form-title">NEW EVENT FORM</h2>
@@ -257,6 +258,36 @@ function AddEvent({ setPage }) {
 
         </div>
       </form >
+
+      ) : (
+        <div id="confirmation_container">
+              <img src={CheckmarkIcon}/>
+              <h1> NEW EVENT CREATED </h1>
+              <p> We can’t wait for it to happen! </p>
+              <div id="eventcard_container">
+                <EventCard
+                  id={newEvent.id}
+                  title={newEvent.title}
+                  description={newEvent.description}
+                  date={newEvent.date}
+                  time={newEvent.time}
+                  location={newEvent.location}
+                  organization={newEvent.organization}
+                  registeredSeatings={newEvent.registeredSeatings}
+                  availableSeatings={newEvent.availableSeatings}
+                  cost={newEvent.cost}
+                  tags={newEvent.tags}
+                />
+              </div>
+
+              <div id="confirmation_button_group">
+                <Button buttonType="btn-white" text="Add Event" onClick={() => setNewEvent(null)} />
+                <Button buttonType="btn-blue" text="Go Home" onClick={() => { setNewEvent(null); setPage('home');}} />
+              </div>
+          </div>
+      ) }
+
+        
     </>
   );
 }
