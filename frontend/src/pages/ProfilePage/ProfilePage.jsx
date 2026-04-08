@@ -35,26 +35,6 @@ useEffect(() => {
   }
 }, [user]);
 
-useEffect(() => {
-  const socket = io("http://localhost:8080");
-
-  socket.on("connect", () => console.log("Socket connected:", socket.id));
-
-  socket.on("eventUpdated", (updatedEvent) => {
-    setRegisteredEvents(prev =>
-      prev.map(event => event.id === updatedEvent.id ? updatedEvent : event)
-    );
-  });
-
-  socket.on("eventDeleted", (deletedId) => {
-    setRegisteredEvents(prev =>
-      prev.filter(event => event.id !== deletedId)
-    );
-  });
-
-  return () => socket.disconnect();
-}, [user]);
-
 let today = new Date();
 today.setHours(0, 0, 0, 0);
 

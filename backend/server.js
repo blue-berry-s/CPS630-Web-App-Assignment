@@ -104,9 +104,7 @@ function toFrontendEvent(doc) {
   obj.capacity = `${obj.availableSeatings} seats`;
 
   //registered user
-  obj.isRegistered = obj.registeredUsers.some(
-    u => String(u) === String(userId)
-  );
+  obj.isRegistered = false;
 
 
   return obj;
