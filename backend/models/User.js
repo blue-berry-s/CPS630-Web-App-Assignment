@@ -13,6 +13,20 @@ const UserSchema = new mongoose.Schema({
     trim: true
   },
 
+  // year since user created account
+  joinYear: {
+    type: Number,
+    required: true,
+  },
+
+  major: {
+    type: String,
+    required: function () {
+      return this.role === "student";
+    },
+    trim: true
+  },
+
   // email used to log in
   email: {
     type: String,

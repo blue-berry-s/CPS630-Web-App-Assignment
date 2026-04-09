@@ -2,6 +2,7 @@ import Button from '../Button/Button.jsx';
 import CardTagDisplay from '../CardTagDisplay/CardTagDisplay.jsx';
 import './EventCard.css'
 import { useState, useEffect} from 'react';
+import { io } from "socket.io-client";
 
 
 
@@ -9,7 +10,13 @@ function EventCard({ id, title, description, date, time, location, organization,
   let today = new Date();
   today.setHours(0, 0, 0, 0);
   const [registeredSeatingsDisplay, setRegisteredSeatings] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
   const eventPassed = new Date(date) < today;
+  const token = localStorage.getItem("token"); // get token from browser
+  const userId = localStorage.getItem("userId");
+  const socket = io("http://localhost:8080");
+
+
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -17,28 +24,54 @@ function EventCard({ id, title, description, date, time, location, organization,
         const res = await fetch(`/api/events/${id}`);
         const data = await res.json();
         setRegisteredSeatings(data.registeredSeatings);
+        const registeredUsers = data.registeredUsers || [];
+        setIsRegistered(registeredUsers.some(u => String(u) === String(userId)));
       } catch (err) {
         console.error("Failed to fetch event", err);
       }
     };
 
     fetchEvent();
-  }, [id]);
+  }, [id, userId]);
 
+  useEffect(() => {
+  socket.on("eventUpdated", (updatedEvent) => {
+    // only update THIS card if it's the same event
+    if (updatedEvent.id === id) {
+      setRegisteredSeatings(updatedEvent.registeredSeatings);
+    }
+  });
+
+  return () => {
+    socket.off("eventUpdated");
+  };
+}, [id]);
 
   // REGISTER for event
   const handleRegister = async () => {
+    const endpoint = isRegistered
+      ? `/api/events/unregister/${id}`
+      : `/api/events/register/${id}`;
+
     try {
-      const response = await fetch(`/api/events/register/${id}`, {
+      const response = await fetch(endpoint, {
         method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json',
+        "Authorization": `Bearer ${token}`
+
+
+      }
       });
 
       const data = await response.json();
 
       if (response.ok) {
         setRegisteredSeatings(data.registeredSeatings);
-        alert(`Registered successfully! Total registered: ${data.registeredSeatings}`);
+        setIsRegistered(!isRegistered); // toggle registration
+        alert(isRegistered 
+          ? "You have unregistered from the event" 
+          : `Registered successfully! Total registered: ${data.registeredSeatings}`);
+
       } else {
         alert(data.error || "Registration failed");
       }
@@ -74,20 +107,42 @@ function EventCard({ id, title, description, date, time, location, organization,
 
   let newButton;
   if (eventPassed) {
-    newButton = <Button
+    newButton = ( <Button
       buttonType="btn-disabled"
       text="PASSED EVENT"
       onClick={() => { }}
     />
+    );
 
+  } else if (isRegistered) {
+    // User already registered then can unregister
+    newButton = (
+      <Button
+        buttonType="btn-red"
+        text="UNREGISTER"
+        onClick={handleRegister}
+      />
+    );
+  } else if (registeredSeatingsDisplay >= availableSeatings) {
+    // Event is full
+    newButton = (
+      <Button
+        buttonType="btn-disabled"
+        text="FULL"
+        onClick={() => {}}
+      />
+    );
+  } else {
+    // Event open and user not registered then can register
+    newButton = (
+      <Button
+        buttonType="btn-yellow"
+        text="REGISTER"
+        onClick={handleRegister}
+      />
+    );
   }
-  else {
-    newButton = <Button
-      buttonType={registeredSeatingsDisplay < availableSeatings ?  "btn-yellow" : "btn-disabled"}
-      text={registeredSeatingsDisplay < availableSeatings  ?  "REGISTER" : "FULL"}
-      onClick={registeredSeatingsDisplay < availableSeatings  ?  handleRegister : undefined }
-    />
-  }
+
 
 
   return (

@@ -5,6 +5,13 @@
 // express lets us build the server and create routes
 const express = require("express");
 
+ // import HTTP module for socket.io
+const http = require("http");
+
+// import socket.io
+const { Server } = require("socket.io"); 
+
+
 // path helps us safely find files like html/css/js
 const path = require("path");
 
@@ -96,6 +103,10 @@ function toFrontendEvent(doc) {
   // frontend expects capacity as text like "40 seats"
   obj.capacity = `${obj.availableSeatings} seats`;
 
+  //registered user
+  obj.isRegistered = false;
+
+
   return obj;
 }
 
@@ -111,7 +122,60 @@ function parseCapacityToSeats(capacity) {
 
   return Number(match[0]);
 }
+// ==============================
+// AUTH HELPER MIDDLEWARE
+// ==============================
 
+// This function checks if the user is logged in.
+// The frontend must send a token like:
+// Authorization: Bearer <token>
+function requireAuth(req, res, next) {
+
+  // get authorization header from request
+  const authHeader = req.headers.authorization;
+
+  // if header is missing OR not in correct format → reject
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({ error: "No token provided" });
+  }
+
+  // extract token from "Bearer TOKEN"
+  const token = authHeader.split(" ")[1];
+
+  try {
+    // verify token using our secret key
+    const decoded = jwt.verify(token, JWT_SECRET);
+
+    // store user info inside request
+    // now we can access:
+    // req.user.userId
+    // req.user.role
+    req.user = decoded;
+
+    // continue to next function (route)
+    next();
+
+  } catch (err) {
+    // token invalid or expired
+    return res.status(401).json({ error: "Invalid token" });
+  }
+}
+
+
+// This function checks if user is STAFF
+// used for routes like:
+// - create event
+// - delete event
+function requireStaff(req, res, next) {
+
+  // if no user OR user is not staff ->reject
+  if (!req.user || req.user.role !== "staff") {
+    return res.status(403).json({ error: "Staff only action" });
+  }
+
+  // user is staff -> continue
+  next();
+}
 
 // ==============================
 // PAGE ROUTES
@@ -142,10 +206,10 @@ app.get("/login", (req, res) => {
 app.post("/api/auth/register", async (req, res) => {
   try {
     // get data sent from frontend
-    const { name, email, password } = req.body;
+    const { name, major, email, password } = req.body;
 
     // basic check so empty fields are not allowed
-    if (!name || !email || !password) {
+    if (!name || !major || !email || !password) {
       return res.status(400).json({
         error: "Name, email, and password are required"
       });
@@ -168,6 +232,8 @@ app.post("/api/auth/register", async (req, res) => {
     // create the new user
     const newUser = await User.create({
       name,
+      joinYear,
+      major,
       email: email.toLowerCase(),
       password: hashedPassword,
       role: "student" // default role for normal signup
@@ -180,6 +246,8 @@ app.post("/api/auth/register", async (req, res) => {
       user: {
         _id: newUser._id,
         name: newUser.name,
+        joinYear: newUser.joinYear,
+        major: newUser.major,
         email: newUser.email,
         role: newUser.role
       }
@@ -247,6 +315,8 @@ app.post("/api/auth/login", async (req, res) => {
       user: {
         _id: user._id,
         name: user.name,
+        joinYear: user.joinYear,
+        major: user.major,
         email: user.email,
         role: user.role
       }
@@ -286,12 +356,23 @@ app.get("/api/events", async (req, res) => {
   try {
 
     const wantAll = String(req.query.all || "").toLowerCase() === "true";
+    const wantPopular = String(req.query.popular || "").toLowerCase() === "true";
 
     const query = wantAll
       ? {}
       : { date: { $gte: getTodayLocalYYYYMMDD() } };
 
-    const events = await Event.find(query).sort({ date: 1, time: 1 });
+  let events = await Event.find(query).sort({ date: 1, time: 1 });
+
+  if (wantPopular) {
+    events = events
+      .sort((a, b) => {
+        const aSeats = a.availableSeatings ?? 9999;
+        const bSeats = b.availableSeatings ?? 9999;
+        return aSeats - bSeats;
+      })
+      .slice(0, 3);
+  }
 
     res.status(200).json(events.map(toFrontendEvent));
 
@@ -348,8 +429,8 @@ app.get("/api/tags", async (req, res) => {
 // CREATE EVENT
 // ==============================
 
-// create new event from form
-app.post("/api/events", async (req, res) => {
+// only logged-in STAFF can create events
+app.post("/api/events", requireAuth, requireStaff, async (req, res) => {
 
   try {
 
@@ -397,7 +478,9 @@ app.post("/api/events", async (req, res) => {
       cost: cost || "",
       tags: finalTags,
       availableSeatings: seats,
-      registeredSeatings: 0
+      registeredSeatings: 0,
+      // start with empty registered users list
+      registeredUsers: []
     });
 
     res.status(201).json(toFrontendEvent(newEvent));
@@ -409,76 +492,142 @@ app.post("/api/events", async (req, res) => {
 
 
 // ==============================
+// START SERVER WITH SOCKET.IO
+// ==============================
+
+  // creates HTTP server from Express app
+  const server = http.createServer(app);
+
+  // creates Socket.io server
+  const io = new Server(server, {
+    cors: {
+      origin: "*", 
+      methods: ["GET", "POST", "PATCH"]
+    }
+  });
+  
+  // listen for client connections
+  io.on("connection", (socket) => {
+    console.log("A user connected: " + socket.id);
+
+    socket.on("joinEvent", (eventId) => {
+      socket.join(eventId);
+      console.log(`Socket ${socket.id} joined room ${eventId}`);
+    });
+  
+    socket.on("disconnect", () => {
+      console.log("A user disconnected: " + socket.id);
+    });
+  });
+  
+  
+// ==============================
 // REGISTER FOR EVENT
 // ==============================
 
-// increment registeredSeatings by 1 (but only if event not full)
-app.patch("/api/events/register/:id", async (req, res) => {
-
+// This allows a logged-in user to register for an event
+app.patch("/api/events/register/:id", requireAuth, async (req, res) => {
   try {
 
-    const updated = await Event.findOneAndUpdate(
-      { _id: req.params.id, $expr: { $lt: ["$registeredSeatings", "$availableSeatings"] } },
-      { $inc: { registeredSeatings: 1 } },
-      { new: true }
-    );
+    // find event by id
+    const event = await Event.findById(req.params.id);
 
-    if (updated) {
-      return res.status(200).json(toFrontendEvent(updated));
-    }
-
-    const exists = await Event.findById(req.params.id);
-
-    if (!exists) {
+    // if event does not exist
+    if (!event) {
       return res.status(404).json({ error: "Event not found" });
     }
 
-    return res.status(409).json({ error: "Event is full" });
+    // check if user already registered
+    // prevents duplicate registration
+    const alreadyRegistered = event.registeredUsers.some(
+      userId => String(userId) === req.user.userId
+    );
+
+    if (alreadyRegistered) {
+      return res.status(409).json({
+        error: "User already registered"
+      });
+    }
+
+    // check if event is full
+    if (event.registeredSeatings >= event.availableSeatings) {
+      return res.status(409).json({ error: "Event is full" });
+    }
+
+    // add user ID to registeredUsers list
+    event.registeredUsers.push(req.user.userId);
+
+    // increase seat count
+    event.registeredSeatings += 1;
+
+    // save changes to database
+    await event.save();
+
+    //io
+    io.emit("eventUpdated", toFrontendEvent(event));
+    // return updated event
+    return res.status(200).json(toFrontendEvent(event));
 
   } catch (err) {
     res.status(400).json({ error: "Invalid ID" });
   }
 });
-
 
 // ==============================
 // UNREGISTER FROM EVENT
 // ==============================
 
-// decrement registeredSeatings by 1 (but only if registeredSeatings > 0)
-app.patch("/api/events/unregister/:id", async (req, res) => {
-
+// allows logged-in user to remove themselves from event
+app.patch("/api/events/unregister/:id", requireAuth, async (req, res) => {
   try {
 
-    const updated = await Event.findOneAndUpdate(
-      { _id: req.params.id, registeredSeatings: { $gt: 0 } },
-      { $inc: { registeredSeatings: -1 } },
-      { new: true }
-    );
+    // find event
+    const event = await Event.findById(req.params.id);
 
-    if (updated) {
-      return res.status(200).json(toFrontendEvent(updated));
-    }
-
-    const exists = await Event.findById(req.params.id);
-
-    if (!exists) {
+    // event not found
+    if (!event) {
       return res.status(404).json({ error: "Event not found" });
     }
 
-    return res.status(409).json({ error: "No registrations to remove" });
+    // check if user is actually registered
+    const wasRegistered = event.registeredUsers.some(
+      userId => String(userId) === req.user.userId
+    );
+
+    if (!wasRegistered) {
+      return res.status(409).json({
+        error: "User not registered"
+      });
+    }
+
+    // remove user from registeredUsers list
+    event.registeredUsers = event.registeredUsers.filter(
+      userId => String(userId) !== req.user.userId
+    );
+
+    // decrease seat count safely
+    event.registeredSeatings = Math.max(0, event.registeredSeatings - 1);
+
+    // save changes
+    await event.save();
+
+    //io
+    io.emit("eventUpdated", toFrontendEvent(event));
+
+    // return updated event
+    return res.status(200).json(toFrontendEvent(event));
 
   } catch (err) {
     res.status(400).json({ error: "Invalid ID" });
   }
 });
 
-
-// ==============================
+// ==============================e
 // DELETE EVENT
 // ==============================
 
-app.delete("/api/events/:id", async (req, res) => {
+// only STAFF can delete events
+app.delete("/api/events/:id", requireAuth, requireStaff, async (req, res) => {
 
   try {
 
@@ -501,6 +650,6 @@ app.delete("/api/events/:id", async (req, res) => {
 // ==============================
 
 // start the server
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log("Server running at http://localhost:" + PORT);
 });

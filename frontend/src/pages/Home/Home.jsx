@@ -16,13 +16,14 @@ import "react-multi-carousel/lib/styles.css";
 
 function Home({ setPage }) {
   const [events, setEvents] = useState([]);
+  const [popularEvents, setPopularEvents] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
   const [searchTitle, setSearchTitle] = useState(""); 
   const [title, setTitle] = useState("");
   
 
   const refreshEvents = (deletedId) => {
-    setEvents(prev => prev.filter(event => event._id !== deletedId));
+    setEvents(prev => prev.filter(event => event.id !== deletedId));
   };
 
   useEffect(() => {
@@ -31,6 +32,13 @@ function Home({ setPage }) {
       .then(data => setEvents(data))
       .catch(err => console.error(err));
   }, []);
+
+  useEffect(() => {
+  fetch('/api/events?popular=true')
+    .then(response => response.json())
+    .then(data => setPopularEvents(data))
+    .catch(err => console.error(err));
+}, []);
 
 
   const responsive = {
@@ -103,17 +111,22 @@ function Home({ setPage }) {
          <h1>Popular Events</h1>
 
 
-        <Carousel 
-          showDots={true}
-          infinite={true}
-          responsive={responsive}
-          centerMode={true}
-          itemClass={"carousel-cards"}
-          >
-          <EventCard  title="Test1"/>
-          <EventCard  title="Test2"/>
-          <EventCard  title="Test3"/>
-        </Carousel>;
+<Carousel 
+  showDots={true}
+  infinite={true}
+  responsive={responsive}
+  centerMode={true}
+  itemClass={"carousel-cards"}
+>
+{popularEvents.map((event, idx) => (
+  <EventCard
+    key={idx}
+    id={event.id}
+    onUpdate={refreshEvents}
+    {...event}
+  />
+))}
+</Carousel>
 
       </section>
 
@@ -158,7 +171,7 @@ function Home({ setPage }) {
               .map((event, idx) => (
                 <EventCard
                   key={idx}
-                  id={event._id}
+                  id={event.id}
                   onUpdate={refreshEvents}
                   {...event}
                 />

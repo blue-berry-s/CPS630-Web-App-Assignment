@@ -70,7 +70,7 @@ function Map() {
             <div id="eventDisplay">
               {filteredEvents.length > 0 ? (
                 filteredEvents.map(event => (
-                  <div key={event._id} className="map-page-card">
+                  <div key={event.id} className="map-page-card">
                     <EventCard {...event} isCompact={true} />
                   </div>
                 ))
