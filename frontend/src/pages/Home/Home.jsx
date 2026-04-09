@@ -18,13 +18,18 @@ function Home({ setPage }) {
   const [events, setEvents] = useState([]);
   const [popularEvents, setPopularEvents] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
-  const [searchTitle, setSearchTitle] = useState(""); 
+  const [searchTitle, setSearchTitle] = useState("");
+  const [searchFromDate, setFromDate] = useState("");
+  const [searchToDate, setToDate] = useState("");
   const [title, setTitle] = useState("");
-  
+  const [switchInput, setSwitchInput] = useState({});
 
   const refreshEvents = (deletedId) => {
     setEvents(prev => prev.filter(event => event.id !== deletedId));
   };
+
+  const today = new Date();
+  today.setDate(today.getDate() - 1)
 
   useEffect(() => {
     fetch('/api/events?all=true')
@@ -68,35 +73,10 @@ function Home({ setPage }) {
     <div>
       <Header setPage={setPage} />
 
-      <Filter
-        className="hide-on-large"
-        setPage={setPage}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
-        searchTitle={searchTitle}          
-        setSearchTitle={setSearchTitle}    
-      />
-
       <div id="hero-landing">
         <img src={TMUSplashImage} alt="Photo of TMU Student Learning Center Building" />
         <div>
           <h1>Stay Connected To Your <span> Student Life </span></h1>
-
-          <form id="search-all-event">
-                  <div className="input-with-icon">
-                    <input
-                      type="text"
-                      name="title"
-                      placeholder="Search (name or description)"
-                      value={title}
-                      onChange={(e) => {}}
-                    />
-                    <button type="submit" className="icon-button">
-                      <img src={SearchIcon} alt="Search" />
-                    </button>
-                  </div>
-          </form>
-
           {/* Buttons */}
           <div className="button-row">
             <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
@@ -108,7 +88,7 @@ function Home({ setPage }) {
 
       <section id="popular-events">
 
-         <h1>Popular Events</h1>
+        <h1>Popular Events</h1>
 
 
 <Carousel 
@@ -134,12 +114,15 @@ function Home({ setPage }) {
         <h1> Missing an Event?</h1>
         <div id="text-content">
           <div id="text-and-button">
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
-             <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+            <p> Hosting a guest speaker, a club social, or a department workshop that isn't on the list? We want to make sure every corner of TMU campus life is represented. By sharing your event on our platform, you’re not just filling a slot on the calendar; you’re helping students discover new passions and build a stronger, more connected community across our downtown campus. </p>
+            <p> Adding your event is quick and easy. Simply click the button below to provide the essential details—like date, time, and location—to ensure your session gets the visibility it deserves. Whether it’s a small study group in the SLC or a major competition at the Mattamy Athletic Centre, get your event on the map and start reaching more students today! </p>
+            <div>
+              <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+            </div>
           </div>
-          <div>
-            <img src={TMUGroupStudents} alt="Group of students smiling"/>
+
+          <div id="student-img">
+            <img src={TMUGroupStudents} alt="Group of students smiling" />
           </div>
         </div>
 
@@ -147,6 +130,19 @@ function Home({ setPage }) {
 
       <section id="upcoming-events">
         <h1>Upcoming Events</h1>
+
+        <Filter
+        className="hide-on-large"
+        setPage={setPage}
+        selectedTags={selectedTags}
+        setSelectedTags={setSelectedTags}
+        searchTitle={searchTitle}
+        setSearchTitle={setSearchTitle}
+        setFromDate={setFromDate}
+        setToDate={setToDate}
+        setSwitchInput={setSwitchInput}
+        switchInput={switchInput}
+      />
 
         <div id="event-display">
           <div id="event-cards">
@@ -167,6 +163,15 @@ function Home({ setPage }) {
                   new RegExp(`\\b${searchTitle.toLowerCase()}\\b`, "i").test(event.title || "") ||
                   new RegExp(`\\b${searchTitle.toLowerCase()}\\b`, "i").test(event.description || "")
                 )
+                &&(
+                 (!searchFromDate || new Date(event.date) >= new Date(searchFromDate)) && (!searchToDate || new Date(event.date) <= new Date(searchToDate))
+                )
+                &&(
+                  switchInput.upcoming === false || new Date(event.date) >= today
+                )
+                &&(
+                  switchInput.available === false || event.registeredSeatings < event.availableSeatings
+                )
               )
               .map((event, idx) => (
                 <EventCard
@@ -183,8 +188,12 @@ function Home({ setPage }) {
             setPage={setPage}
             selectedTags={selectedTags}
             setSelectedTags={setSelectedTags}
-            searchTitle={searchTitle}          
-            setSearchTitle={setSearchTitle}    
+            searchTitle={searchTitle}
+            setSearchTitle={setSearchTitle}
+            setFromDate={setFromDate}
+            setToDate={setToDate}
+            setSwitchInput={setSwitchInput}
+            switchInput={switchInput}
           />
         </div>
       </section>

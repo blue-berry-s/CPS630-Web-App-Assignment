@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./Filter.css";
+import "../../css/defaultStyle.css"
 import SearchIcon from "../../assets/icons/SearchIcon.svg";
 import SearchDateIcon from "../../assets/icons/SearchDateIcon.svg";
 import Button from "../Button/Button";
 
-function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle, setSearchTitle }) {
+function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle, setSearchTitle, setFromDate, setToDate, switchInput, setSwitchInput}) {
   const [title, setTitle] = useState(searchTitle || ""); // ADDED
-  const [fromDate, setFromDate] = useState("");
-  const [toDate, setToDate] = useState("");
+  const [fromDate, setFromDateVar] = useState("");
+  const [toDate, setToDateVar] = useState("");
   const [tags, setTags] = useState([]);
   const [notice, setNoticeState] = useState(null);
 
@@ -30,6 +31,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
 
     displayTags();
   }, []);
+  
 
   const handleTagChange = (tag) => {
     if (selectedTags.includes(tag)) {
@@ -45,7 +47,18 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
     setSearchTitle(title);
   };
 
-  const handleSearchDate = (e) => e.preventDefault();
+  const handleSearchDate = (e) => {
+    e.preventDefault();
+    setFromDate(fromDate);
+    setToDate(toDate);
+  };
+
+  const handleSwitchChange = (e) => {
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
+    setSwitchInput(values => ({...values, [name]: value}))
+  }
 
   return (
     <div className={className} id="filter">
@@ -69,16 +82,37 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
             value={title}
             onChange={(e) => setTitle(e.target.value)}   // still your state
           />
-          <button type="submit" className="icon-button">
+          <button type="submit" className="icon-button search-icon">
             <img src={SearchIcon} alt="Search" />
           </button>
+        </div>
+
+        <div id="switch-input-group">
+          <div className="switch-input">
+            <label className="switch">
+              <input id="upcoming-only" name= "upcoming" type="checkbox" checked={switchInput.upcoming} onChange={handleSwitchChange}/>
+              <span className="slider"></span>
+            </label>
+
+            <label htmlFor="upcoming-only">Upcoming Events Only</label>
+          </div>
+
+          <div className="switch-input">
+            <label className="switch">
+              <input id="available-only" name= "available" type="checkbox" checked={switchInput.available} onChange={handleSwitchChange}/>
+              <span className="slider"></span>
+            </label>
+
+            <label htmlFor="available-only">Available Events Only</label>
+          </div>
         </div>
       </form>
 
       {/* Event Date Section */}
       <h2 className="section-title">Event Date</h2>
       <div id="date-filter">
-        <form id="search-date" onSubmit={handleSearchDate}>
+        <form id="search-date">
+
           <label htmlFor="from-date">From: </label>
           <div className="input-with-icon">
             <input
@@ -86,7 +120,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
               id="from-date"
               name="from-date"
               value={fromDate}
-              onChange={(e) => setFromDate(e.target.value)}
+              onChange={(e) => setFromDateVar(e.target.value)}
             />
             <button
               type="button"
@@ -104,7 +138,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
               id="to-date"
               name="to-date"
               value={toDate}
-              onChange={(e) => setToDate(e.target.value)}
+              onChange={(e) => setToDateVar(e.target.value)}
             />
             <button
               type="button"
@@ -114,6 +148,11 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
               <img src={SearchDateIcon} alt="Search To Date" />
             </button>
           </div>
+          <Button
+            buttonType="btn-blue"
+            text="Apply"
+            onClick={handleSearchDate}
+          />
         </form>
       </div>
 

@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 
 
 
-function EventCard({ id, title, description, date, time, location, organization, availableSeatings, cost, tags, isCompact, onUpdate }) {
+function EventCard({ id, title, description, date, time, location, organization, registeredSeatings, availableSeatings, cost, tags, isCompact, onUpdate }) {
   let today = new Date();
   today.setHours(0, 0, 0, 0);
   const [registeredSeatingsDisplay, setRegisteredSeatings] = useState(null);

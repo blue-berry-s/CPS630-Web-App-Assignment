@@ -19,6 +19,7 @@ label, input[type="checkbox"], .registration-title{
   font-size:2em;
 }
 
+
 .form-section {
   display: grid;
   align-items: start; 
@@ -197,7 +198,7 @@ textarea {
 }
 
 /* Buttons */
-.button-row {
+.add-event-button-row {
   display: flex;
   justify-content: flex-end;
   gap: 20px;
@@ -206,6 +207,8 @@ textarea {
 
 input[type="submit"]{
   width:auto;
+  font-size:1em;
+  height:auto !important;
   
 }
 
@@ -274,6 +277,14 @@ input[type="submit"]{
     grid-template-columns: 40% auto;
   }
 
+  .add-event-button-row{
+    justify-content: right;
+  }
+
+  .add-event-button-row button{
+    font-size: 1em !important;
+  }
+
 }
 
 /* Tablet */
@@ -298,6 +309,10 @@ input[type="submit"]{
   .form-section {
     grid-template-columns: 40% auto;
   }
+
+  .add-event-button-row button{
+    font-size: 1em !important;
+  }
 }
 
 .input-with-icon select {
@@ -320,3 +335,33 @@ input[type="submit"]{
   display: flex;
 }
 
+
+#confirmation_container{
+  width: 80vw;
+  min-width:400px;
+  background-color: white;
+  margin:auto;
+  text-align: center;
+  align-items: center;
+  margin-top:4em;
+  margin-bottom: 4em;
+  padding:4em 2em;
+  border-radius: 25px;
+}
+
+#confirmation_container h1{
+  margin-bottom: 0.2em;
+}
+
+#eventcard_container{
+  display:flex;
+  justify-content: center;
+}
+
+#confirmation_button_group{
+  margin-top:1em;
+  display:flex;
+  gap:2em;
+  align-items: center;
+  justify-content: center;
+}

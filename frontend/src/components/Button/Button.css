@@ -28,6 +28,9 @@ input[type="submit"]:active {
 .btn-yellow {
   background-color: var(--yellow);
   color: var(--dark-blue);
+  border-style: solid;
+  border-width: 0.2em;
+  border-color:var(--yellow);
 }
 
 .btn-yellow:hover {
@@ -44,6 +47,9 @@ input[type="submit"]:active {
   font-weight: 800;
   background-color: var(--red);
   color: var(--white);
+  border-style: solid;
+  border-width: 0.2em;
+  border-color:var(--red);
 }
 
 .btn-red:hover {
@@ -59,6 +65,9 @@ input[type="submit"]:active {
 .btn-blue {
   background-color: var(--medium-blue);
   color: var(--white);
+  border-style: solid;
+  border-width: 0.2em;
+  border-color:var(--medium-blue);
 }
 
 .btn-blue:hover {

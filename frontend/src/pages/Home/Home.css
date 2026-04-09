@@ -1,5 +1,5 @@
-section > h1{
-  font-size:2em;
+section>h1 {
+  font-size: 2em;
   margin: 1em;
   color: #363636;
 }
@@ -17,58 +17,47 @@ section > h1{
   gap: 20px;
 }
 
-
-/* Mobile and tablet design*/
-@media (max-width: 1023px) { 
-  #event-display{
-    display:flex;
-    flex-direction:column;
-    align-items:center; 
-  }
-}
-
-
-#hero-landing{
-  /* background-image: url('../../assets/photos/TMUSplashImage.png'); */
+#hero-landing {
   height: 30em;
   position: relative;
   text-align: center;
 }
 
-#hero-landing > img{
+#hero-landing>img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   filter: brightness(75%);
 }
 
-#hero-landing > div{
+#hero-landing>div {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width:80em;
-  display:flex;
+  width: 100%;
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-#hero-landing span{
-  color:var(--yellow)
+#hero-landing span {
+  color: var(--yellow)
 }
 
-#hero-landing h1{
-  color:var(--white);
-  margin-top:0;
+#hero-landing h1 {
+  color: var(--white);
+  margin: 0;
+  padding: 1rem;
 }
 
 
 #search-all-event {
-  width:50%;
+  width: 50%;
 }
 
-#search-all-event input[type="text"]{
- padding-left:1em; 
+#search-all-event input[type="text"] {
+  padding-left: 1em;
 }
 
 .input-with-icon .search-btn {
@@ -81,17 +70,68 @@ section > h1{
 .input-with-icon .icon-button {
   position: absolute;
   top: 25% !important;
-  right:3em;
+  right: 3em;
   border: none;
   background: none;
   cursor: pointer;
   padding: 0;
 }
 
-#text-content{
+#text-content {
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 1rem;
+  margin: 3em;
 }
 
-#text-content{
-  margin:3em;
+#text-and-button {
+  width: 50%;
+}
+
+#student-img {
+  align-content: center;
+}
+
+#student-img img {
+  width: 100%;
+}
+
+/* Mobile and tablet design*/
+@media (max-width: 1023px) {
+  #event-display {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #text-content {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: space-evenly;
+    gap: 1rem;
+    margin: 3em;
+  }
+
+  #text-and-button {
+    width: 100%;
+  }
+
+  #text-and-button div {
+    display: flex;
+    justify-content: center;
+    font-size: 1.5em;
+  }
+
+  #text-and-button div>* {
+    width: 40%;
+  }
+
+  #search-all-event {
+    width: 70%;
+  }
+
+  .button-row {
+    width: 50%;
+  }
 }
