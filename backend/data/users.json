@@ -1,14 +1,17 @@
 [
-    {
-      "name": "staff",
-      "email": "staff@test.com",
-      "password": "password123",
-      "role": "staff"
-    },
-    {
-      "name": "student",
-      "email": "student@test.com",
-      "password": "password123",
-      "role": "student"
-    }
-  ]
+  {
+    "name": "Jane Doe",
+    "joinYear": 2024,
+    "email": "staff@torontomu.ca",
+    "password": "password123",
+    "role": "staff"
+  },
+  {
+    "name": "John Doe",
+    "joinYear": 2025,
+    "major": "Computer Science",
+    "email": "student@torontomu.ca",
+    "password": "password123",
+    "role": "student"
+  }
+]

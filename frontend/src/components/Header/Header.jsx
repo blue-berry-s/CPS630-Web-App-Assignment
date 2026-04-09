@@ -14,8 +14,8 @@ function Header({ setPage }) {
       <nav id="right-icons">
 
         <div className="nav-links-desktop">
-          <img src="/src/assets/icons/home.svg" alt="Home Button" onClick={() => {setPage("home");}}/>
-          <img src="/src/assets/icons/profile.svg" alt="Profile Button" />
+          <img src="/src/assets/icons/home.svg" alt="Home Button" onClick={() => { setPage("home"); }} />
+          <img src="/src/assets/icons/profile.svg" alt="Profile Button" onClick={() => { setPage("profilePage"); }} />
         </div>
 
         <div className="menu-container">
@@ -24,7 +24,7 @@ function Header({ setPage }) {
           </a>
 
           <div className={`mobile-menu ${menuOpen ? "open" : ""}`}>
-            <a onClick={() => {setPage("home");}}> Home </a>
+            <a onClick={() => { setPage("home"); }}> Home </a>
             <a> Profile </a>
           </div>
         </div>
