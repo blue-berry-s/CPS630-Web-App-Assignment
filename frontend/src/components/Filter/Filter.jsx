@@ -82,7 +82,7 @@ function Filter({ className, setPage, selectedTags, setSelectedTags, searchTitle
             value={title}
             onChange={(e) => setTitle(e.target.value)}   // still your state
           />
-          <button type="submit" className="icon-button">
+          <button type="submit" className="icon-button search-icon">
             <img src={SearchIcon} alt="Search" />
           </button>
         </div>

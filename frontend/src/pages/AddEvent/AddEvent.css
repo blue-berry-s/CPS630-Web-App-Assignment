@@ -198,7 +198,7 @@ textarea {
 }
 
 /* Buttons */
-.button-row {
+.add-event-button-row {
   display: flex;
   justify-content: flex-end;
   gap: 20px;
@@ -277,6 +277,14 @@ input[type="submit"]{
     grid-template-columns: 40% auto;
   }
 
+  .add-event-button-row{
+    justify-content: right;
+  }
+
+  .add-event-button-row button{
+    font-size: 1em !important;
+  }
+
 }
 
 /* Tablet */
@@ -300,6 +308,10 @@ input[type="submit"]{
 
   .form-section {
     grid-template-columns: 40% auto;
+  }
+
+  .add-event-button-row button{
+    font-size: 1em !important;
   }
 }
 

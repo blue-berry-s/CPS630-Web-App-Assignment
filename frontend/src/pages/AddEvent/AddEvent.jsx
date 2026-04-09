@@ -251,7 +251,7 @@ function AddEvent({ setPage }) {
             </div>
           </div>
 
-          <div className="button-row">
+          <div className="add-event-button-row">
             <Button buttonType="btn-white" text="Cancel" onClick={() => setPage('home')} />
             <input className="btn-blue" type="submit"/>
           </div>
