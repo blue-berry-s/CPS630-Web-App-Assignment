@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 
 
 
-function EventCard({ id, title, description, date, time, location, organization, registeredSeatings, availableSeatings, cost, tags, isCompact, onUpdate, user  }) {
+function EventCard({ id, title, description, date, time, location, organization, registeredSeatings, availableSeatings, cost, tags, isCompact, onUpdate, user }) {
   let today = new Date();
   today.setHours(0, 0, 0, 0);
   const [registeredSeatingsDisplay, setRegisteredSeatings] = useState(null);
@@ -87,14 +87,16 @@ function EventCard({ id, title, description, date, time, location, organization,
     try {
       const response = await fetch(`/api/events/${id}`, {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+         }
       });
 
       const data = await response.json();
 
       if (response.ok) {
         alert(`Event "${title}" deleted successfully!`);
-        if (onUpdate) onUpdate(id);
+        if (onUpdate) {onUpdate(id)};
       } else {
         alert(data.error || "Delete failed");
       }
