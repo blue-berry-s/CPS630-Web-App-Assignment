@@ -54,8 +54,8 @@ function EventCard({ id, title, description, date, time, location, organization,
       : `/api/events/register/${id}`;
 
     try {
-  const response = await fetch(`/api/events/${id}`, {
-  method: 'DELETE',
+  const response = await fetch( endpoint , {
+  method: 'PATCH',
   headers: {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${token}`
