@@ -365,3 +365,10 @@ input[type="submit"]{
   align-items: center;
   justify-content: center;
 }
+
+#permission_denied_text{
+  width:80vw;
+  text-align: center;
+  margin:auto;
+  color:var(--red);
+}

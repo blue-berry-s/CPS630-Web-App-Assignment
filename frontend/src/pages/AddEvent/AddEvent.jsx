@@ -16,7 +16,7 @@ import CheckmarkIcon from "../../assets/icons/CheckmarkIcon.svg";
 
 import { useState, useEffect } from "react";
 
-function AddEvent({ setPage }) {
+function AddEvent({ setPage, user}) {
   const [registrationRequired, openRegistration] = useState(true);
   const [tags, setTags] = useState([]);
   const [newEvent, setNewEvent] = useState(null);
@@ -92,7 +92,19 @@ const response = await fetch('/api/events', {
     }
   };
 
-  return (
+  if (user?.role === "student"){
+    return (
+      <>
+        <Header/>
+        <div id="permission_denied_text">
+          <h1> Permission Denied </h1>
+          <Button buttonType="btn-blue" text="Home" onClick={() => setPage('home')} />
+        </div>
+      </>
+    );
+  }
+  else{
+    return (
     <>
       <Header setPage={setPage} />
 
@@ -295,6 +307,7 @@ const response = await fetch('/api/events', {
         
     </>
   );
+  }
 }
 
 export default AddEvent;
