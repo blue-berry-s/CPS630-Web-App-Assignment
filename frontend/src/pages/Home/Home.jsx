@@ -14,7 +14,7 @@ import "./Home.css";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 
-function Home({ setPage }) {
+function Home({ setPage, user }) {
   const [events, setEvents] = useState([]);
   const [popularEvents, setPopularEvents] = useState([]);
   const [selectedTags, setSelectedTags] = useState([]);
@@ -27,6 +27,10 @@ function Home({ setPage }) {
   const refreshEvents = (deletedId) => {
     setEvents(prev => prev.filter(event => event.id !== deletedId));
   };
+
+  function handleClick() {
+    window.open('https://www.torontomu.ca/', '_blank');
+  }
 
   const today = new Date();
   today.setDate(today.getDate() - 1)
@@ -79,7 +83,13 @@ function Home({ setPage }) {
           <h1>Stay Connected To Your <span> Student Life </span></h1>
           {/* Buttons */}
           <div className="button-row">
-            <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+            {user?.role === "staff" && (
+                <Button
+                  text="Add Event"
+                  buttonType="btn-blue"
+                  onClick={() => { setPage("addEvent"); }}
+                />
+              )}
             <Button text="View Map" buttonType="btn-blue" onClick={() => { setPage("campusMap"); console.log("Switch to campus Map"); }} />
           </div>
 
@@ -117,7 +127,21 @@ function Home({ setPage }) {
             <p> Hosting a guest speaker, a club social, or a department workshop that isn't on the list? We want to make sure every corner of TMU campus life is represented. By sharing your event on our platform, you’re not just filling a slot on the calendar; you’re helping students discover new passions and build a stronger, more connected community across our downtown campus. </p>
             <p> Adding your event is quick and easy. Simply click the button below to provide the essential details—like date, time, and location—to ensure your session gets the visibility it deserves. Whether it’s a small study group in the SLC or a major competition at the Mattamy Athletic Centre, get your event on the map and start reaching more students today! </p>
             <div>
-              <Button text="Add Event" buttonType="btn-blue" onClick={() => { setPage("addEvent"); console.log("Switch to add Event"); }} />
+              {user?.role === "staff" && (
+                <Button
+                  text="Add Event"
+                  buttonType="btn-blue"
+                  onClick={() => { setPage("addEvent"); }}
+                />
+              )}
+              {user?.role === "student" && (
+                <Button
+                  text="Contact Staff"
+                  buttonType="btn-blue"
+                  onClick={handleClick}
+                />
+              )}
+              
             </div>
           </div>
 
