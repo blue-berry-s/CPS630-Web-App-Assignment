@@ -5,7 +5,7 @@ import Button from "../../components/Button/Button.jsx";
 import "../../css/defaultStyle.css"
 import "./ProfilePage.css";
 
-function ProfilePage({ setPage, user}) {
+function ProfilePage({ setPage, user, setUser }) {
   const [selectedEvents, setSelectedEvents] = useState("upcoming");
   const [registeredEvents, setRegisteredEvents] = useState([]);
 

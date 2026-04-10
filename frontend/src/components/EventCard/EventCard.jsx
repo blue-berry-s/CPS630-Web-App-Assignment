@@ -6,7 +6,7 @@ import { io } from "socket.io-client";
 
 
 
-function EventCard({ id, title, description, date, time, location, organization, registeredSeatings, availableSeatings, cost, tags, isCompact, onUpdate }) {
+function EventCard({ id, title, description, date, time, location, organization, registeredSeatings, availableSeatings, cost, tags, isCompact, onUpdate, user  }) {
   let today = new Date();
   today.setHours(0, 0, 0, 0);
   const [registeredSeatingsDisplay, setRegisteredSeatings] = useState(null);
@@ -54,14 +54,13 @@ function EventCard({ id, title, description, date, time, location, organization,
       : `/api/events/register/${id}`;
 
     try {
-      const response = await fetch(endpoint, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json',
-        "Authorization": `Bearer ${token}`
-
-
-      }
-      });
+  const response = await fetch(`/api/events/${id}`, {
+  method: 'DELETE',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  }
+});
 
       const data = await response.json();
 
@@ -208,16 +207,18 @@ function EventCard({ id, title, description, date, time, location, organization,
             />
           )}
 
-          {!isCompact && (
-            <div className="button-bar">
-              <Button
-                buttonType="btn-red"
-                text="DELETE"
-                onClick={handleDelete}
-              />
-              {newButton}
-            </div>
-          )}
+{!isCompact && (
+  <div className="button-bar">
+    {user?.role === "staff" && (
+      <Button
+        buttonType="btn-red"
+        text="DELETE"
+        onClick={handleDelete}
+      />
+    )}
+    {newButton}
+  </div>
+)}
         </div>
       </div>
 

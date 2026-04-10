@@ -198,12 +198,13 @@ function Home({ setPage, user }) {
                 )
               )
               .map((event, idx) => (
-                <EventCard
-                  key={idx}
-                  id={event.id}
-                  onUpdate={refreshEvents}
-                  {...event}
-                />
+<EventCard
+  key={idx}
+  id={event.id}
+  user={user}
+  onUpdate={refreshEvents}
+  {...event}
+/>
               ))}
           </div>
 

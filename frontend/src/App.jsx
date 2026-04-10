@@ -31,8 +31,7 @@ function App() {
   if (page === "addEvent") return <AddEvent setPage={setPage} user={user}/>;
   if (page === "campusMap") return <CampusMap setPage={setPage} />;
   if (page === "profilePage") return <ProfilePage setPage={setPage} user={user} setUser={setUser} />;
-  if (user.role === "staff") return <Home setPage={setPage} user={user} />; // will change to staff page later
-  else return <Home setPage={setPage} user={user} />;
+  return <Home setPage={setPage} user={user}/>;
 
   return null;
 }
